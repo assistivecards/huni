@@ -3,15 +3,29 @@
   "displayName": "huni",
   "expo": {
     "name": "huni",
-    "slug": "expo-template-bare",
+    "slug": "huni",
     "version": "1.0.0",
     "platforms": [
       "ios",
       "android",
       "web"
     ],
+    "ios": {
+      "bundleIdentifier": "org.dreamoriented.huni",
+      "buildNumber": "1.0.0",
+      "requireFullScreen": true,
+      "supportsTablet": true
+    },
+    "android": {
+      "package": "org.dreamoriented.huni",
+      "permissions": [
+        "WAKE_LOCK"
+      ],
+      "versionCode": 100
+    },
     "assetBundlePatterns": [
       "**/*"
-    ]
+    ],
+    "entryPoint": "node_modules/expo/AppEntry.js"
   }
 }

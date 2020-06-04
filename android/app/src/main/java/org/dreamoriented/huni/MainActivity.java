@@ -1,4 +1,4 @@
-package com.huni;
+package org.dreamoriented.huni;
 
 import android.os.Bundle;
 

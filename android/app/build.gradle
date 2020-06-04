@@ -130,11 +130,11 @@ android {
     }
 
     defaultConfig {
-        applicationId "com.huni"
+        applicationId 'org.dreamoriented.huni'
         minSdkVersion rootProject.ext.minSdkVersion
         targetSdkVersion rootProject.ext.targetSdkVersion
-        versionCode 1
-        versionName "1.0"
+        versionCode 100
+        versionName "1.0.0"
     }
     splits {
         abi {
