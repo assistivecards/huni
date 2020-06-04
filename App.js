@@ -143,7 +143,7 @@ export default class VoiceTest extends Component {
   render(){
     return (
       <View style={styles.container}>
-        <Text style={styles.welcome}>Welcome to React Native Voice!</Text>
+        <Text style={styles.welcome}>Welcome to Huni!</Text>
         <Text style={styles.instructions}>
           Press the button and start speaking.
         </Text>
