@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { Platform, StyleSheet, Text, View, Image, TouchableHighlight} from 'react-native';
 import * as Speech from 'expo-speech';
+import * as Notifications from 'expo-notifications';
 
 import Voice, {
   SpeechRecognizedEvent,
@@ -13,6 +14,8 @@ const instructions = Platform.select({
   ios: `Press Cmd+R to reload,\nCmd+D or shake for dev menu`,
   android: `Double tap R on your keyboard to reload,\nShake or press menu button for dev menu`,
 });
+
+import API from './api';
 
 export default class VoiceTest extends Component {
   constructor(props: Props) {
@@ -34,6 +37,29 @@ export default class VoiceTest extends Component {
     Voice.onSpeechResults = this.onSpeechResults;
     Voice.onSpeechPartialResults = this.onSpeechPartialResults;
     Voice.onSpeechVolumeChanged = this.onSpeechVolumeChanged;
+  }
+
+  async registerForPushNotificationsAsync(){
+		await Notifications.requestPermissionsAsync({
+      ios: {
+        allowAlert: true,
+        allowBadge: true,
+        allowSound: true,
+        allowAnnouncements: true,
+      },
+    });
+
+    let experienceId = undefined;
+    if (!Constants.manifest) {
+      // Absence of the manifest means we're in bare workflow
+      experienceId = '@burak/huni';
+    }
+
+    const expoPushToken = await Notifications.getExpoPushTokenAsync({
+      experienceId,
+    });
+
+    console.log(expoPushToken);
   }
 
   componentWillUnmount() {
@@ -143,6 +169,9 @@ export default class VoiceTest extends Component {
   render(){
     return (
       <View style={styles.container}>
+        <TouchableOpacity onPress={() => this.registerForPushNotificationsAsync()}>
+          <Text>Register notification</Text>
+        </TouchableOpacity>
         <Text style={styles.welcome}>Welcome to Huni!</Text>
         <Text style={styles.instructions}>
           Press the button and start speaking.
