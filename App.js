@@ -15,7 +15,7 @@ const instructions = Platform.select({
   android: `Double tap R on your keyboard to reload,\nShake or press menu button for dev menu`,
 });
 
-import API from './api';
+//import API from './api';
 
 export default class VoiceTest extends Component {
   constructor(props: Props) {
