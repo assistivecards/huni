@@ -9,8 +9,6 @@ import Browser from './layouts/Browser';
 import Svg, { Path, Line, Circle, Polyline, Rect } from 'react-native-svg';
 
 import * as Font from 'expo-font';
-import * as AppleAuthentication from 'expo-apple-authentication';
-import * as GoogleSignIn from 'expo-google-sign-in';
 import * as Localization from 'expo-localization';
 import * as ScreenOrientation from 'expo-screen-orientation';
 
@@ -75,56 +73,6 @@ export default class App extends React.Component {
     }
   }
 
-  async signInWithApple(){
-    try {
-      this.setState({activity: true});
-
-      const credential = await AppleAuthentication.signInAsync({
-        requestedScopes: [
-          AppleAuthentication.AppleAuthenticationScope.FULL_NAME,
-          AppleAuthentication.AppleAuthenticationScope.EMAIL,
-        ],
-      });
-      let user = await API.signIn(credential.user, "apple", credential);
-      API.setData("identifier", credential.user);
-
-      API.ramLanguage(user.language).then(res => {
-        this.setState({screen: "logged", activity: false});
-      });
-
-      // signed in
-    } catch (e) {
-      if (e.code === 'ERR_CANCELED') {
-        // handle that the user canceled the sign-in flow
-        this.setState({activity: false});
-      } else {
-        // handle other errors
-        alert('Make sure to have internet connection and try again later:' + JSON.stringify(e));
-        this.setState({activity: false});
-      }
-    }
-  }
-
-  async signInWithGoogle(){
-    try {
-      this.setState({activity: true});
-      await GoogleSignIn.askForPlayServicesAsync();
-      const { type, user } = await GoogleSignIn.signInAsync();
-      if (type === 'success') {
-        const credential = await GoogleSignIn.signInSilentlyAsync();
-        let user = await API.signIn(credential.uid, "google", credential);
-        API.setData("identifier", credential.uid);
-
-        API.ramLanguage(user.language).then(res => {
-          this.setState({screen: "logged", activity: false});
-        });
-      }
-    } catch ({ message }) {
-      alert('Make sure to have internet connection and try again later:' + message);
-      this.setState({activity: false});
-    }
-  }
-
   signInWithEmail(){
     this.setState({screen: "email"});
     API.event.on("authIdentifier", (identifier) => {
@@ -180,95 +128,20 @@ export default class App extends React.Component {
   }
 
   renderSignInButtons(){
-    if(this.state.moreSignin){
-
-      if(Platform.OS == "android"){
-        return (
-          <View style={{justifyContent: "center", alignItems: "center", backgroundColor: "#6989FF"}}>
-            <AppleAuthentication.AppleAuthenticationButton
-              buttonType={AppleAuthentication.AppleAuthenticationButtonType.SIGN_IN}
-              buttonStyle={AppleAuthentication.AppleAuthenticationButtonStyle.WHITE}
-              cornerRadius={25}
-              style={{ width: 240, height: 50, borderRadius: 25 }}
-              onPress={this.signInWithApple.bind(this)}
-            />
-            <View style={{height: 10}}></View>
-            <TouchableOpacity
-              style={{ width: 240, height: 46, alignItems: "center", borderRadius: 25, backgroundColor: "#fff",  justifyContent: "center", flexDirection: "row"}}
-              onPress={this.signInWithGoogle.bind(this)}>
-              <Image source={{uri: "https://developers.google.com/identity/images/g-logo.png"}} style={{width: 18, height: 18, marginRight: 5}}/>
-              <Text style={{fontSize: 19, fontWeight: "500"}}>Sign in with Google</Text>
-            </TouchableOpacity>
-          </View>
-        );
-      }else if(Platform.OS == "ios"){
-        return (
-          <View style={{justifyContent: "center", alignItems: "center", backgroundColor: "#6989FF"}}>
-            <AppleAuthentication.AppleAuthenticationButton
-              buttonType={AppleAuthentication.AppleAuthenticationButtonType.SIGN_IN}
-              buttonStyle={AppleAuthentication.AppleAuthenticationButtonStyle.WHITE}
-              cornerRadius={25}
-              style={{ width: 240, height: 50, borderRadius: 25 }}
-              onPress={this.signInWithApple.bind(this)}
-            />
-            <View style={{height: 10}}></View>
-            <TouchableOpacity
-              style={{ width: 240, height: 46, alignItems: "center", borderRadius: 25, backgroundColor: "#fff",  justifyContent: "center", flexDirection: "row"}}
-              onPress={this.signInWithGoogle.bind(this)}>
-              <Image source={{uri: "https://developers.google.com/identity/images/g-logo.png"}} style={{width: 18, height: 18, marginRight: 5}}/>
-              <Text style={{fontSize: 19, fontWeight: "500"}}>Sign in with Google</Text>
-            </TouchableOpacity>
-            <View style={{height: 10}}></View>
-            <TouchableOpacity
-              style={{ width: 240, height: 46, alignItems: "center", borderRadius: 25, backgroundColor: "#fff",  justifyContent: "center", flexDirection: "row"}}
-              onPress={this.signInWithEmail.bind(this)}>
-              <Svg height={18} width={18} viewBox="0 0 24 24" style={{marginRight: 5}} strokeWidth="2" stroke="#333" fill="none" strokeLinecap="round" strokeLinejoin="round">
-                <Path d="M0 0h24v24H0z" stroke="none"/>
-                <Rect height="14" width="18" rx="2" x="3" y="5"/>
-                <Polyline points="3 7 12 13 21 7"/>
-              </Svg>
-              <Text style={{fontSize: 19, fontWeight: "500"}}>Sign in with Email</Text>
-            </TouchableOpacity>
-          </View>
-        );
-      }
-    }else{
-      if(Platform.OS == "ios"){
-        return (
-          <>
-            <AppleAuthentication.AppleAuthenticationButton
-              buttonType={AppleAuthentication.AppleAuthenticationButtonType.SIGN_IN}
-              buttonStyle={AppleAuthentication.AppleAuthenticationButtonStyle.WHITE}
-              cornerRadius={25}
-              style={{ width: 240, height: 50, borderRadius: 25 }}
-              onPress={this.signInWithApple.bind(this)}
-            />
-            <TouchableOpacity onPress={() => this.setState({moreSignin: true})}><Text style={{color: "rgba(255,255,255,0.9)", marginTop: 18.5, marginBottom: 20}}>{API.t("setup_other_options")}</Text></TouchableOpacity>
-          </>
-        )
-      }else{
-        return(
-          <>
-            <TouchableOpacity
-              style={{ width: 240, height: 46, alignItems: "center", borderRadius: 25, backgroundColor: "#fff",  justifyContent: "center", flexDirection: "row"}}
-              onPress={this.signInWithGoogle.bind(this)}>
-              <Image source={{uri: "https://developers.google.com/identity/images/g-logo.png"}} style={{width: 18, height: 18, marginRight: 5}}/>
-              <Text style={{fontSize: 18, fontWeight: "500"}}>Sign in with Google</Text>
-            </TouchableOpacity>
-            <TouchableOpacity
-              style={{ width: 240, height: 46, alignItems: "center", borderRadius: 25, backgroundColor: "#fff",  justifyContent: "center", flexDirection: "row"}}
-              onPress={this.signInWithEmail.bind(this)}>
-              <Svg height={18} width={18} viewBox="0 0 24 24" style={{marginRight: 5}} strokeWidth="2" stroke="#333" fill="none" strokeLinecap="round" strokeLinejoin="round">
-                <Path d="M0 0h24v24H0z" stroke="none"/>
-                <Rect height="14" width="18" rx="2" x="3" y="5"/>
-                <Polyline points="3 7 12 13 21 7"/>
-              </Svg>
-              <Text style={{fontSize: 19, fontWeight: "500"}}>Sign in with Email</Text>
-            </TouchableOpacity>
-          </>
-        );
-      }
-    }
+      return(
+        <>
+          <TouchableOpacity
+            style={{ width: 240, height: 46, alignItems: "center", borderRadius: 25, backgroundColor: "#fff",  justifyContent: "center", flexDirection: "row"}}
+            onPress={this.signInWithEmail.bind(this)}>
+            <Svg height={18} width={18} viewBox="0 0 24 24" style={{marginRight: 5}} strokeWidth="2" stroke="#333" fill="none" strokeLinecap="round" strokeLinejoin="round">
+              <Path d="M0 0h24v24H0z" stroke="none"/>
+              <Rect height="14" width="18" rx="2" x="3" y="5"/>
+              <Polyline points="3 7 12 13 21 7"/>
+            </Svg>
+            <Text style={{fontSize: 19, fontWeight: "500"}}>Sign in with Email</Text>
+          </TouchableOpacity>
+        </>
+      );
   }
 
   renderLoading(type){
