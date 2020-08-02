@@ -34,8 +34,8 @@ export default class Setting extends React.Component {
   render() {
     return(
       <>
-        <TopBar back={() => this.props.back()} backgroundColor={"#6989FF"}/>
-        <ScrollView style={{flex: 1, backgroundColor: "#6989FF"}}>
+        <TopBar back={() => this.props.back()} backgroundColor={"#63b2b5"}/>
+        <ScrollView style={{flex: 1, backgroundColor: "#63b2b5"}}>
           <View style={{paddingTop: 0}}>
             <Text style={API.styles.h1}>{API.t("register_email_title")}</Text>
             <Text style={API.styles.pHome}>{API.t("register_email_description")}</Text>
@@ -66,7 +66,7 @@ export default class Setting extends React.Component {
 
 const styles = StyleSheet.create({
   head: {
-    backgroundColor: "#6989FF",
+    backgroundColor: "#63b2b5",
     marginBottom: 10,
     paddingVertical: 10,
     paddingBottom: 5

@@ -98,7 +98,7 @@ export default class App extends React.Component {
   signInScreen(){
     return (
       <>
-        <SafeAreaView style={{justifyContent: "center", alignItems: "center", flex: 1, backgroundColor: "#6989FF"}}>
+        <SafeAreaView style={{justifyContent: "center", alignItems: "center", flex: 1, backgroundColor: "#63b2b5"}}>
           <View style={{ justifyContent: "center", alignItems: "center", flexDirection: "column", padding: 30, paddingBottom: 0, marginTop: 20}}>
             <Text style={[API.styles.h1, {color: "#fff", marginTop: 0, marginHorizontal: 0, fontSize: 28, textAlign: "center"}]}>{API.t("setup_welcome_title1")}</Text>
             <Text style={[API.styles.h1, {color: "#fff", marginTop: 0, marginHorizontal: 0, fontSize: 42, textAlign: "center", marginBottom: 15}]}>{API.t("setup_welcome_title2")}</Text>
@@ -116,7 +116,7 @@ export default class App extends React.Component {
         {this.state.activity &&
           <View style={{backgroundColor: "rgba(0,0,0,0.3)", width: "100%", height: "100%", position: "absolute", top: 0, left: 0, justifyContent: "center", alignItems: "center"}}>
             <View style={{width: 60, height: 60, backgroundColor: "#fff", alignItems: "center", justifyContent: "center", borderRadius: 30}}>
-              <ActivityIndicator color={"#6989FF"}/>
+              <ActivityIndicator color={"#63b2b5"}/>
             </View>
             <TouchableOpacity style={{marginTop: 30, position: "absolute", bottom: 30}} onPress={() => this.setState({activity: false})}>
               <Text style={{color: "#fff", fontWeight: "bold", fontSize: 18}}>{API.t("alert_cancel")}</Text>
@@ -151,10 +151,10 @@ export default class App extends React.Component {
       }, 5000);
     }
     return (
-      <View style={{flex: 1, backgroundColor: "#6989FF", justifyContent: "center", alignItems: "center"}}>
-        <StatusBar backgroundColor="#6989FF" barStyle={"light-content"} />
+      <View style={{flex: 1, backgroundColor: "#63b2b5", justifyContent: "center", alignItems: "center"}}>
+        <StatusBar backgroundColor="#63b2b5" barStyle={"light-content"} />
         <View style={{width: 60, height: 60, backgroundColor: "#fff", alignItems: "center", justifyContent: "center", borderRadius: 30}}>
-          <ActivityIndicator color={"#6989FF"}/>
+          <ActivityIndicator color={"#63b2b5"}/>
         </View>
       </View>
     )

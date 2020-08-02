@@ -84,8 +84,8 @@ export default class Setting extends React.Component {
   render() {
     return (
       <>
-        <TopBar back={() => this.props.navigation.pop()} backgroundColor={"#6989FF"}/>
-        <View style={{flex: 1, backgroundColor: "#6989FF"}}>
+        <TopBar back={() => this.props.navigation.pop()} backgroundColor={"#63b2b5"}/>
+        <View style={{flex: 1, backgroundColor: "#63b2b5"}}>
           <View style={{flex: 1, backgroundColor: "#fff", borderTopLeftRadius: 30, borderTopRightRadius: 30}}>
             <FlatList
                style={{flex: 1,  paddingTop: 20, paddingHorizontal: 25, width: "100%"}}
@@ -103,7 +103,7 @@ export default class Setting extends React.Component {
 
 const styles = StyleSheet.create({
   head: {
-    backgroundColor: "#6989FF",
+    backgroundColor: "#63b2b5",
     marginBottom: 10,
     paddingVertical: 10,
     paddingBottom: 5
@@ -128,7 +128,7 @@ const styles = StyleSheet.create({
     height: 50,
   },
   premium: {
-    backgroundColor: "#6989FF",
+    backgroundColor: "#63b2b5",
     height: 24,
     width: 60,
     borderRadius: 12,
@@ -136,7 +136,7 @@ const styles = StyleSheet.create({
     justifyContent: "center"
   },
   button: {
-    backgroundColor: "#6989FF",
+    backgroundColor: "#63b2b5",
     height: 30,
     borderRadius: 15,
     paddingHorizontal: 15,

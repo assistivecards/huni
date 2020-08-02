@@ -20,7 +20,7 @@ function packTranslation(lang){
           return Promise.resolve({
             id: i,
             slug: packAttr[4].split(",")[i],
-            color: packAttr[2].split(",")[i] ? packAttr[2].split(",")[i] : "#6989FF",
+            color: packAttr[2].split(",")[i] ? packAttr[2].split(",")[i] : "#63b2b5",
             premium: packAttr[0].split(",")[i] == "free" ? 0 : 1,
             locale: translations[0],
             count: parseInt(packAttr[1].split(",")[i])

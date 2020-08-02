@@ -11,8 +11,8 @@ export default class Setting extends React.Component {
 
   render() {
     return(
-      <View style={{flex: 1, backgroundColor: "#6989FF"}}>
-        <StatusBar backgroundColor="#6989FF" barStyle={"light-content"} />
+      <View style={{flex: 1, backgroundColor: "#63b2b5"}}>
+        <StatusBar backgroundColor="#63b2b5" barStyle={"light-content"} />
         <View style={{flex: 1, justifyContent: "center", alignItems: "center", flexDirection: "column"}}>
           <Text style={[API.styles.h2, {color: "#fff", marginBottom: 35, marginTop: 30, fontSize: 26, marginHorizontal: 30, textAlign: "center"}]}>{API.t("login_choose_profile_title")}</Text>
           <View style={{justifyContent: "center", alignItems: "center", flexDirection: "row", flexWrap: "wrap"}}>

@@ -26,8 +26,8 @@ export default class Setting extends React.Component {
   render() {
     return (
       <>
-        <TopBar back={() => this.props.navigation.pop()} backgroundColor={"#6989FF"}/>
-        <ScrollView style={{flex: 1, backgroundColor: "#6989FF"}}>
+        <TopBar back={() => this.props.navigation.pop()} backgroundColor={"#63b2b5"}/>
+        <ScrollView style={{flex: 1, backgroundColor: "#63b2b5"}}>
           <View style={[styles.head, {alignItems: API.user.isRTL ? "flex-end" : "flex-start"}]}>
             <Text style={API.styles.h1}>{API.t("settings_change_avatar_title")}</Text>
             <Text style={API.styles.pHome}>{API.t("settings_change_avatar_description")}</Text>
@@ -69,7 +69,7 @@ export default class Setting extends React.Component {
 
 const styles = StyleSheet.create({
   head: {
-    backgroundColor: "#6989FF",
+    backgroundColor: "#63b2b5",
     marginBottom: 10,
     paddingVertical: 10,
     paddingBottom: 5

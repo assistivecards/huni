@@ -34,7 +34,7 @@ export default class App extends React.Component {
                   <CachedImage uri={`${API.assetEndpoint}cards/avatar/${profile.avatar}.png?v=${API.version}`} resizeMode="contain" style={styles.childImage} />
                 </View>
                 {API.user.active_profile.id == profile.id &&
-                  <View style={styles.active}><Text style={{fontWeight: "600", fontSize: 10, color: "#6989FF"}}>{API.t("settings_profile_active")}</Text></View>
+                  <View style={styles.active}><Text style={{fontWeight: "600", fontSize: 10, color: "#63b2b5"}}>{API.t("settings_profile_active")}</Text></View>
                 }
                 <View style={{alignItems: API.user.isRTL ? "flex-end" : "flex-start", marginHorizontal: 10}}>
                   <Text style={{fontSize: 22, color: "#fff", fontWeight: "bold"}}>{profile.name}</Text>

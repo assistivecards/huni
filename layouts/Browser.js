@@ -21,10 +21,10 @@ export default class App extends React.Component {
     }
 
     return (
-      <View style={{flex: 1, flexDirection: "column", backgroundColor: "#6989FF"}}>
+      <View style={{flex: 1, flexDirection: "column", backgroundColor: "#63b2b5"}}>
         <TopBar back={() => {
           this.back();
-        }} backgroundColor={"#6989FF"} />
+        }} backgroundColor={"#63b2b5"} />
         <View style={{flex: 1, borderTopRightRadius: 30, borderTopLeftRadius: 30, overflow: "hidden" }}>
           <WebView source={{uri: this.link}} style={{flex: 1}}
             showsHorizontalScrollIndicator={false}

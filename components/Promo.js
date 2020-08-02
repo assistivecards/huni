@@ -21,7 +21,7 @@ export default class App extends React.Component {
 
 const styles = StyleSheet.create({
   promo: {
-    height: 130, backgroundColor: "#6989ff",
+    height: 130, backgroundColor: "#63b2b5",
     borderRadius: 20,
     overflow: "hidden",
     flexDirection: "row",

@@ -83,12 +83,12 @@ export default class Setting extends React.Component {
             <TextInput style={[API.styles.input, {width: "100%", backgroundColor: "#fff"}]} placeholder={API.t("setup_your_name")} value={this.state.name} onChangeText={(name) => this.setState({name})}/>
             {this.state.name.length >= 2 &&
               <TouchableOpacity style={[API.styles.whiteButton, {marginTop: 30}]} onPress={() => this.setName()}>
-                <Text style={{color: "#6989FF", fontWeight: "bold", fontSize: 18}}>{API.t("button_next")}</Text>
+                <Text style={{color: "#63b2b5", fontWeight: "bold", fontSize: 18}}>{API.t("button_next")}</Text>
               </TouchableOpacity>
             }
             {this.state.name.length < 2 &&
               <View style={[API.styles.whiteButton, {marginTop: 30, backgroundColor: "rgba(255,255,255,0.5)"}]} onPress={() => this.setName()}>
-                <Text style={{color: "#6989FF", fontWeight: "bold", fontSize: 18}}>{API.t("button_next")}</Text>
+                <Text style={{color: "#63b2b5", fontWeight: "bold", fontSize: 18}}>{API.t("button_next")}</Text>
               </View>
             }
           </View>
@@ -115,7 +115,7 @@ export default class Setting extends React.Component {
   renderAvatar(){
     return (
       <KeyboardAvoidingView style={{flex: 1}}>
-        <ScrollView style={{flex: 1, backgroundColor: "#6989FF"}}>
+        <ScrollView style={{flex: 1, backgroundColor: "#63b2b5"}}>
           <View style={{justifyContent: "center", alignItems: "center", flexDirection: "column", padding: 30}}>
             <Text style={[API.styles.h2, {color: "#fff", marginTop: 30, fontSize: 26, marginHorizontal: 0, textAlign: "center"}]}>{API.t("setup_avatar_title")}</Text>
             <Text style={[API.styles.pHome, {marginBottom: 10, marginHorizontal: 0, textAlign: "center"}]}>{API.t("setup_avatar_description")}</Text>
@@ -152,7 +152,7 @@ export default class Setting extends React.Component {
              )
            })}
           </View>
-          <View style={{backgroundColor: "#6989FF", height: 40}}>
+          <View style={{backgroundColor: "#63b2b5", height: 40}}>
           </View>
         </ScrollView>
       </KeyboardAvoidingView>
@@ -323,12 +323,12 @@ export default class Setting extends React.Component {
           <Image source={require("../assets/leeloo_magic.png")} style={{width: 200, height: 300, padding: 10}} resizeMode={"contain"}/>
           {!this.state.creating &&
             <TouchableOpacity style={API.styles.whiteButton} onPress={() => this.createProfile()}>
-              <Text style={{color: "#6989FF", fontWeight: "bold", fontSize: 18}}>{API.t("button_start")}</Text>
+              <Text style={{color: "#63b2b5", fontWeight: "bold", fontSize: 18}}>{API.t("button_start")}</Text>
             </TouchableOpacity>
           }
           {this.state.creating &&
             <View style={API.styles.whiteButton}>
-              <ActivityIndicator color={"#6989FF"}/>
+              <ActivityIndicator color={"#63b2b5"}/>
             </View>
           }
         </View>
@@ -338,8 +338,8 @@ export default class Setting extends React.Component {
 
   render() {
     return(
-      <View style={{flex: 1, backgroundColor: "#6989FF"}}>
-        <StatusBar backgroundColor="#6989FF" barStyle={"light-content"} />
+      <View style={{flex: 1, backgroundColor: "#63b2b5"}}>
+        <StatusBar backgroundColor="#63b2b5" barStyle={"light-content"} />
         <Animated.View style={{flex: 1, opacity: this._getTransitionInt(0, 1), transform: [{translateY: this._getTransitionInt(50, 0)}]}}>
           {this.state.page == "name" && this.renderName()}
           {this.state.page == "avatar" && this.renderAvatar()}

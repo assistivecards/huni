@@ -165,8 +165,8 @@ export default class Setting extends React.Component {
 
     return (
       <>
-        <TopBar back={() => this.props.navigation.pop()} backgroundColor={"#6989FF"} rightButtonRender={true} rightButtonActive={this.didChange()} rightButtonPress={() => this.save()}/>
-          <View style={{flex: 1, backgroundColor: "#6989FF"}}>
+        <TopBar back={() => this.props.navigation.pop()} backgroundColor={"#63b2b5"} rightButtonRender={true} rightButtonActive={this.didChange()} rightButtonPress={() => this.save()}/>
+          <View style={{flex: 1, backgroundColor: "#63b2b5"}}>
             <View style={styles.head}>
               <View style={{flexDirection: "column", alignItems: "center", justifyContent: "center"}}>
 
@@ -249,7 +249,7 @@ export default class Setting extends React.Component {
 
 const styles = StyleSheet.create({
   head: {
-    backgroundColor: "#6989FF",
+    backgroundColor: "#63b2b5",
     paddingVertical: 5
   },
   addNew: {
@@ -302,7 +302,7 @@ const styles = StyleSheet.create({
     height: 50,
   },
   premium: {
-    backgroundColor: "#6989FF",
+    backgroundColor: "#63b2b5",
     height: 24,
     width: 60,
     borderRadius: 12,
