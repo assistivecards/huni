@@ -13,7 +13,7 @@ export default class App extends React.Component {
           <Text style={{fontSize: 14, color: "#fff", marginBottom: 2}}>{API.t("premium_promo_desc1")}</Text>
           <Text style={{fontSize: 14, color: "#fff", marginBottom: 2}}>{API.t("premium_promo_desc2")}</Text>
         </View>
-        <Image source={require("../assets/promo.png")} style={{width: 200, height: 150, position: "absolute", bottom: -39, right: -33}} resizeMode={"contain"} />
+        <Image source={require("../assets/icon.png")} style={{width: 200, height: 150, position: "absolute", bottom: -39, right: -33}} resizeMode={"contain"} />
       </TouchableOpacity>
     );
   }

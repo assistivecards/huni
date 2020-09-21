@@ -234,7 +234,7 @@ export default class App extends React.Component {
                 <Animated.View style={{flex: 1, alignItems: "center", justifyContent: "center", opacity: this.state.lockAnim}}>
                   <View style={[styles.shadow, {alignItems: "center", justifyContent: "center", backgroundColor: "#63b2b5", margin: 20, borderRadius: 40, paddingVertical: 30}]}>
                     <View style={{marginBottom: 0}}>
-                      <Image source={require("../assets/mascot.png")} style={{width: 100, height: 100}} resizeMode={"contain"}/>
+                      <Image source={require("../assets/icon.png")} style={{width: 100, height: 100}} resizeMode={"contain"}/>
                     </View>
                     <Text style={[API.styles.h1, {color: "#fff", marginTop: 15}]}>{API.t("settings_locked_title")}</Text>
                     <Text style={[API.styles.pHome, {textAlign: "center", marginTop: 5}]}>{API.t("settings_locked_description")}</Text>

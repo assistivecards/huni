@@ -320,7 +320,6 @@ export default class Setting extends React.Component {
         <View style={{flex: 1, justifyContent: "center", alignItems: "center", flexDirection: "column", padding: 30}}>
           <Text style={[API.styles.h2, {color: "#fff", marginTop: 30, fontSize: 26, marginHorizontal: 0, textAlign: "center"}]}>{API.t("setup_congrats_title", this.state.name)}</Text>
           <Text style={[API.styles.pHome, {marginBottom: 35, marginHorizontal: 0, textAlign: "center"}]}>{API.t("setup_congrats_description")}</Text>
-          <Image source={require("../assets/leeloo_magic.png")} style={{width: 200, height: 300, padding: 10}} resizeMode={"contain"}/>
           {!this.state.creating &&
             <TouchableOpacity style={API.styles.whiteButton} onPress={() => this.createProfile()}>
               <Text style={{color: "#63b2b5", fontWeight: "bold", fontSize: 18}}>{API.t("button_start")}</Text>
