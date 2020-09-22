@@ -1,9 +1,7 @@
 import React from 'react';
 import { Text, View, StatusBar, TouchableOpacity, ActivityIndicator, Image, Linking, SafeAreaView } from 'react-native';
 import Navigator from './Navigator';
-import Switch from './layouts/Switch';
-import ProfileSetup from './layouts/ProfileSetup';
-import EmailSignIn from './layouts/EmailSignIn';
+import Setup from './layouts/Setup';
 import Browser from './layouts/Browser';
 
 import Svg, { Path, Line, Circle, Polyline, Rect } from 'react-native-svg';
@@ -38,7 +36,9 @@ export default class App extends React.Component {
         this.setState({screen: "login"});
       }
     }, 5000);
+
     this.checkIdentifier();
+
     ScreenOrientation.unlockAsync();
 
     API.event.on("refresh", (type) => {
@@ -48,63 +48,23 @@ export default class App extends React.Component {
     })
   }
 
-  async checkIdentifier(providedIdentifier){
-    let identifier = providedIdentifier;
-    if(!identifier){
-      identifier = await API.getIdentifier();
-    }
-
-    if(identifier != ""){
-      let user = await API.signIn(identifier);
-      console.log("Already exists: ", user.language);
-      if(user.language){
-        API.ramLanguage(user.language).then(res => {
-          this.setState({screen: "logged"});
-        });
-      }else{
-        API.ramLanguage(Localization.locale.substr(0,2)).then(res => {
-          this.setState({screen: "login"});
-        });
-      }
-    }else{
-      API.ramLanguage(Localization.locale.substr(0,2), 1).then(res => {
-        this.setState({screen: "login"});
-      });
-    }
+  checkIdentifier(){
+    // Check if user had boot the app earlier
   }
 
-  signInWithEmail(){
-    this.setState({screen: "email"});
-    API.event.on("authIdentifier", (identifier) => {
-      this.checkIdentifier(identifier);
-      API.setData("identifier", identifier);
-    });
+  setupComplete(param){
+    console.log("setup complete", param);
   }
-
-  setCurrentProfile(id){
-    if(id){
-      API.setCurrentProfile(id);
-      this.forceUpdate();
-
-    }else{
-      API.getCurrentProfile().then(profile => {
-        API.setCurrentProfile(profile.id);
-        this.forceUpdate();
-      })
-    }
-  }
-
 
   signInScreen(){
     return (
       <>
         <SafeAreaView style={{justifyContent: "center", alignItems: "center", flex: 1, backgroundColor: "#63b2b5"}}>
-          <View style={{ justifyContent: "center", alignItems: "center", flexDirection: "column", padding: 30, paddingBottom: 0, marginTop: 20}}>
-            <Text style={[API.styles.h1, {color: "#fff", marginTop: 0, marginHorizontal: 0, fontSize: 28, textAlign: "center"}]}>{API.t("setup_welcome_title1")}</Text>
-            <Text style={[API.styles.h1, {color: "#fff", marginTop: 0, marginHorizontal: 0, fontSize: 42, textAlign: "center", marginBottom: 15}]}>{API.t("setup_welcome_title2")}</Text>
+          <Image source={require("./assets/title_screen.png")} style={{width: 200, height: 200}}/>
+
+          <View style={{ justifyContent: "center", alignItems: "center", flexDirection: "column", padding: 20}}>
             <Text style={[API.styles.pHome, {marginBottom: 0, marginHorizontal: 0, textAlign: "center"}]}>{API.t("setup_welcome_description")}</Text>
           </View>
-
           {this.renderSignInButtons()}
           <TouchableOpacity onPress={() => this.setState({screen: "policy"})} style={{marginTop: 15, marginBottom: 30}}>
             <Text style={[API.styles.pHome, {textAlign: "center"}]}>
@@ -127,20 +87,20 @@ export default class App extends React.Component {
   }
 
   renderSignInButtons(){
-      return(
-        <>
-          <TouchableOpacity
-            style={{ width: 240, height: 46, alignItems: "center", borderRadius: 25, backgroundColor: "#fff",  justifyContent: "center", flexDirection: "row"}}
-            onPress={this.signInWithEmail.bind(this)}>
-            <Svg height={18} width={18} viewBox="0 0 24 24" style={{marginRight: 5}} strokeWidth="2" stroke="#333" fill="none" strokeLinecap="round" strokeLinejoin="round">
-              <Path d="M0 0h24v24H0z" stroke="none"/>
-              <Rect height="14" width="18" rx="2" x="3" y="5"/>
-              <Polyline points="3 7 12 13 21 7"/>
-            </Svg>
-            <Text style={{fontSize: 19, fontWeight: "500"}}>Sign in with Email</Text>
-          </TouchableOpacity>
-        </>
-      );
+    return(
+      <>
+        <TouchableOpacity
+          style={{ width: 240, height: 46, alignItems: "center", borderRadius: 25, backgroundColor: "#fff",  justifyContent: "center", flexDirection: "row"}}
+          onPress={() => { this.setState({screen: "logged"}) }}>
+          <Svg height={24} width={24} viewBox="0 0 24 24" style={{marginRight: 5}} strokeWidth="2" stroke="#333" fill="none" strokeLinecap="round" strokeLinejoin="round">
+            <Path d="M0 0h24v24H0z" stroke="none"/>
+            <Path d="M20 12v6a2 2 0 0 1 -2 2h-12a2 2 0 0 1 -2 -2v-12a2 2 0 0 1 2 -2h9"/>
+            <Polyline points="9 11 12 14 20 6"/>
+          </Svg>
+          <Text style={{fontSize: 19, fontWeight: "500"}}>Get Started</Text>
+        </TouchableOpacity>
+      </>
+    );
   }
 
   renderLoading(type){
@@ -164,17 +124,10 @@ export default class App extends React.Component {
 
     if(screen == "login"){
       return this.signInScreen();
-    }else if(screen == "policy"
-  ){
+    }else if(screen == "policy"){
       return (<Browser link={"https://dreamoriented.org/privacypolicy/"} back={() => this.setState({screen: "login"})}/>);
-    }else if(screen == "email"){
-      return (<EmailSignIn back={() => this.setState({screen: "login"})}/>);
     }else if(screen == "logged"){
-      if(API.user.active_profile == "noprofile"){
-        return (<ProfileSetup done={this.setCurrentProfile.bind(this)}/>);
-      }else if(API.user.active_profile == "multiple"){
-        return (<Switch onChoose={this.setCurrentProfile.bind(this)}/>);
-      }else if(API.user.active_profile){
+      if(API.user){
         if(this.state.premium == "determining"){
           return this.renderLoading("premium");
         }else{
@@ -186,7 +139,7 @@ export default class App extends React.Component {
           );
         }
       }else{
-        return (<ProfileSetup done={this.setCurrentProfile.bind(this)}/>);
+        return (<Setup done={this.setupComplete.bind(this)}/>);
       }
 
     }else if(screen == "loading"){

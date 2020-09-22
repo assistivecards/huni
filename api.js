@@ -15,13 +15,12 @@ import { CacheManager } from "react-native-expo-image-cache";
 import Constants from 'expo-constants';
 import NetInfo from '@react-native-community/netinfo';
 
-import makeid from './js/makeid';
 import Event from './js/event';
+import makeid from './js/makeid';
 import styles from './js/styles';
-import themes from './js/themes';
+import config from './js/config';
 
-const fallbackUIText = require("./data/interface/en.json");
-
+const APP = require("./app.json");
 // For test cases
 const _DEVELOPMENT = false;
 
@@ -31,22 +30,21 @@ const _DEVUSERIDENTIFIER = "109677539152659927717";
 const _DEVLOCALE = "en-US";
 const _ISPREMIUM = false;
 
-const API_ENDPOINT = "https://leeloo.dreamoriented.org/";
-const ASSET_ENDPOINT = "https://api.assistivecards.com/";
-const ANALYTICS_KEY = 'UA-110111146-1';
-const ASSET_VERSION = 212;
+const enUI = require("./interface/en.json");
+
+const ANALYTICS_KEY = APP.analyticsKey;
+const API_ENDPOINT = APP.apiEndpoint;
+const ASSET_ENDPOINT = APP.assetEndpoint;
+const ASSET_VERSION = APP.assetVersion;
 const RTL = ["ar","ur","he"];
 
-let storage;
-
-storage = new Storage({
+let storage = new Storage({
 	size: 1000,
 	storageBackend: AsyncStorage,
 	defaultExpires: null,
 	enableCache: true,
 	sync: {}
 });
-
 
 class Api {
   constructor(){
@@ -55,25 +53,20 @@ class Api {
 			CacheManager.clearCache();
 		}
 		this.cards = {};
-		this.uitext = {en: fallbackUIText};
+		this.uitext = {en: enUI};
 		this.searchArray = [];
 		this.development = _DEVELOPMENT;
 		this.styles = styles;
-		if(_DEVELOPMENT){
-			this.analytics = new Analytics("DEVELOPMENT", {slug: "leeloo", name: "Leeloo", version: "2.0.3"});
-		}else{
-			this.analytics = new Analytics(ANALYTICS_KEY, {slug: "leeloo", name: "Leeloo", version: "2.0.3"});
-		}
+		this.config = config;
+		this.event = Event;
+		this.language = "en";
+		this.analytics = new Analytics(_DEVELOPMENT ? "DEVELOPMENT" : ANALYTICS_KEY, {slug: APP.name, name: APP.displayName, version: APP.expo.version});
 		this.isTablet = false;
 		this._checkIfTablet();
 
-		this.config = {
-			theme: themes.light
-		}
 		this.version = ASSET_VERSION;
 		this.assetEndpoint = ASSET_ENDPOINT;
 
-		this.event = Event;
 		if(_DEVELOPMENT){
 			this.isOnline = _NETWORK_STATUS;
 		}else{
@@ -81,7 +74,6 @@ class Api {
 		}
 
 		this.locked = true;
-		this.activeProfileId = null;
 		this.premium = "determining";
 		this.premiumPlans = [];
 
@@ -89,7 +81,6 @@ class Api {
 		if(!_DEVELOPMENT){
 			this._listenNetwork();
 		}
-
 		this._initSubscriptions();
   }
 
@@ -123,6 +114,10 @@ class Api {
 		if(_DEVELOPMENT){
 			return _ISPREMIUM;
 		}
+		if(this.user.premium == "lifetime"){
+			return true;
+		}
+
 		if(this.premium == "lifetime" || this.premium == "yearly" || this.premium == "monthly"){
 			return true;
 		}else{
@@ -170,10 +165,11 @@ class Api {
 	      experienceId,
 	    });
 
-	    console.log(expoPushToken);
+		  let token = expoPushToken.data;
+			console.log(token);
 
 			if(token != this.user.notificationToken){
-				await this.update(["notificationToken"], [expoPushToken.data]);
+				await this.update(["notificationToken"], [token]);
 			}
 			return token;
 
@@ -183,294 +179,9 @@ class Api {
     }
   }
 
-	async signIn(identifier, type, user){
-    var url = API_ENDPOINT + "user/";
-    var formData = new FormData();
-		formData.append('identifier', identifier);
-
-		let localIdentifier = await this.getData("identifier");
-		let localUserString = await this.getData("user");
-		let registerAgain = false;
-		let localUser;
-		if(localUserString){
-			localUser = JSON.parse(localUserString);
-			if(localUser.identifier){
-				if(!localUser.language){
-					registerAgain = true;
-				}
-			}
-		}
-
-		if(localIdentifier != identifier || registerAgain){
-
-			let deviceLanguage = Localization.locale.substr(0,2);
-			let bestTTS = await this.getBestAvailableVoiceDriver(deviceLanguage);
-			formData.append('type', type);
-			formData.append('language', Localization.locale.substr(0,2));
-			formData.append('voice', bestTTS.identifier);
-			formData.append('os', Platform.OS);
-			formData.append('modelName', Device.modelName);
-			formData.append('timeline', Localization.timezone);
-
-			if(type == "apple"){
-				formData.append('email', user.email);
-				formData.append('name', user.fullName.givenName + " " +user.fullName.familyName);
-
-			}else if(type == "google"){
-				formData.append('email', user.email);
-				formData.append('name', user.displayName);
-				formData.append('avatar', user.photoURL);
-			}else if(type == "email"){
-				formData.append('email', user.email);
-			}
-		}
-
-		let userResponse;
-
-		try {
-			userResponse = await fetch(url, { method: 'POST', body: formData })
-	    .then(res => res.json());
-
-			userResponse.profiles.forEach((profile, i) => {
-				userResponse.profiles[i].packs = JSON.parse(profile.packs);
-			});
-
-			await this.setData("user", JSON.stringify(userResponse));
-		} catch(error){
-			console.log("Offline, Falling back to cached userdata!", error);
-			let userResponseString = await this.getData("user");
-			if(userResponseString){
-				userResponse = JSON.parse(userResponseString);
-			}
-		}
-
-		this.user = userResponse;
-		if(registerAgain){
-			await this.ramLanguage(Localization.locale.substr(0, 2));
-		}else{
-			if(this.user.language){
-				await this.ramLanguage(this.user.language);
-			}
-		}
-		this.user.isRTL = ["ar","ur","he"].includes(this.user.language);
-		if(this.user.premium == "gift"){
-			this.isGift = true;
-		}
-		this.user.active_profile = await this.getCurrentProfile();
-		return userResponse;
-	}
-
-  signout(){
-    Alert.alert(
-      this.t("alert_signout_title"),
-      this.t("alert_signout_description"),
-      [
-        {
-          text: this.t("alert_cancel"),
-          onPress: () => console.log("Cancel Pressed"),
-          style: "cancel"
-        },
-        { text: this.t("alert_ok"), onPress: () => {
-					AsyncStorage.clear();
-					this.event.emit("refresh", "signout");
-				} }
-      ],
-      { cancelable: true }
-    );
-  }
-
 	async update(fields, values){
-		if(this.user.identifier){
-	    var url = API_ENDPOINT + "update/";
-	    var formData = new FormData();
-			formData.append('identifier', this.user.identifier);
-
-			for (var i = 0; i < fields.length; i++) {
-				formData.append(fields[i], values[i]);
-			}
-
-			console.log(formData);
-
-			try {
-				let userResponse = await fetch(url, { method: 'POST', body: formData })
-		    .then(res => res.json());
-				await this.setData("user", JSON.stringify(userResponse));
-
-				console.log(userResponse);
-
-				userResponse.profiles.forEach((profile, i) => {
-					userResponse.profiles[i].packs = JSON.parse(profile.packs);
-				});
-				this.user = userResponse;
-				await this.ramLanguage(this.user.language);
-				if(this.user.premium == "gift"){
-					this.isGift = true;
-				}
-				this.user.isRTL = RTL.includes(this.user.language);
-				this.user.active_profile = await this.getCurrentProfile();
-			} catch(error){
-				alert("Please check your internet connectivity!");
-			}
-
-			this.event.emit("refresh");
-
-			return true;
-		}
+		// fill this in
 	}
-
-	async newProfile(profile){
-		if(this.user.identifier && profile.name){
-	    var url = API_ENDPOINT + "profile/";
-	    var formData = new FormData();
-			formData.append('identifier', this.user.identifier);
-			formData.append('name', profile.name);
-			formData.append('avatar', profile.avatar);
-			formData.append('packs', `["conversation","people","feelings","food","animals","school","activities","shapes","colors","clothes"]`);
-
-			try {
-				let newProfileResponse = await fetch(url, { method: 'POST', body: formData })
-		    .then(res => res.json());
-
-				newProfileResponse.packs = JSON.parse(newProfileResponse.packs);
-
-				this.user.profiles.push(newProfileResponse);
-
-				await this.setData("user", JSON.stringify(this.user));
-
-				this.user.active_profile = await this.getCurrentProfile();
-			} catch(error){
-				console.log("Please check your internet connectivity!", error);
-				alert("Please check your internet connectivity!");
-			}
-
-			this.event.emit("refresh");
-
-			return true;
-		}
-	}
-
-	async updateProfile(profileId, fields, values){
-		if(this.user.identifier && profileId){
-	    var url = API_ENDPOINT + "profile/update/";
-	    var formData = new FormData();
-			formData.append('id', profileId);
-			formData.append('identifier', this.user.identifier);
-
-			for (var i = 0; i < fields.length; i++) {
-				formData.append(fields[i], values[i]);
-			}
-
-			try {
-				let profileResponse = await fetch(url, { method: 'POST', body: formData })
-		    .then(res => res.json());
-
-				profileResponse.packs = JSON.parse(profileResponse.packs);
-
-				for (var i in this.user.profiles) {
-					if (this.user.profiles[i].id == profileId) {
-						this.user.profiles[i] = profileResponse;
-						break;
-					}
-				}
-
-				await this.setData("user", JSON.stringify(this.user));
-
-				this.user.active_profile = await this.getCurrentProfile();
-			} catch(error){
-				console.log(error);
-				alert("Please check your internet connectivity!");
-			}
-
-			this.event.emit("refresh");
-
-			return true;
-		}
-	}
-
-	async removeProfile(profileId){
-		if(this.user.identifier && profileId){
-	    var url = API_ENDPOINT + "profile/remove/";
-	    var formData = new FormData();
-			formData.append('id', profileId);
-			formData.append('identifier', this.user.identifier);
-
-			try {
-				let profileResponse = await fetch(url, { method: 'POST', body: formData })
-		    .then(res => res.json());
-				console.log(profileResponse);
-				if(profileResponse == "deleted"){
-
-					this.user.profiles = this.user.profiles.filter(profile => profile.id != profileId);
-					await this.setData("user", JSON.stringify(this.user));
-
-				}else{
-					alert("A problem occured while trying to remove profile.");
-				}
-				this.user.active_profile = await this.getCurrentProfile();
-			} catch(error){
-				alert("Please check your internet connectivity!");
-			}
-
-			this.event.emit("refresh");
-
-			return true;
-		}
-	}
-
-	async getCurrentProfile(){
-		if(this.user){
-			let profiles = this.user.profiles;
-			if(this.activeProfileId){
-				return profiles.find(profile => profile.id == this.activeProfileId);
-			}else{
-				if(profiles.length == 1){
-					let profile = profiles[0];
-					this.activeProfileId = profile.id;
-					return profile;
-				}else if(profiles.length == 0){
-					return "noprofile";
-				}else{
-					return "multiple";
-				}
-			}
-		}else{
-			return "nouser";
-		}
-	}
-
-	async setCurrentProfile(profileId){
-		if(this.user){
-			let profiles = this.user.profiles;
-			this.activeProfileId = profileId;
-			this.user.active_profile = profiles.find(profile => profile.id == profileId);
-			this.event.emit("refresh");
-		}
-	}
-
-
-	async getAuthIdentifier(email, pass){
-		if(email && pass){
-	    var url = API_ENDPOINT + "auth/";
-	    var formData = new FormData();
-			formData.append('email', email);
-			formData.append('pass', pass);
-
-			let identifier = null;
-
-			try {
-				let authIdentifierResponse = await fetch(url, { method: 'POST', body: formData })
-		    .then(res => res.json());
-
-				identifier = authIdentifierResponse.identifier;
-			} catch(error){
-				console.log("Please check your internet connectivity!", error);
-				alert("Please check your internet connectivity!");
-			}
-
-			return identifier;
-		}
-	}
-
 
 	speak(text, speed){
 		//text = this.phrase()
@@ -481,7 +192,7 @@ class Api {
 		if(this.user.voice != "unsupported"){
 			Speech.speak(text, {
 				voice: this.user.voice,
-				language: this.user.language,
+				language: this.language,
 				pitch: 1,
 				rate: rate
 			});
@@ -541,7 +252,7 @@ class Api {
 	}
 
 	async getPacks(force){
-		var url = ASSET_ENDPOINT + "packs/" + this.user.language + "/metadata.json?v="+this.version;
+		var url = ASSET_ENDPOINT + "packs/" + this.language + "/metadata.json?v="+this.version;
 
 		if(this.packs && force == null){
 			console.log("pulling from ram");
@@ -636,6 +347,7 @@ class Api {
       const history = await InAppPurchases.connectAsync();
 			if (history.responseCode === InAppPurchases.IAPResponseCode.OK) {
 			  // get to know if user is premium or npt.
+				console.log(history.results);
 				let lifetime = history.results.filter(res => res.productId == "lifetime")[0];
 				if(lifetime){
 					this.premium = "lifetime";
@@ -653,34 +365,39 @@ class Api {
 
 				this.getPlans(); // async fetch the plans for later use.
 
-	      InAppPurchases.setPurchaseListener(({ responseCode, results, errorCode }) => {
-	        // Purchase was successful
-	        if (responseCode === InAppPurchases.IAPResponseCode.OK) {
-	          results.forEach(purchase => {
-	            if (!purchase.acknowledged) {
-	              alert(`Successfully purchased ${purchase.productId}`);
-	              // Process transaction here and unlock content...
+				InAppPurchases.setPurchaseListener(({ responseCode, results, errorCode }) => {
+				  // Purchase was successful
+				  if (responseCode === InAppPurchases.IAPResponseCode.OK) {
+				    results.forEach(async (purchase) => {
+				      if (!purchase.acknowledged) {
+				        console.log(`Successfully purchased ${purchase.productId}`);
+				        // Process transaction here and unlock content...
+
 								this.premium = purchase.productId;
+
+								let consume = (purchase.productId == "lifetime");
+								console.log("Should I consume?", consume);
+				        // Then when you're done
+				        let resfinish = await InAppPurchases.finishTransactionAsync(purchase, consume);
+								alert(`Successfully purchased ${purchase.productId}`);
 								this.event.emit("premium");
 								this.event.emit("premiumPurchase", this.premium);
 								this.setData("premium", this.premium);
 								this.event.emit("refresh");
+				      }
+				    });
+				  }
 
-	              // Then when you're done
-	              InAppPurchases.finishTransactionAsync(purchase, true);
-	            }
-	          });
-	        }
+				  // Else find out what went wrong
+				  if (responseCode === InAppPurchases.IAPResponseCode.USER_CANCELED) {
+				    console.log('User canceled the transaction');
+				  } else if (responseCode === InAppPurchases.IAPResponseCode.DEFERRED) {
+				    console.log('User does not have permissions to buy but requested parental approval (iOS only)');
+				  } else {
+				    console.warn(`Something went wrong with the purchase. Received errorCode ${responseCode}`);
+				  }
+				});
 
-	        // Else find out what went wrong
-	        if (responseCode === InAppPurchases.IAPResponseCode.USER_CANCELED) {
-	          console.log('User canceled the transaction');
-	        } else if (responseCode === InAppPurchases.IAPResponseCode.DEFERRED) {
-	          console.log('User does not have permissions to buy but requested parental approval (iOS only)');
-	        } else {
-	          console.warn(`Something went wrong with the purchase. Received errorCode ${responseCode}`);
-	        }
-	      });
 			}else{
 				console.log("#### Appstore status is not ok.");
 				this.premium = await this.getData("premium");
@@ -730,7 +447,7 @@ class Api {
 	}
 
 	async getCards(slug, force){
-		var url = ASSET_ENDPOINT + "packs/" + this.user.language + "/"+ slug +".json?v="+this.version;
+		var url = ASSET_ENDPOINT + "packs/" + this.language + "/"+ slug +".json?v="+this.version;
 
 		if(this.cards[slug] && force == null){
 			console.log("pulling from ram", "cardsFor", slug);
@@ -774,35 +491,10 @@ class Api {
 		return await this.getData("identifier");
 	}
 
-	async ramLanguage(langCode, force){
-
-		var url = ASSET_ENDPOINT + "interface/" + langCode +".json?v="+this.version;
-		if(this.uitext[langCode] && force == null){
-			console.log("pulling from ram", "language", langCode);
-			return this.uitext[langCode];
-		}else{
-			let uiLangResponse;
-			try {
-				uiLangResponse = await fetch(url, {cache: "no-cache"})
-				.then(res => res.json());
-				this.setData("lang:"+langCode, JSON.stringify(uiLangResponse));
-
-			} catch(error){
-				console.log("Offline, Falling back to cached ui lang!", error);
-				let uiLangResponseString = await this.getData("lang:"+langCode);
-				if(uiLangResponseString){
-					uiLangResponse = JSON.parse(uiLangResponseString);
-				}
-			}
-			this.uitext[langCode] = uiLangResponse;
-			return uiLangResponse;
-		}
-	}
-
 	t(UITextIdentifier, variableArray){
 		let lang = "en";
 		if(this.user){
-			lang = this.user.language
+			lang = this.language
 		}else{
 			lang = Localization.locale.substr(0, 2);
 		}

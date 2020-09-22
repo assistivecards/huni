@@ -4,7 +4,7 @@ import * as Localization from 'expo-localization';
 import * as Speech from 'expo-speech';
 
 import API from '../api';
-import Languages from '../data/languages.json';
+import Languages from '../languages.json';
 import TopBar from '../components/TopBar'
 
 export default class Setting extends React.Component {

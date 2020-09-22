@@ -1,6 +1,6 @@
 import { StyleSheet } from 'react-native';
 
-import themes from './themes'
+import config from './config'
 
 const styles = StyleSheet.create({
   p: {
@@ -20,13 +20,13 @@ const styles = StyleSheet.create({
     marginHorizontal: 30
   },
   b: {
-    color: themes.light.pFontColor,
+    color: config.pFontColor,
     fontWeight: "bold",
     fontSize: 14,
     lineHeight: 21
   },
   bBig: {
-    color: themes.light.pFontColor,
+    color: config.pFontColor,
     fontWeight: "bold",
     fontSize: 16,
     lineHeight: 21,
@@ -66,7 +66,7 @@ const styles = StyleSheet.create({
     fontWeight: "bold"
   },
   sub: {
-    color: themes.light.hFontColor,
+    color: config.hFontColor,
     fontWeight: "200",
     opacity: 0.8,
     fontSize: 16,
@@ -86,14 +86,14 @@ const styles = StyleSheet.create({
   },
   subUp: {
     fontSize: 14,
-    color: themes.light.hFontColor,
+    color: config.hFontColor,
     opacity: 0.6,
     lineHeight: 20,
     marginHorizontal: 20,
   },
   sub15: {
     fontSize: 15,
-    color: themes.light.hFontColor,
+    color: config.hFontColor,
     opacity: 0.6,
     lineHeight: 23,
     marginBottom: 10,
@@ -103,7 +103,7 @@ const styles = StyleSheet.create({
     marginVertical: 10,
     borderBottomWidth: 1,
     borderBottomColor: 1,
-    borderBottomColor: themes.light.mainBorderColor
+    borderBottomColor: config.mainBorderColor
   },
   br: {
     marginVertical: 10
