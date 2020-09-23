@@ -78,13 +78,18 @@
 	"setup_your_name": "Your Name",
 
 	"setup_avatar_title": "Choose an avatar!",
-	"setup_avatar_description": "Choose an avatar for the person who is going to use this AAC application.",
+	"setup_avatar_description": "Choose an avatar for the person who is going to use this application.",
 	"setup_label_boy": "Boy",
 	"setup_label_girl": "Girl",
 	"setup_label_mixed": "Mixed",
 
+	"setup_notification_title": "Practice Reminder",
+	"setup_notification_description": "If you want us to send you notifications to remind to to practice, you can enable notifications!",
+	"setup_notification_badge_title": "Come back and practice! 🦙",
+	"setup_notification_badge_description": "Regular practice is very important for learning, let's start another session.",
+
 	"setup_congrats_title": "Congratulations, $1!",
-	"setup_congrats_description": "Your user profile has been completed. You can start using Leeloo AAC app",
+	"setup_congrats_description": "Your user profile has been completed. You can start using your app",
 
 	"setup_welcome_description": "Thank you for downloading Huni, let's get started with setting up your app to your needs.",
 
@@ -121,6 +126,7 @@
 	"button_using": "USING",
 	"button_add": "ADD",
 	"button_remove": "REMOVE",
+	"button_get_started": "Get Started",
 	"alert_yourDeviceDoesNotSupportTTS": "Your device doesn't support voice driver for this language. In order to use TTS capabilities, you need to install a voice driver. You can try 'Google TTS' app to install and manage drivers!",
 	"alert_ok": "OK",
 	"alert_cancel": "Cancel"

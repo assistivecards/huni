@@ -5,7 +5,9 @@
   "apiEndpoint": "https://leeloo.dreamoriented.org/",
   "assetEndpoint": "https://api.assistivecards.com/",
   "assetVersion": 215,
-
+  "config": {
+    "backgroundColor": "#63b2b5"
+  },
   "expo": {
     "name": "huni",
     "slug": "huni",

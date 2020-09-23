@@ -7,9 +7,6 @@ import { Image as CachedImage } from "react-native-expo-image-cache";
 import * as ScreenOrientation from 'expo-screen-orientation';
 import Svg, { Line, Path, Circle } from 'react-native-svg';
 
-
-import Search from '../components/Search'
-import SearchResults from '../components/SearchResults'
 import TouchableScale from '../components/touchable-scale'
 
 export default class Setting extends React.Component {
@@ -33,7 +30,7 @@ export default class Setting extends React.Component {
   componentDidMount(){
     API.hit("Home");
     API.event.on("refresh", this._refreshHandler)
-    this.getPacks(API.user.active_profile.packs);
+    this.getPacks();
     this.orientationSubscription = ScreenOrientation.addOrientationChangeListener(this._orientationChanged.bind(this));
 
     API.event.on("announce", this._announcer.bind(this))
@@ -49,7 +46,7 @@ export default class Setting extends React.Component {
 
   _refreshHandler = () => {
     this.forceUpdate();
-    this.getPacks(API.user.active_profile.packs, true);
+    this.getPacks(true);
   };
 
   _announcer = (card) => {
@@ -107,32 +104,13 @@ export default class Setting extends React.Component {
     }else{
       return (
         <View style={{flex: 1, justifyContent: "center", alignItems: "center", height: 300}}>
-          <ActivityIndicator color={"#63b2b5"}/>
+          <ActivityIndicator color={API.config.backgroundColor}/>
         </View>
       )
     }
   }
 
   render() {
-    let headerHeight = this.state.searchToggleAnim.interpolate({
-    	inputRange: [0, 1],
-    	outputRange: [60, 0]
-    });
-
-    let headerOpacity = this.state.searchToggleAnim.interpolate({
-    	inputRange: [0, 1],
-    	outputRange: [1, 0]
-    });
-
-    let boardOpacity = this.state.searchToggleAnim.interpolate({
-    	inputRange: [0, 1],
-    	outputRange: [1, 0]
-    });
-
-    let boardTranslate = this.state.searchToggleAnim.interpolate({
-    	inputRange: [0, 1],
-    	outputRange: [0, 400]
-    });
 
     return(
       <View style={{flex: 1}}>
@@ -168,7 +146,7 @@ const styles = StyleSheet.create({
     height: "100%"
   },
   header: {
-    backgroundColor: "#63b2b5"
+    backgroundColor: API.config.backgroundColor
   },
   avatar: {
     marginHorizontal: 30, padding: 2, backgroundColor: "#a5d5ff", borderRadius: 40, overflow: "hidden",

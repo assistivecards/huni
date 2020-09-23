@@ -7,7 +7,6 @@ import * as ScreenOrientation from 'expo-screen-orientation';
 import API from '../api'
 
 import TopBar from '../components/TopBar'
-import Profiles from '../components/Profiles'
 import Promo from '../components/Promo'
 
 export default class App extends React.Component {
@@ -114,8 +113,8 @@ export default class App extends React.Component {
 
     return (
       <>
-        <TopBar back={() => this.props.navigation.pop()} backgroundColor={"#63b2b5"} lock={"locked"} lockPress={this.lockPress.bind(this)}/>
-        <ScrollView style={{flex: 1, backgroundColor: "#63b2b5"}}>
+        <TopBar back={() => this.props.navigation.pop()} backgroundColor={API.config.backgroundColor} lock={"locked"} lockPress={this.lockPress.bind(this)}/>
+        <ScrollView style={{flex: 1, backgroundColor: API.config.backgroundColor}}>
           <View style={styles.content}>
             <View style={styles.userSettings}>
               <TouchableOpacity style={[styles.selectionItem, {flexDirection: API.user.isRTL ? "row-reverse" : "row"}]} onPress={() => this.openAccountSettings()}>
@@ -226,18 +225,18 @@ export default class App extends React.Component {
         {
           this.state.lock &&
           <View style={{width: "100%", height: "100%", position: "absolute", top: 0, left: 0}}>
-            <TopBar back={() => this.props.navigation.pop()} backgroundColor={"#63b2b5"}/>
+            <TopBar back={() => this.props.navigation.pop()} backgroundColor={API.config.backgroundColor}/>
             <Animated.View style={{backgroundColor: lockBG, flex: 1, alignItems: "center", justifyContent: "center"}}>
               {
                 this.state.lockByUser &&
                   <View style={{width: 60, height: 60, backgroundColor: "#fff", alignItems: "center", justifyContent: "center", borderRadius: 30}}>
-                    <ActivityIndicator color={"#63b2b5"}/>
+                    <ActivityIndicator color={API.config.backgroundColor}/>
                   </View>
               }
               {
                 !this.state.lockByUser &&
                 <Animated.View style={{flex: 1, alignItems: "center", justifyContent: "center", opacity: this.state.lockAnim}}>
-                  <View style={[styles.shadow, {alignItems: "center", justifyContent: "center", backgroundColor: "#63b2b5", margin: 20, borderRadius: 40, paddingVertical: 30}]}>
+                  <View style={[styles.shadow, {alignItems: "center", justifyContent: "center", backgroundColor: API.config.backgroundColor, margin: 20, borderRadius: 40, paddingVertical: 30}]}>
                     <View style={{marginBottom: 0}}>
                       <Image source={require("../assets/icon.png")} style={{width: 100, height: 100}} resizeMode={"contain"}/>
                     </View>
@@ -245,7 +244,7 @@ export default class App extends React.Component {
                     <Text style={[API.styles.pHome, {textAlign: "center", marginTop: 5}]}>{API.t("settings_locked_description")}</Text>
                     <View style={{flexDirection: "row", justifyContent: "center", marginTop: 20}}>
                       <View style={{width: 50, height: 50, backgroundColor: "#fff", justifyContent: "center", alignItems: "center", borderRadius: 25}}>
-                        <Svg width={30} height={30} viewBox="0 0 24 24" strokeLinecap="round" strokeWidth="2" stroke="#63b2b5" fill="none">
+                        <Svg width={30} height={30} viewBox="0 0 24 24" strokeLinecap="round" strokeWidth="2" stroke={API.config.backgroundColor} fill="none">
                           <Path stroke="none" d="M0 0h24v24H0z"/>
                           <Rect x="5" y="11" width="14" height="10" rx="2" />
                           <Circle cx="12" cy="16" r="1" />
@@ -257,7 +256,7 @@ export default class App extends React.Component {
                         {...this.state.panResponder.panHandlers}
                         style={this.state.pan.getLayout()}>
                         <View style={{width: 50, height: 50, backgroundColor: "#fff", justifyContent: "center", alignItems: "center", borderRadius: 25}}>
-                          <Svg width={30} height={30} viewBox="0 0 24 24" strokeLinecap="round" strokeWidth="2" stroke="#63b2b5" fill="none">
+                          <Svg width={30} height={30} viewBox="0 0 24 24" strokeLinecap="round" strokeWidth="2" stroke={API.config.backgroundColor} fill="none">
                             <Path stroke="none" d="M0 0h24v24H0z"/>
                             <Circle cx="8" cy="15" r="4" />
                             <Line x1="10.85" y1="12.15" x2="19" y2="4" />

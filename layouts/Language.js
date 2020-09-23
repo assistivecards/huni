@@ -58,8 +58,8 @@ export default class Setting extends React.Component {
   render() {
     return(
       <>
-        <TopBar back={() => this.props.navigation.pop()} backgroundColor={"#63b2b5"} rightButtonRender={true} rightButtonActive={this.didChange()} rightButtonPress={() => this.save()}/>
-        <ScrollView style={{flex: 1, backgroundColor: "#63b2b5"}}>
+        <TopBar back={() => this.props.navigation.pop()} backgroundColor={API.config.backgroundColor} rightButtonRender={true} rightButtonActive={this.didChange()} rightButtonPress={() => this.save()}/>
+        <ScrollView style={{flex: 1, backgroundColor: API.config.backgroundColor}}>
           <View style={[styles.head, {alignItems: API.user.isRTL ? "flex-end" : "flex-start"}]}>
             <Text style={API.styles.h1}>{API.t("settings_selection_language")}</Text>
             <Text style={API.styles.pHome}>{API.t("settings_language_description")}</Text>
@@ -76,7 +76,7 @@ export default class Setting extends React.Component {
                         <Text style={[API.styles.h3, {marginVertical: 0}]}>{lang.title}</Text>
                         <Text style={API.styles.p}>{lang.native}</Text>
                       </View>
-                      <View style={[styles.pointer, {backgroundColor: this.state.language == lang.code ? "#63b2b5": "#eee"}]}></View>
+                      <View style={[styles.pointer, {backgroundColor: this.state.language == lang.code ? API.config.backgroundColor: "#eee"}]}></View>
                     </TouchableOpacity>
                   )
                 })}
@@ -92,7 +92,7 @@ export default class Setting extends React.Component {
                       <Text style={[API.styles.h3, {marginVertical: 0}]}>{lang.title}</Text>
                       <Text style={API.styles.p}>{lang.native}</Text>
                     </View>
-                    <View style={[styles.pointer, {backgroundColor: this.state.language == lang.code ? "#63b2b5": "#eee"}]}></View>
+                    <View style={[styles.pointer, {backgroundColor: this.state.language == lang.code ? API.config.backgroundColor: "#eee"}]}></View>
                   </TouchableOpacity>
                 )
               })}
@@ -107,7 +107,7 @@ export default class Setting extends React.Component {
 
 const styles = StyleSheet.create({
   head: {
-    backgroundColor: "#63b2b5",
+    backgroundColor: API.config.backgroundColor,
     marginBottom: 10,
     paddingVertical: 10,
     paddingBottom: 5

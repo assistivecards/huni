@@ -43,8 +43,8 @@ export default class Setting extends React.Component {
     let hap = this.state.haptic;
     return(
       <>
-        <TopBar back={() => this.props.navigation.pop()} backgroundColor={"#63b2b5"} rightButtonRender={true} rightButtonActive={this.didChange()} rightButtonPress={() => this.save()}/>
-        <ScrollView style={{flex: 1, backgroundColor: "#63b2b5"}}>
+        <TopBar back={() => this.props.navigation.pop()} backgroundColor={API.config.backgroundColor} rightButtonRender={true} rightButtonActive={this.didChange()} rightButtonPress={() => this.save()}/>
+        <ScrollView style={{flex: 1, backgroundColor: API.config.backgroundColor}}>
           <View style={[styles.head, {alignItems: API.user.isRTL ? "flex-end" : "flex-start"}]}>
             <Text style={API.styles.h1}>{API.t("settings_selection_accessibility")}</Text>
             <Text style={API.styles.pHome}>{API.t("settings_accessibility_description")}</Text>
@@ -59,7 +59,7 @@ export default class Setting extends React.Component {
                   <Text style={[API.styles.h3, {marginVertical: 0}]}>{API.t("settings_accessibility_sensory_haptic")}</Text>
                   <Text style={API.styles.p}>{API.t("settings_accessibility_sensory_haptic_description")}</Text>
                 </View>
-                <View style={[styles.pointerMulti, {backgroundColor: hap == "1" ? "#63b2b5": "#eee"}]}></View>
+                <View style={[styles.pointerMulti, {backgroundColor: hap == "1" ? API.config.backgroundColor: "#eee"}]}></View>
               </TouchableOpacity>
 
             </View>
@@ -73,7 +73,7 @@ export default class Setting extends React.Component {
 
 const styles = StyleSheet.create({
   head: {
-    backgroundColor: "#63b2b5",
+    backgroundColor: API.config.backgroundColor,
     marginBottom: 10,
     paddingVertical: 10,
     paddingBottom: 5

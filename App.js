@@ -35,7 +35,7 @@ export default class App extends React.Component {
       if(this.state.screen == "loading"){
         this.setState({screen: "login"});
       }
-    }, 5000);
+    }, 2000);
 
     this.checkIdentifier();
 
@@ -44,12 +44,22 @@ export default class App extends React.Component {
     API.event.on("refresh", (type) => {
       if(type == "signout"){
         this.setState({screen: "login"});
+      }else if(type == "setup"){
+        this.checkIdentifier();
       }
     })
   }
 
   checkIdentifier(){
-    // Check if user had boot the app earlier
+		API.getData("user").then(user => {
+			if(user){
+				API.user = JSON.parse(user);
+        this.setState({screen: "logged"});
+      }else{
+        console.log("You need to setup your app!!");
+        this.setState({screen: "login"});
+      }
+		});
   }
 
   setupComplete(param){
@@ -59,7 +69,7 @@ export default class App extends React.Component {
   signInScreen(){
     return (
       <>
-        <SafeAreaView style={{justifyContent: "center", alignItems: "center", flex: 1, backgroundColor: "#63b2b5"}}>
+        <SafeAreaView style={{justifyContent: "center", alignItems: "center", flex: 1, backgroundColor: API.config.backgroundColor}}>
           <Image source={require("./assets/title_screen.png")} style={{width: 200, height: 200}}/>
 
           <View style={{ justifyContent: "center", alignItems: "center", flexDirection: "column", padding: 20}}>
@@ -75,7 +85,7 @@ export default class App extends React.Component {
         {this.state.activity &&
           <View style={{backgroundColor: "rgba(0,0,0,0.3)", width: "100%", height: "100%", position: "absolute", top: 0, left: 0, justifyContent: "center", alignItems: "center"}}>
             <View style={{width: 60, height: 60, backgroundColor: "#fff", alignItems: "center", justifyContent: "center", borderRadius: 30}}>
-              <ActivityIndicator color={"#63b2b5"}/>
+              <ActivityIndicator color={API.config.backgroundColor}/>
             </View>
             <TouchableOpacity style={{marginTop: 30, position: "absolute", bottom: 30}} onPress={() => this.setState({activity: false})}>
               <Text style={{color: "#fff", fontWeight: "bold", fontSize: 18}}>{API.t("alert_cancel")}</Text>
@@ -97,7 +107,7 @@ export default class App extends React.Component {
             <Path d="M20 12v6a2 2 0 0 1 -2 2h-12a2 2 0 0 1 -2 -2v-12a2 2 0 0 1 2 -2h9"/>
             <Polyline points="9 11 12 14 20 6"/>
           </Svg>
-          <Text style={{fontSize: 19, fontWeight: "500"}}>Get Started</Text>
+          <Text style={{fontSize: 19, fontWeight: "500"}}>{API.t("button_get_started")}</Text>
         </TouchableOpacity>
       </>
     );
@@ -107,13 +117,13 @@ export default class App extends React.Component {
     if(type == "premium"){
       setTimeout(() => {
         this.setState({premium: "none"});
-      }, 5000);
+      }, 3000);
     }
     return (
-      <View style={{flex: 1, backgroundColor: "#63b2b5", justifyContent: "center", alignItems: "center"}}>
-        <StatusBar backgroundColor="#63b2b5" barStyle={"light-content"} />
+      <View style={{flex: 1, backgroundColor: API.config.backgroundColor, justifyContent: "center", alignItems: "center"}}>
+        <StatusBar backgroundColor={API.config.backgroundColor} barStyle={"light-content"} />
         <View style={{width: 60, height: 60, backgroundColor: "#fff", alignItems: "center", justifyContent: "center", borderRadius: 30}}>
-          <ActivityIndicator color={"#63b2b5"}/>
+          <ActivityIndicator color={API.config.backgroundColor}/>
         </View>
       </View>
     )
@@ -127,7 +137,7 @@ export default class App extends React.Component {
     }else if(screen == "policy"){
       return (<Browser link={"https://dreamoriented.org/privacypolicy/"} back={() => this.setState({screen: "login"})}/>);
     }else if(screen == "logged"){
-      if(API.user){
+      if(API.user.name){
         if(this.state.premium == "determining"){
           return this.renderLoading("premium");
         }else{

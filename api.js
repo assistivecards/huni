@@ -18,14 +18,13 @@ import NetInfo from '@react-native-community/netinfo';
 import Event from './js/event';
 import makeid from './js/makeid';
 import styles from './js/styles';
-import config from './js/config';
 
 const APP = require("./app.json");
 // For test cases
 const _DEVELOPMENT = false;
 
 const _NETWORK_STATUS = true;
-const _FLUSH = false;
+const _FLUSH = true;
 const _DEVUSERIDENTIFIER = "109677539152659927717";
 const _DEVLOCALE = "en-US";
 const _ISPREMIUM = false;
@@ -52,12 +51,13 @@ class Api {
 			AsyncStorage.clear();
 			CacheManager.clearCache();
 		}
+		this.user = {};
 		this.cards = {};
 		this.uitext = {en: enUI};
 		this.searchArray = [];
 		this.development = _DEVELOPMENT;
 		this.styles = styles;
-		this.config = config;
+		this.config = APP.config;
 		this.event = Event;
 		this.language = "en";
 		this.analytics = new Analytics(_DEVELOPMENT ? "DEVELOPMENT" : ANALYTICS_KEY, {slug: APP.name, name: APP.displayName, version: APP.expo.version});
@@ -144,43 +144,71 @@ class Api {
 		}
 	}
 
-	async registerForPushNotificationsAsync(){
-    if(Constants.isDevice) {
-			await Notifications.requestPermissionsAsync({
-	      ios: {
-	        allowAlert: true,
-	        allowBadge: true,
-	        allowSound: true,
-	        allowAnnouncements: true,
-	      },
-	    });
+	async registerForPushNotificationsAsync() {
+    await Notifications.requestPermissionsAsync({
+      ios: {
+        allowAlert: true,
+        allowBadge: true,
+        allowSound: true,
+        allowAnnouncements: true,
+      },
+    });
 
-	    let experienceId = undefined;
-	    if (!Constants.manifest) {
-	      // Absence of the manifest means we're in bare workflow
-	      experienceId = '@burak/leeloo';
-	    }
+    let experienceId = undefined;
+    if (!Constants.manifest) {
+      // Absence of the manifest means we're in bare workflow
+      experienceId = '@burak/'+APP.name;
+    }
 
-	    const expoPushToken = await Notifications.getExpoPushTokenAsync({
-	      experienceId,
-	    });
+    const expoPushToken = await Notifications.getExpoPushTokenAsync({
+      experienceId,
+    });
 
-		  let token = expoPushToken.data;
-			console.log(token);
+    console.log(expoPushToken.data);
+    this.scheduleNotif();
+  }
 
-			if(token != this.user.notificationToken){
-				await this.update(["notificationToken"], [token]);
-			}
-			return token;
+  async scheduleNotif(){
+    let scheduledNotifs = await Notifications.getAllScheduledNotificationsAsync();
+    console.log("##Notif", scheduledNotifs);
+    if(scheduledNotifs.length == 0){
 
-    }else{
-      console.log('Must use physical device for Push Notifications');
-			return "";
+      let content = {
+        sound: 'default',
+        title: this.t("setup_notification_badge_title"),
+        body: this.t("setup_notification_badge_description"),
+      };
+
+      Notifications.scheduleNotificationAsync({
+        content: content,
+        trigger: {
+          seconds: 60*60*24*2, // 2 days = 60*60*24*2
+          repeats: true
+        },
+      });
     }
   }
 
+	async setup(profile){
+		let user = {
+			name: profile.name,
+			avatar: profile.avatar
+		}
+
+		await this.setData("user", JSON.stringify(user));
+		console.log("Setup completed.");
+		this.user = user;
+	}
+
 	async update(fields, values){
-		// fill this in
+		let user = JSON.parse(await this.getData("user"));
+		fields.forEach((itemProperty, i) => {
+			user[itemProperty] = values[i];
+		});
+
+		this.user = user;
+
+		await this.setData("user", JSON.stringify(user));
 	}
 
 	speak(text, speed){
@@ -276,59 +304,8 @@ class Api {
 		}
 	}
 
-	search(term){
-		if(term.length >= 2){
-			let results = [];
-			for (var i = 0; i < this.searchArray.length; i++) {
-				if(this.searchArray[i].search.includes(" "+term.toLocaleLowerCase())){
-					results.push(this.searchArray[i]);
-					if(results.length == 10){
-						break;
-					}
-				}
-			}
-			return results;
-		}else{
-			return [];
-		}
-	}
-
-	phrase(string){
-		if(string.includes("{name}")){
-			return string.replace("{name}", this.user.active_profile.name)
-		}else{
-			return string;
-		}
-	}
-
 	async ramCards(slugArray, force){
-		for (var i = 0; i < slugArray.length; i++) {
-			await this.getCards(slugArray[i], force);
-		}
-
-		if(!this.isPremium()){
-			let allPacks = await this.getPacks();
-			slugArray = slugArray.map(slug => {
-				if(!allPacks.filter(allpack => allpack.slug == slug)[0].premium){
-					return slug;
-				}
-			}).filter(slug => slug != null);
-		}
-
-
-		this.searchArray = []; // empty the old search array.
-
-		slugArray.forEach((packSlug, i) => {
-			this.cards[packSlug].forEach((card, i) => {
-				let color = this.packs.filter(pack => pack.slug == packSlug)[0].color;
-				this.searchArray.push({pack: packSlug, color, search: " "+card.title.toLocaleLowerCase()+" ", slug: card.slug, emoji: null, title: card.title, type: 1});
-
-				card.phrases.forEach((phrase, i) => {
-					this.searchArray.push({pack: packSlug, search: " "+this.phrase(phrase.phrase).toLocaleLowerCase()+" ", slug: card.slug, emoji: phrase.type, title: this.phrase(phrase.phrase), type: 2});
-				});
-			});
-		});
-
+		// We need to ram things hereé!
 	}
 
 	async _initSubscriptions(){
