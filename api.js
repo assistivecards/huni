@@ -53,6 +53,7 @@ class Api {
 		}
 		this.user = {};
 		this.cards = {};
+		this.storeId = APP.storeId;
 		this.uitext = {en: enUI};
 		this.searchArray = [];
 		this.development = _DEVELOPMENT;
@@ -114,6 +115,7 @@ class Api {
 		if(_DEVELOPMENT){
 			return _ISPREMIUM;
 		}
+
 		if(this.user.premium == "lifetime"){
 			return true;
 		}
@@ -190,15 +192,38 @@ class Api {
   }
 
 	async setup(profile){
+		let lang = profile.language ? profile.language : "en";
+		let voice = await this.getBestAvailableVoiceDriver(lang);
 		let user = {
 			name: profile.name,
-			avatar: profile.avatar
+			avatar: profile.avatar,
+			voice: voice.identifier,
+			language: lang
 		}
 
 		await this.setData("user", JSON.stringify(user));
 		console.log("Setup completed.");
 		this.user = user;
 	}
+
+	signout(){
+    Alert.alert(
+      this.t("alert_signout_title"),
+      this.t("alert_signout_description"),
+      [
+        {
+          text: this.t("alert_cancel"),
+          onPress: () => console.log("Cancel Pressed"),
+          style: "cancel"
+        },
+        { text: this.t("alert_ok"), onPress: () => {
+					//AsyncStorage.clear();
+					this.event.emit("refresh", "signout");
+				} }
+      ],
+      { cancelable: true }
+    );
+  }
 
 	async update(fields, values){
 		let user = JSON.parse(await this.getData("user"));

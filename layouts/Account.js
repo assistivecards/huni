@@ -1,5 +1,6 @@
 import React from 'react';
 import { StyleSheet, View, Dimensions, Image, Text, ScrollView, Animated, TouchableOpacity, TextInput, KeyboardAvoidingView, Platform } from 'react-native';
+import { Image as CachedImage } from "react-native-expo-image-cache";
 
 import API from '../api';
 import TopBar from '../components/TopBar'
@@ -10,6 +11,7 @@ export default class Setting extends React.Component {
     super(props);
     this.state = {
       newName: null,
+      newAvatar: null,
     }
   }
 
@@ -17,8 +19,16 @@ export default class Setting extends React.Component {
     API.hit("Account");
   }
 
-  save(){
-    let { newName, newEmail } = this.state;
+  async changeAvatar(avatar){
+    console.log(avatar);
+    this.setState({newAvatar: avatar});
+    setTimeout(() => {
+      this.save(true);
+    }, 100);
+  }
+
+  save(nopop){
+    let { newName, newEmail, newAvatar } = this.state;
     let changedFields = [];
     let changedValues = [];
 
@@ -27,19 +37,21 @@ export default class Setting extends React.Component {
       changedValues.push(newName);
     }
 
-    if(newEmail != null){
-      changedFields.push("email");
-      changedValues.push(newEmail);
+    if(newAvatar != null){
+      changedFields.push("avatar");
+      changedValues.push(newAvatar);
     }
 
     API.update(changedFields, changedValues).then(res => {
-      this.props.navigation.pop();
+      if(!nopop){
+        this.props.navigation.pop();
+      }
       API.haptics("impact");
     })
   }
 
   didChange(){
-    return this.state.newName != null || this.state.newEmail != null;
+    return this.state.newName != null || this.state.newAvatar != null;
   }
 
   render() {
@@ -59,14 +71,13 @@ export default class Setting extends React.Component {
                 <TextInput style={API.styles.input} defaultValue={API.user.name} onChangeText={(text) => this.setState({newName: text})}/>
               </View>
               <View style={styles.preferenceItem}>
-                <Text style={API.styles.h3}>{API.t("settings_account_section2_title")}</Text>
-                <Text style={API.styles.subSmall}>{API.t("settings_account_section2_description")}</Text>
-                <TextInput style={API.styles.input} defaultValue={API.user.email} onChangeText={(text) => this.setState({newEmail: text})} autoCapitalize="none"/>
-              </View>
-              <View style={styles.preferenceItem}>
-                <Text style={API.styles.h3}>{API.t("settings_account_section3_title")}</Text>
-                <Text style={API.styles.subSmall}>{API.t("settings_account_section3_description")}</Text>
-                <TextInput style={[API.styles.input, {backgroundColor: "#f1f1f1"}]} value={API.user.identifier.substr(0, 3) + "-" + API.user.type + "-" + API.user.id} selectTextOnFocus={true}/>
+                <Text style={API.styles.h3}>{API.t("settings_change_avatar_title")}</Text>
+                <Text style={API.styles.subSmall}>{API.t("settings_change_avatar_description")}</Text>
+                <View style={{justifyContent: "center", alignItems: "center"}}>
+                  <TouchableOpacity style={styles.childAvatar} onPress={() => this.props.navigation.push("Avatar", {avatar: this.changeAvatar.bind(this)})}>
+                    <CachedImage uri={`${API.assetEndpoint}cards/avatar/${this.state.newAvatar ? this.state.newAvatar : API.user.avatar}.png?v=${API.version}`} resizeMode="contain" style={styles.childImage} />
+                  </TouchableOpacity>
+                </View>
               </View>
               <TouchableOpacity onPress={() => API.signout()}>
                 <View style={[[styles.selectionItem, {flexDirection: API.user.isRTL ? "row-reverse" : "row"}], {borderBottomWidth: 0, padding: 25}]}>
@@ -97,5 +108,28 @@ const styles = StyleSheet.create({
   preferenceItem: {
     paddingBottom: 20,
     borderBottomWidth: 1, borderColor: "#f5f5f5",
-  }
+  },
+  childAvatar: {
+    width: 90,
+    height: 90,
+    borderRadius: 45,
+    backgroundColor: "#F5F5F7",
+    borderWidth: 9,
+    borderColor: "#ffffff",
+    shadowColor: "#000",
+    shadowOffset: {
+    	width: 0,
+    	height: 1,
+    },
+    shadowOpacity: 0.20,
+    shadowRadius: 1.41,
+
+    elevation: 2,
+  },
+  childImage: {
+    width: 60,
+    height: 60,
+    position: "relative",
+    margin: 6
+  },
 });

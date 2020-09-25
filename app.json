@@ -8,6 +8,10 @@
   "config": {
     "backgroundColor": "#63b2b5"
   },
+  "storeId": {
+    "appStore": 1508952198,
+    "googlePlay": 4973589507294195479
+  },
   "expo": {
     "name": "huni",
     "slug": "huni",

@@ -4,6 +4,13 @@
 	"settings_cards": "$1 cards",
 	"this_is_test_voice": "This is a test voice!",
 
+	"settings_selection_account": "Profile",
+	"settings_account_description": "Change the profile information of this application's user",
+	"settings_account_section1_title": "Name",
+	"settings_account_section1_description": "Name of of the user of this app",
+	"settings_change_avatar_title": "Change Avatar",
+	"settings_change_avatar_description": "Choose an avatar to symbolize this profile",
+
 	"settings_selection_language": "Language",
 	"settings_language_description": "Choose the language for app interface and assistive cards",
 	"settings_language_basedOnYourDevice": "Based On Your Device",
@@ -34,7 +41,7 @@
 	"settings_notifications_tipsAndPromo_promotion_description": "Let us notify you when we have a discount for the subscription",
 
 	"settings_selection_subscriptions": "Subscriptions",
-	"settings_subscriptions_description": "Manage your subscriptions and Leeloo Premium purchases and switch between plans.",
+	"settings_subscriptions_description": "Manage your subscriptions and Huni Premium purchases and switch between plans.",
 	"settings_subscriptions_cancel_notice": "In order to cancel a subscription, please go to your device or market settings and subscriptions.",
 	"settings_subscriptions_downgrade_notice": "You can't downgrade your lifetime premium subscription.",
 	"settings_subscriptions_oneTimePayment": "One-time payment",
@@ -67,9 +74,9 @@
 	"settings_locked_title": "Parents Only",
 	"settings_locked_description": "Drag and drop the key over the padlock to unlock the Settings",
 
-	"settings_share_title": "Leeloo AAC",
-	"settings_share_message": "Leeloo AAC helps non-verbal kids to communicate with their parents, teachers and friends.",
-	"settings_share_url": "https://assistivecards.com/leeloo/",
+	"settings_share_title": "Huni AI",
+	"settings_share_message": "Huni AI helps non-verbal kids to communicate with their parents, teachers and friends.",
+	"settings_share_url": "https://assistivecards.com/huni/",
 	"settings_selection_share_the_app": "Share this App",
 	"settings_selection_rate_the_app": "Rate this App",
 
@@ -95,8 +102,8 @@
 
 	"search_input_placeholder": "Search cards and phrases...",
 
-	"premium_title": "Unlock Leeloo Premium!",
-	"premium_description": "Functionality of Leeloo AAC will always be free. Leeloo Premium offers +50 additional Assistive Card packs.",
+	"premium_title": "Unlock Huni Premium!",
+	"premium_description": "Functionality of Huni AI will always be free. Huni Premium offers +50 additional Assistive Card packs.",
 	"premium_monthly": "Monthly",
 	"premium_yearly": "Try 3 days for FREE",
 	"premium_then_info": "Then $1/year",
@@ -115,7 +122,7 @@
 	"premium_details3": "Monthly and Yearly plans are recurring plans and Lifetime plan is a one-time payment plan, for subscriptions, unless auto-renew is turned off you will be charged the period price when the current period ends.",
 	"premium_details4": "Keep in mind refunds are handled by the platforms and the refund times and policies might differ respect to the platform and the market you are subscribing from.",
 	"premium_details5": "Please report accidental purchases to us the same day or at most in 24 hours using 'Send Feedback' page in App settings.",
-	"premium_promo_title": "Leeloo Premium",
+	"premium_promo_title": "Huni Premium",
 	"premium_promo_desc1": "Subscribe to get more",
 	"premium_promo_desc2": "Try 3 days for free",
 

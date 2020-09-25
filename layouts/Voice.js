@@ -16,6 +16,8 @@ export default class Setting extends React.Component {
       loading: true
     }
 
+    console.log("voice", API.user.voice);
+
     API.getAvailableVoicesAsync().then(voices => this.setState({
       voices: voices.filter(voice => voice.language.includes(API.user.language)).sort((a, b) => {
           let aQ = !(a.quality == "Enhanced");
@@ -65,7 +67,7 @@ export default class Setting extends React.Component {
             <Text style={[API.styles.p, {marginBottom: 2}]}>{voice.language} - {voice.quality}</Text>
             <Text style={API.styles.sub}>{voice.identifier}</Text>
           </View>
-          <View style={[styles.pointer, {backgroundColor: this.state.voice == voice.identifier ? "#6989FF": "#eee"}]}></View>
+          <View style={[styles.pointer, {backgroundColor: this.state.voice == voice.identifier ? API.config.backgroundColor: "#eee"}]}></View>
         </TouchableOpacity>
       )
     })
@@ -124,8 +126,8 @@ export default class Setting extends React.Component {
   render() {
     return(
       <>
-        <TopBar back={() => this.props.navigation.pop()} backgroundColor={"#6989FF"} rightButtonRender={true} rightButtonActive={this.didChange()} rightButtonPress={() => this.save()}/>
-        <ScrollView style={{flex: 1, backgroundColor: "#6989FF"}}>
+        <TopBar back={() => this.props.navigation.pop()} backgroundColor={API.config.backgroundColor} rightButtonRender={true} rightButtonActive={this.didChange()} rightButtonPress={() => this.save()}/>
+        <ScrollView style={{flex: 1, backgroundColor: API.config.backgroundColor}}>
           <View style={[styles.head, {alignItems: API.user.isRTL ? "flex-end" : "flex-start"}]}>
             <Text style={API.styles.h1}>{API.t("settings_selection_voice")}</Text>
             <Text style={API.styles.pHome}>{API.t("settings_voice_description")}</Text>
@@ -142,7 +144,7 @@ export default class Setting extends React.Component {
 
 const styles = StyleSheet.create({
   head: {
-    backgroundColor: "#6989FF",
+    backgroundColor: API.config.backgroundColor,
     marginBottom: 10,
     paddingVertical: 10,
     paddingBottom: 5

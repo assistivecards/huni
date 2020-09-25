@@ -5,7 +5,6 @@ import Svg, { Path, Rect, Circle } from 'react-native-svg';
 import API from '../api'
 
 export default class App extends React.Component {
-
   state = {
     rightButtonActivity: false
   }

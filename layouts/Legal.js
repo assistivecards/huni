@@ -3,6 +3,7 @@ import { StyleSheet, View, Dimensions, Image, Text, ScrollView, Animated, Toucha
 import Svg, { Path, Line, Circle, Polyline, Rect } from 'react-native-svg';
 
 import API from '../api';
+import APP from '../app.json';
 import TopBar from '../components/TopBar'
 
 export default class Setting extends React.Component {
@@ -17,17 +18,15 @@ export default class Setting extends React.Component {
     API.hit("Legal");
   }
 
-
-
   async rateThisApp(){
     if(Platform.OS == "ios"){
-      let url = 'itms-apps://itunes.apple.com/us/app/apple-store/1508952198?mt=8';
+      let url = `itms-apps://itunes.apple.com/us/app/apple-store/${API.storeId.appStore}?mt=8`;
       const supported = await Linking.canOpenURL(url);
       if(supported){
         Linking.openURL(url)
       }
     }else{
-      let url = 'market://details?id=4973589507294195479';
+      let url = `market://details?id=${API.storeId.googlePlay}`;
       const supported = await Linking.canOpenURL(url);
       if(supported){
         Linking.openURL(url)
@@ -42,7 +41,6 @@ export default class Setting extends React.Component {
       url: API.t("settings_share_url")
     })
   }
-
 
   render() {
     return(
@@ -158,7 +156,7 @@ const styles = StyleSheet.create({
     marginHorizontal: 30,
     borderBottomWidth: 1,
     paddingBottom: 25,
-    borderBottomColor: API.config.mainBorderColor
+    borderBottomColor: "#f1f1f1"
   },
   selectionItem: {
     flexDirection: "row",

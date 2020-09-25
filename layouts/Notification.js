@@ -10,8 +10,7 @@ export default class Setting extends React.Component {
   constructor(props){
     super(props);
     this.state = {
-      notificationSettings: API.user.notificationSettings,
-      notificationToken: API.user.notificationToken,
+      notificationSettings: API.user.notificationSettings ? API.user.notificationSettings : "w10"
     }
   }
 
@@ -42,7 +41,7 @@ export default class Setting extends React.Component {
 
   async componentDidMount(){
     let token = await API.registerForPushNotificationsAsync();
-    this.setState({notificationToken: token});
+    console.log(token);
     if(token == "ungranted"){
       AppState.addEventListener("change", this._handleAppStateChange);
     }
@@ -50,7 +49,7 @@ export default class Setting extends React.Component {
 
   _handleAppStateChange = nextAppState => {
     API.registerForPushNotificationsAsync().then(token => {
-      this.setState({notificationToken: token});
+      console.log("Created a notification schedule!");
     });
   }
 
