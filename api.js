@@ -347,7 +347,8 @@ class Api {
 				this.premium = "none";
 				this.event.emit("premium");
 			}
-      const history = await InAppPurchases.connectAsync();
+			await InAppPurchases.connectAsync();
+      const history = await InAppPurchases.getPurchaseHistoryAsync();
 			if (history.responseCode === InAppPurchases.IAPResponseCode.OK) {
 			  // get to know if user is premium or npt.
 				console.log(history.results);
