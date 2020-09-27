@@ -116,11 +116,11 @@ class Api {
 			return _ISPREMIUM;
 		}
 
-		if(this.user.premium == "lifetime"){
+		if(this.user.premium.includes("lifetime")){
 			return true;
 		}
 
-		if(this.premium == "lifetime" || this.premium == "yearly" || this.premium == "monthly"){
+		if(this.premium.includes("lifetime") || this.premium.includes("yearly") || this.premium == this.premium.includes("monthly")){
 			return true;
 		}else{
 			if(this.isGift){
