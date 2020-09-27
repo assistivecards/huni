@@ -428,7 +428,7 @@ class Api {
 		}else{
 			try {
 	      const { responseCode, results } = await InAppPurchases.getProductsAsync(["monthly", "yearly", "lifetime"]);
-				console.log(results);
+				console.log("plans", results);
 				if (responseCode === InAppPurchases.IAPResponseCode.OK) {
 					this.premiumPlans = results;
 				}
