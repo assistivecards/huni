@@ -198,7 +198,8 @@ class Api {
 			name: profile.name,
 			avatar: profile.avatar,
 			voice: voice.identifier,
-			language: lang
+			language: lang,
+			haptic: 1
 		}
 
 		await this.setData("user", JSON.stringify(user));
