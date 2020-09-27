@@ -4,7 +4,6 @@ import { Easing, Animated } from 'react-native';
 import Home from './layouts/Home'
 import Cards from './layouts/Cards'
 import Settings from './layouts/Settings'
-import Profile from './layouts/Profile'
 import Announcer from './layouts/Announcer'
 
 import Account from './layouts/Account'
@@ -13,7 +12,6 @@ import Voice from './layouts/Voice'
 import Notification from './layouts/Notification'
 import Browser from './layouts/Browser'
 import Remove from './layouts/Remove'
-import Packs from './layouts/Packs'
 import Avatar from './layouts/Avatar'
 import Subscription from './layouts/Subscription'
 import Premium from './layouts/Premium'
@@ -24,14 +22,12 @@ const AppNavigator = createStackNavigator({
     Home:         { screen: Home          },
     Cards:        { screen: Cards         },
     Settings:     { screen: Settings      },
-    Profile:      { screen: Profile       },
     Account:      { screen: Account       },
     Browser:      { screen: Browser       },
     Language:     { screen: Language      },
     Voice:        { screen: Voice         },
     Notification: { screen: Notification  },
     Remove:       { screen: Remove        },
-    Packs:        { screen: Packs         },
     Avatar:       { screen: Avatar        },
     Subscription: { screen: Subscription  },
     Premium:      { screen: Premium       },
