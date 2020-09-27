@@ -7,7 +7,6 @@ import titleCase from '../js/titleCase';
 import { Image as CachedImage } from "react-native-expo-image-cache";
 import * as ScreenOrientation from 'expo-screen-orientation';
 
-import Search from '../components/Search'
 import TopBar from '../components/TopBar'
 import TouchableScale from '../components/touchable-scale'
 

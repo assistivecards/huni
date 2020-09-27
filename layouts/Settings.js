@@ -7,7 +7,6 @@ import * as ScreenOrientation from 'expo-screen-orientation';
 import API from '../api'
 
 import TopBar from '../components/TopBar'
-import Profiles from '../components/Profiles'
 import Promo from '../components/Promo'
 
 export default class App extends React.Component {
@@ -29,7 +28,7 @@ export default class App extends React.Component {
           dx: this.state.pan.x, // x,y are Animated.Value
           dy: this.state.pan.y
         }
-      ]),
+      ], { useNativeDriver: false }),
       onPanResponderRelease: () => {
         let xVal = this.state.pan.x._value;
         let yVal = this.state.pan.y._value;
@@ -39,7 +38,8 @@ export default class App extends React.Component {
 
             Animated.timing(this.state.lockAnim, {
               toValue: 0,
-              duration: 200
+              duration: 200,
+              useNativeDriver: false
             }).start();
             setTimeout(() => {
               this.setState({lock: false});
@@ -49,7 +49,10 @@ export default class App extends React.Component {
         }
         Animated.spring(
           this.state.pan, // Auto-multiplexed
-          { toValue: { x: 0, y: 0 } } // Back to zero
+          {
+            toValue: { x: 0, y: 0 },
+            useNativeDriver: false
+          } // Back to zero
         ).start();
       }
     });
@@ -89,8 +92,9 @@ export default class App extends React.Component {
 
     Animated.timing(this.state.lockAnim, {
       toValue: 1,
-      duration: 400
-    }).start();
+      duration: 400,
+      useNativeDriver: false
+  }).start();
 
     setTimeout(() => {
       this.props.navigation.pop();
@@ -104,13 +108,13 @@ export default class App extends React.Component {
 
     let lockBG = this.state.lockAnim.interpolate({
       inputRange: [0, 1],
-      outputRange: ["rgba(105,137,255,0)", "rgba(105,137,255,0.8)"]
+      outputRange: ["rgba(99,178,181,0)", "rgba(99,178,181,0.8)"]
     });
 
     return (
       <>
-        <TopBar back={() => this.props.navigation.pop()} backgroundColor={"#63b2b5"} lock={"locked"} lockPress={this.lockPress.bind(this)}/>
-        <ScrollView style={{flex: 1, backgroundColor: "#63b2b5"}}>
+        <TopBar back={() => this.props.navigation.pop()} backgroundColor={API.config.backgroundColor} lock={"locked"} lockPress={this.lockPress.bind(this)}/>
+        <ScrollView style={{flex: 1, backgroundColor: API.config.backgroundColor}}>
           <View style={styles.content}>
             <View style={styles.userSettings}>
               <TouchableOpacity style={[styles.selectionItem, {flexDirection: API.user.isRTL ? "row-reverse" : "row"}]} onPress={() => this.openAccountSettings()}>
@@ -173,7 +177,7 @@ export default class App extends React.Component {
             <View style={styles.appSettings}>
               <View style={styles.selectionCarrier}>
 
-                <TouchableOpacity onPress={() => this.props.navigation.push("Browser", {link: "https://dreamoriented.org/leeloo-feedback/"})}>
+                <TouchableOpacity onPress={() => this.props.navigation.push("Browser", {link: "https://dreamoriented.org/huni-feedback/"})}>
                   <View style={[styles.selectionItem, {flexDirection: API.user.isRTL ? "row-reverse" : "row"}]}>
                     <Svg height={24} width={24} viewBox="0 0 24 24" style={styles.selectionIcon} strokeWidth="2" stroke="#333" fill="none" strokeLinecap="round" strokeLinejoin="round">
                       <Path stroke="none" d="M0 0h24v24H0z"/>
@@ -221,26 +225,26 @@ export default class App extends React.Component {
         {
           this.state.lock &&
           <View style={{width: "100%", height: "100%", position: "absolute", top: 0, left: 0}}>
-            <TopBar back={() => this.props.navigation.pop()} backgroundColor={"#63b2b5"}/>
+            <TopBar back={() => this.props.navigation.pop()} backgroundColor={API.config.backgroundColor}/>
             <Animated.View style={{backgroundColor: lockBG, flex: 1, alignItems: "center", justifyContent: "center"}}>
               {
                 this.state.lockByUser &&
                   <View style={{width: 60, height: 60, backgroundColor: "#fff", alignItems: "center", justifyContent: "center", borderRadius: 30}}>
-                    <ActivityIndicator color={"#63b2b5"}/>
+                    <ActivityIndicator color={API.config.backgroundColor}/>
                   </View>
               }
               {
                 !this.state.lockByUser &&
                 <Animated.View style={{flex: 1, alignItems: "center", justifyContent: "center", opacity: this.state.lockAnim}}>
-                  <View style={[styles.shadow, {alignItems: "center", justifyContent: "center", backgroundColor: "#63b2b5", margin: 20, borderRadius: 40, paddingVertical: 30}]}>
+                  <View style={[styles.shadow, {alignItems: "center", justifyContent: "center", backgroundColor: API.config.backgroundColor, margin: 20, borderRadius: 40, paddingVertical: 30}]}>
                     <View style={{marginBottom: 0}}>
-                      <Image source={require("../assets/icon.png")} style={{width: 100, height: 100}} resizeMode={"contain"}/>
+                      <Image source={require("../assets/mascot.png")} style={{width: 120, height: 120}} resizeMode={"contain"}/>
                     </View>
                     <Text style={[API.styles.h1, {color: "#fff", marginTop: 15}]}>{API.t("settings_locked_title")}</Text>
                     <Text style={[API.styles.pHome, {textAlign: "center", marginTop: 5}]}>{API.t("settings_locked_description")}</Text>
                     <View style={{flexDirection: "row", justifyContent: "center", marginTop: 20}}>
                       <View style={{width: 50, height: 50, backgroundColor: "#fff", justifyContent: "center", alignItems: "center", borderRadius: 25}}>
-                        <Svg width={30} height={30} viewBox="0 0 24 24" strokeLinecap="round" strokeWidth="2" stroke="#63b2b5" fill="none">
+                        <Svg width={30} height={30} viewBox="0 0 24 24" strokeLinecap="round" strokeWidth="2" stroke={API.config.backgroundColor} fill="none">
                           <Path stroke="none" d="M0 0h24v24H0z"/>
                           <Rect x="5" y="11" width="14" height="10" rx="2" />
                           <Circle cx="12" cy="16" r="1" />
@@ -252,7 +256,7 @@ export default class App extends React.Component {
                         {...this.state.panResponder.panHandlers}
                         style={this.state.pan.getLayout()}>
                         <View style={{width: 50, height: 50, backgroundColor: "#fff", justifyContent: "center", alignItems: "center", borderRadius: 25}}>
-                          <Svg width={30} height={30} viewBox="0 0 24 24" strokeLinecap="round" strokeWidth="2" stroke="#63b2b5" fill="none">
+                          <Svg width={30} height={30} viewBox="0 0 24 24" strokeLinecap="round" strokeWidth="2" stroke={API.config.backgroundColor} fill="none">
                             <Path stroke="none" d="M0 0h24v24H0z"/>
                             <Circle cx="8" cy="15" r="4" />
                             <Line x1="10.85" y1="12.15" x2="19" y2="4" />
@@ -321,7 +325,7 @@ const styles = StyleSheet.create({
     paddingBottom: 15,
     paddingTop: 10,
     borderBottomWidth: 1,
-    borderBottomColor: API.config.theme.mainBorderColor
+    borderBottomColor: "#f1f1f1"
   },
   appSettings: {
     marginHorizontal: 30,

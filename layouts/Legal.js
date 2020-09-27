@@ -3,6 +3,7 @@ import { StyleSheet, View, Dimensions, Image, Text, ScrollView, Animated, Toucha
 import Svg, { Path, Line, Circle, Polyline, Rect } from 'react-native-svg';
 
 import API from '../api';
+import APP from '../app.json';
 import TopBar from '../components/TopBar'
 
 export default class Setting extends React.Component {
@@ -17,17 +18,15 @@ export default class Setting extends React.Component {
     API.hit("Legal");
   }
 
-
-
   async rateThisApp(){
     if(Platform.OS == "ios"){
-      let url = 'itms-apps://itunes.apple.com/us/app/apple-store/1508952198?mt=8';
+      let url = `itms-apps://itunes.apple.com/us/app/apple-store/${API.storeId.appStore}?mt=8`;
       const supported = await Linking.canOpenURL(url);
       if(supported){
         Linking.openURL(url)
       }
     }else{
-      let url = 'market://details?id=4973589507294195479';
+      let url = `market://details?id=${API.storeId.googlePlay}`;
       const supported = await Linking.canOpenURL(url);
       if(supported){
         Linking.openURL(url)
@@ -43,12 +42,11 @@ export default class Setting extends React.Component {
     })
   }
 
-
   render() {
     return(
       <>
-        <TopBar back={() => this.props.navigation.pop()} backgroundColor={"#63b2b5"}/>
-        <ScrollView style={{flex: 1, backgroundColor: "#63b2b5"}}>
+        <TopBar back={() => this.props.navigation.pop()} backgroundColor={API.config.backgroundColor}/>
+        <ScrollView style={{flex: 1, backgroundColor: API.config.backgroundColor}}>
           <View style={[styles.head, {alignItems: API.user.isRTL ? "flex-end" : "flex-start"}]}>
             <Text style={API.styles.h1}>{API.t("settings_selection_aboutapp")}</Text>
             <Text style={API.styles.pHome}>{API.t("settings_aboutapp_description")}</Text>
@@ -147,7 +145,7 @@ export default class Setting extends React.Component {
 
 const styles = StyleSheet.create({
   head: {
-    backgroundColor: "#63b2b5",
+    backgroundColor: API.config.backgroundColor,
     marginBottom: 10,
     paddingVertical: 10,
     paddingBottom: 5
@@ -158,7 +156,7 @@ const styles = StyleSheet.create({
     marginHorizontal: 30,
     borderBottomWidth: 1,
     paddingBottom: 25,
-    borderBottomColor: API.config.theme.mainBorderColor
+    borderBottomColor: "#f1f1f1"
   },
   selectionItem: {
     flexDirection: "row",

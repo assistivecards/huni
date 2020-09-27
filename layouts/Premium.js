@@ -284,9 +284,9 @@ export default class Setting extends React.Component {
     let plans = this.state.plans;
     return(
       <>
-        <ScrollView style={{flex: 1, backgroundColor: "#63b2b5"}} contentInsetAdjustmentBehavior="automatic">
+        <ScrollView style={{flex: 1, backgroundColor: API.config.backgroundColor}} contentInsetAdjustmentBehavior="automatic">
 
-          <SafeAreaView style={{backgroundColor: "#63b2b5", alignItems: "flex-end"}}>
+          <SafeAreaView style={{backgroundColor: API.config.backgroundColor, alignItems: "flex-end"}}>
             <TouchableOpacity onPress={() => this.props.navigation.pop()} style={{justifyContent: "center", alignItems: "center", margin: 5, marginBottom: 0, marginHorizontal: 15, backgroundColor: "#fff", width: 45, height: 45, backgroundColor: "rgba(0,0,0,0.1)", borderRadius: 25}}>
               <Svg width={25} height={25} viewBox="0 0 25 25">
                 <Path fill={"rgba(255,255,255,0.7)"} d={"M18.3 5.71c-.39-.39-1.02-.39-1.41 0L12 10.59 7.11 5.7c-.39-.39-1.02-.39-1.41 0-.39.39-.39 1.02 0 1.41L10.59 12 5.7 16.89c-.39.39-.39 1.02 0 1.41.39.39 1.02.39 1.41 0L12 13.41l4.89 4.89c.39.39 1.02.39 1.41 0 .39-.39.39-1.02 0-1.41L13.41 12l4.89-4.89c.38-.38.38-1.02 0-1.4z"}></Path>
@@ -357,7 +357,7 @@ export default class Setting extends React.Component {
 
 const styles = StyleSheet.create({
   head: {
-    backgroundColor: "#63b2b5",
+    backgroundColor: API.config.backgroundColor,
     marginBottom: 0,
     paddingBottom: 5
   },

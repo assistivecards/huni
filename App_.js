@@ -161,7 +161,7 @@ export default class VoiceTest extends Component {
   render(){
     return (
       <>
-      <TopBar back={() => {}} backgroundColor={"#63b2b5"} rightButtonRender={false} rightButtonActive={false} rightButtonPress={() => {}}/>
+      <TopBar back={() => {}} backgroundColor={API.config.backgroundColor} rightButtonRender={false} rightButtonActive={false} rightButtonPress={() => {}}/>
       <View style={styles.container}>
         <TouchableHighlight onPress={() => this.registerForPushNotificationsAsync()}>
           <Text>Register notification</Text>
