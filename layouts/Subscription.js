@@ -91,7 +91,7 @@ export default class Setting extends React.Component {
   }
 
   renderSubscriptionPlan(plan){
-    if(plan.productId == this.state.premium || (this.state.premium == "lifetime")){
+    if(plan.productId.includes(this.state.premium) || (this.state.premium.includes("lifetime"))){
       return (
         <View style={[styles.listItem, {opacity: 0.5}]}>
           <View>
@@ -148,9 +148,9 @@ export default class Setting extends React.Component {
             <View style={{flex: 1, backgroundColor: "#fff", borderTopLeftRadius: 30, borderTopRightRadius: 30, paddingTop: 15}}>
               {plans[0] &&
                 <>
-                  {this.renderSubscriptionPlan(plans.filter(plan => plan.productId == "monthly")[0])}
-                  {this.renderSubscriptionPlan(plans.filter(plan => plan.productId == "yearly")[0])}
-                  {this.renderSubscriptionPlan(plans.filter(plan => plan.productId == "lifetime")[0])}
+                  {this.renderSubscriptionPlan(plans.filter(plan => plan.productId.includes("monthly"))[0])}
+                  {this.renderSubscriptionPlan(plans.filter(plan => plan.productId.includes("yearly"))[0])}
+                  {this.renderSubscriptionPlan(plans.filter(plan => plan.productId.includes("lifetime"))[0])}
                 </>
               }
 
@@ -159,7 +159,7 @@ export default class Setting extends React.Component {
                   <ActivityIndicator/>
                 </View>
               }
-              {this.state.premium == "lifetime" && <Text style={API.styles.p}>{API.t("settings_subscriptions_downgrade_notice")}</Text>}
+              {this.state.premium.includes("lifetime") && <Text style={API.styles.p}>{API.t("settings_subscriptions_downgrade_notice")}</Text>}
               <Text style={API.styles.p}>{API.t("settings_subscriptions_cancel_notice")}</Text>
               <TouchableOpacity onPress={() => this.redeem()}>
                 <View style={[[styles.selectionItem, {flexDirection: API.user.isRTL ? "row-reverse" : "row"}], {borderBottomWidth: 0, padding: 25, paddingHorizontal: 30}]}>

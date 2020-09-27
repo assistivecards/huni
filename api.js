@@ -383,7 +383,7 @@ class Api {
 								console.log("Should I consume?", consume);
 				        // Then when you're done
 				        let resfinish = await InAppPurchases.finishTransactionAsync(purchase, consume);
-								alert(`Successfully purchased ${purchase.productId}`);
+								alert(`Successfully purchased ${purchase.productId.replace(APP.planPrefix, "")}, you can now use the premium version of the app!`);
 								this.event.emit("premium");
 								this.event.emit("premiumPurchase", this.premium);
 								this.setData("premium", this.premium);
@@ -428,7 +428,7 @@ class Api {
 			return this.premiumPlans;
 		}else{
 			try {
-	      const { responseCode, results } = await InAppPurchases.getProductsAsync(["monthly", "yearly", "lifetime"]);
+	      const { responseCode, results } = await InAppPurchases.getProductsAsync([APP.planPrefix + "monthly", APP.planPrefix + "yearly", APP.planPrefix + "lifetime"]);
 				console.log("plans", results);
 				if (responseCode === InAppPurchases.IAPResponseCode.OK) {
 					this.premiumPlans = results;

@@ -5,6 +5,7 @@
   "apiEndpoint": "https://leeloo.dreamoriented.org/",
   "assetEndpoint": "https://api.assistivecards.com/",
   "assetVersion": 215,
+  "planPrefix": "huniapp_",
   "config": {
     "backgroundColor": "#63b2b5"
   },

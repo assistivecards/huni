@@ -65,7 +65,7 @@ export default class Setting extends React.Component {
 
   renderSubscriptionPlan(plan, compare){
     plan.price = plan.price.replace(",", ".");
-    if(plan.productId == "monthly"){
+    if(plan.productId.includes("monthly")){
        return (
          <TouchableOpacity key={plan.productId} onPress={() => API.purchasePremium(plan.productId, this.state.premium)} style={styles.listItem}>
            <View>
@@ -74,7 +74,7 @@ export default class Setting extends React.Component {
            <View><Text style={styles.price}>{API.t("premium_monthly_priceShow", plan.price)}</Text></View>
          </TouchableOpacity>
        )
-    }else if(plan.productId == "yearly"){
+    }else if(plan.productId.includes("yearly")){
       let monthlyPrice = toFixed((plan.priceAmountMicros / 1000000) / 12, 2);
       let yearlyToMonthlyPrice = plan.price.replace(toFixed((plan.priceAmountMicros / 1000000), 2), toFixed((plan.priceAmountMicros / 1000000) / 12, 2))
       let comparePercent = 0;
@@ -95,7 +95,7 @@ export default class Setting extends React.Component {
            </View>
          </TouchableOpacity>
        )
-    }else if(plan.productId == "lifetime"){
+    }else if(plan.productId.includes("lifetime")){
        return (
          <TouchableOpacity key={plan.productId} onPress={() => API.purchasePremium(plan.productId, this.state.premium)} style={styles.listItem}>
            <View>
@@ -304,9 +304,9 @@ export default class Setting extends React.Component {
             <Text style={[API.styles.p, {textAlign: "center", marginBottom: 30}]}>{API.t("premium_description")}</Text>
             {plans[0] &&
               <>
-                {this.renderSubscriptionPlan(plans.filter(plan => plan.productId == "monthly")[0])}
-                {this.renderSubscriptionPlan(plans.filter(plan => plan.productId == "yearly")[0], plans.filter(plan => plan.productId == "monthly")[0])}
-                {this.renderSubscriptionPlan(plans.filter(plan => plan.productId == "lifetime")[0])}
+                {this.renderSubscriptionPlan(plans.filter(plan => plan.productId.includes("monthly"))[0])}
+                {this.renderSubscriptionPlan(plans.filter(plan => plan.productId.includes("yearly"))[0], plans.filter(plan => plan.productId.includes("monthly"))[0])}
+                {this.renderSubscriptionPlan(plans.filter(plan => plan.productId.includes("lifetime"))[0])}
               </>
             }
             {!plans[0] &&
