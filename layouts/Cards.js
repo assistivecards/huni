@@ -9,6 +9,7 @@ import * as ScreenOrientation from 'expo-screen-orientation';
 
 import TopBar from '../components/TopBar'
 import TouchableScale from '../components/touchable-scale'
+import WordItem from '../components/WordItem'
 
 export default class Setting extends React.Component {
   constructor(props){
@@ -25,7 +26,9 @@ export default class Setting extends React.Component {
 
   componentDidMount(){
     API.hit("Pack:"+this.pack.slug);
-    this.fetchCards(this.pack.slug);
+    if(this.pack.slug != "random"){
+      this.fetchCards(this.pack.slug);
+    }
     this.orientationSubscription = ScreenOrientation.addOrientationChangeListener(this._orientationChanged.bind(this));
   }
 
@@ -105,16 +108,12 @@ export default class Setting extends React.Component {
                 <Path d="M6 15 h-2a1 1 0 0 1 -1 -1v-4a1 1 0 0 1 1 -1h2l3.5 -4.5a.8 .8 0 0 1 1.5 .5v14a.8 .8 0 0 1 -1.5 .5l-3.5 -4.5"/>
               </Svg>
             </TouchableScale>
+            <Text style={[API.styles.h2, {color: "#000", marginHorizontal: 10}]}>Training words in this category</Text>
+            
             <View style={styles.board}>
               {this.state.cards.map((card, i) => {
                 return (
-                  <TouchableScale key={i} onPress={() => this.props.navigation.push("Announcer", {card, pack: this.pack, orientation: this.state.orientation})}
-                    style={[this.state.orientation == "portrait" ? styles.cardItem : styles.cardItemLandscape, {height: API.isTablet ? 200 : 130}]}>
-                    <View style={styles.cardItemInner}>
-                      <CachedImage uri={`${API.assetEndpoint}cards/${this.pack.slug}/${card.slug}.png?v=${API.version}`} style={{width: API.isTablet ? 110 : 70, height: API.isTablet ? 110 : 70, margin: 10, marginBottom: 5}}/>
-                      <Text style={[styles.cardItemText, {fontSize: API.isTablet ? 21 : 14}]}>{titleCase(card.title)}</Text>
-                    </View>
-                  </TouchableScale>
+                  <WordItem key={i} result={card} width={this.props.orientation == "portrait" ? "100%" : "50%"}/>
                 )
               })}
             </View>
@@ -140,7 +139,6 @@ const styles = StyleSheet.create({
   board: {
     justifyContent: "flex-start",
     flexDirection: "row",
-    flexWrap: "wrap",
     padding: 15,
     backgroundColor: "#fff",
     borderTopLeftRadius: 30,

@@ -80,7 +80,11 @@ export default class Setting extends React.Component {
   }
 
   openCards(pack, packIndex){
-    this.props.navigation.push("Cards", {pack, packs: this.state.packs, packIndex, orientation: this.state.orientation});
+    if(pack == "random"){
+      this.props.navigation.push("Cards", {pack: {slug: "random", title: "Random"}, packs: this.state.packs, orientation: this.state.orientation});
+    }else{
+      this.props.navigation.push("Cards", {pack, packs: this.state.packs, packIndex, orientation: this.state.orientation});
+    }
   }
 
   renderPacks(){
@@ -116,20 +120,35 @@ export default class Setting extends React.Component {
       <View style={{flex: 1}}>
         <SafeAreaView></SafeAreaView>
         <ScrollView contentInsetAdjustmentBehavior="automatic" keyboardShouldPersistTaps="handled" keyboardDismissMode={"on-drag"}>
-          <View style={{flexDirection: API.user.isRTL ? "row-reverse" : "row", justifyContent: "space-between", alignItems: "center", height: 60}}>
-            <View style={{flex: 1}}>
-              <Text style={[API.styles.h2, {padding: 0, margin: 0, color: "#000"}]}>Choose a category</Text>
+        <SafeAreaView style={{flex: 1}}>
+          <View style={{flexDirection: "row", justifyContent: "space-between", alignItems: "center", height: 60}}>
+            <View style={styles.tabHolder}>
+              <View style={styles.tabStyleActive}>
+                <Text style={styles.tabStyleActiveText}>Categories</Text>
+              </View>
+              <View style={{width: 10}}></View>
+              <TouchableOpacity style={styles.tabStyle} onPress={() => this.openCards("random", 0)}>
+                <Text style={styles.tabStyleText}>Randomly</Text>
+              </TouchableOpacity>
             </View>
+
             <TouchableOpacity style={styles.avatarHolder} onPress={() => this.openSettings()}>
               <View style={styles.avatar}>
-                <Svg width={32} height={32} viewBox="0 0 24 24" stroke="#000" strokeLinecap="round" strokeWidth="2">
-                  <Path d="M0 0h24v24H0z" stroke="none"/>
-                  <Path d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 0 0 2.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 0 0 1.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 0 0 -1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 0 0 -2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 0 0 -2.573 -1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 0 0 -1.065 -2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 0 0 1.066 -2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z"/>
-                  <Circle cx="12" cy="12" r="3"/>
+                <CachedImage uri={`${API.assetEndpoint}cards/avatar/${API.user.avatar}.png?v=${API.version}`}
+                  style={{width: 40, height: 40, position: "relative", top: 4}}
+                  resizeMode={"contain"}
+                  />
+              </View>
+              <View style={styles.avatarIcon}>
+                <Svg width={11} height={11} viewBox="0 0 8 4">
+                  <Line x1="1" x2="7" y1="0.8" y2="0.8" fill="none" stroke={API.config.backgroundColor} strokeLinecap="round" strokeLinejoin="round" strokeWidth="1.1"/>
+                  <Line x1="1" x2="7" y1="3.2" y2="3.2" fill="none" stroke={API.config.backgroundColor} strokeLinecap="round" strokeLinejoin="round" strokeWidth="1.1"/>
                 </Svg>
               </View>
             </TouchableOpacity>
           </View>
+          </SafeAreaView>
+
           <SafeAreaView>
             <View style={{padding: 15}}>{this.renderPacks()}</View>
           </SafeAreaView>
@@ -149,12 +168,14 @@ const styles = StyleSheet.create({
     backgroundColor: API.config.backgroundColor
   },
   avatar: {
-    marginHorizontal: 30, padding: 2, backgroundColor: "#a5d5ff", borderRadius: 40, overflow: "hidden",
+    marginHorizontal: 30, padding: 2, backgroundColor: "#fff", borderRadius: 40, overflow: "hidden",
     width: 45,
     height: 45,
     marginTop: 5,
     justifyContent: "center",
-    alignItems: "center"
+    alignItems: "center",
+    borderWidth: 1,
+    borderColor: "#eee"
   },
   avatarHolder: {
     position: "relative"
@@ -193,5 +214,36 @@ const styles = StyleSheet.create({
   categoryItemText:{
     fontWeight: "bold",
     color: "rgba(0,0,0,0.75)"
+  },
+  tabStyle: {
+    justifyContent: "center",
+    alignItems: "center",
+    backgroundColor: "#fafafa",
+    height: 40,
+    borderRadius: 10,
+    paddingHorizontal: 20
+  },
+  tabStyleText: {
+    fontWeight: "bold",
+    fontSize: 17
+  },
+  tabStyleActive: {
+    justifyContent: "center",
+    alignItems: "center",
+    backgroundColor: API.config.backgroundColor,
+    height: 40,
+    paddingHorizontal: 20,
+    borderRadius: 10
+  },
+  tabStyleActiveText: {
+    color: "#fff",
+    fontWeight: "bold",
+    fontSize: 17
+  },
+  tabHolder: {
+    flex: 1, flexDirection: "row", alignItems: "center",
+    marginLeft: 20,
+    marginTop: 10,
+    height: 60,
   }
 });
