@@ -93,8 +93,7 @@ export default class Setting extends React.Component {
         this.state.packs.map((pack, i) => {
           return (
             <TouchableScale key={i} style={[this.state.orientation == "portrait" ? styles.categoryItem : styles.categoryItemLandscape, {height: API.isTablet ? 160 : 100, opacity: pack.premium ? 0.5 : 1}]} onPress={() => this.openCards(pack, i)}>
-              <View style={[styles.categoryItemInner]}>
-                <View style={{borderWidth: 1, borderColor: "#666", width: 20, height: 20, backgroundColor: pack.color, borderRadius: 10, margin: 20, marginRight: 0}}></View>
+              <View style={[styles.categoryItemInner, {backgroundColor: pack.color}]}>
                 <CachedImage uri={`${API.assetEndpoint}cards/icon/${pack.slug}.png?v=${API.version}`} style={{width: API.isTablet ? 90 : 50, height: API.isTablet ? 90 : 50, margin: 15, marginBottom: 10}}/>
                 <View>
                   <Text style={[styles.categoryItemText, {fontSize: API.isTablet ? 25 : 18, marginBottom: 3}]}>{titleCase(pack.locale)}</Text>

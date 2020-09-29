@@ -109,11 +109,12 @@ export default class Setting extends React.Component {
               </Svg>
             </TouchableScale>
             <Text style={[API.styles.h2, {color: "#000", marginHorizontal: 10}]}>Training words in this category</Text>
-            
+
             <View style={styles.board}>
               {this.state.cards.map((card, i) => {
+                card.pack = this.pack.slug;
                 return (
-                  <WordItem key={i} result={card} width={this.props.orientation == "portrait" ? "100%" : "50%"}/>
+                  <WordItem key={i} result={card} width={this.state.orientation == "portrait" ? "100%" : "50%"}/>
                 )
               })}
             </View>
@@ -139,7 +140,8 @@ const styles = StyleSheet.create({
   board: {
     justifyContent: "flex-start",
     flexDirection: "row",
-    padding: 15,
+    flexWrap: "wrap",
+    paddingVertical: 15,
     backgroundColor: "#fff",
     borderTopLeftRadius: 30,
     borderTopRightRadius: 30,
