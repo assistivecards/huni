@@ -1,5 +1,5 @@
 import React from 'react';
-import { Text, View, StatusBar, TouchableOpacity, ActivityIndicator, Image, Linking, SafeAreaView } from 'react-native';
+import { Text, View, StatusBar, TouchableOpacity, TouchableWithoutFeedback, ActivityIndicator, Image, Linking, SafeAreaView } from 'react-native';
 import Navigator from './Navigator';
 import Setup from './layouts/Setup';
 import Browser from './layouts/Browser';
@@ -11,6 +11,11 @@ import * as Localization from 'expo-localization';
 import * as ScreenOrientation from 'expo-screen-orientation';
 
 import API from './api';
+
+TouchableOpacity.defaultProps = TouchableOpacity.defaultProps || {};
+TouchableOpacity.defaultProps.delayPressIn = 0;
+TouchableWithoutFeedback.defaultProps = TouchableWithoutFeedback.defaultProps || {};
+TouchableWithoutFeedback.defaultProps.delayPressIn = 0;
 
 export default class App extends React.Component {
   constructor(props){
