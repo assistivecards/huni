@@ -116,7 +116,7 @@ export default class Setting extends React.Component {
 
   render() {
     let plans = this.state.plans;
-    if(API.user.premium == "gift"){
+    if(API.premium == "gift"){
 
       return(
         <>

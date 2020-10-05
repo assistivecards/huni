@@ -1,5 +1,4 @@
 import Storage from 'react-native-storage';
-
 import { AsyncStorage, Platform, Alert } from 'react-native';
 
 import * as Speech from 'expo-speech';
@@ -39,7 +38,7 @@ const RTL = ["ar","ur","he"];
 
 let storage = new Storage({
 	size: 1000,
-	storageBackend: AsyncStorage,
+	storageBackend: Platform.OS === "web" ? localStorage : AsyncStorage,
 	defaultExpires: null,
 	enableCache: true,
 	sync: {}
@@ -116,7 +115,7 @@ class Api {
 			return _ISPREMIUM;
 		}
 
-		if(this.user.premium.includes("lifetime")){
+		if(this.premium.includes("lifetime")){
 			return true;
 		}
 
@@ -132,17 +131,21 @@ class Api {
 	}
 
 	haptics(style){
-		if(this.user.haptic !== "0"){
-			switch (style) {
-				case "touch":
-					Haptics.selectionAsync()
-					break;
-				case "impact":
-					Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Medium)
-					break;
-				default:
-					Haptics.selectionAsync()
+		if(Platform.OS != "web"){
+			if(this.user.haptic !== "0"){
+				switch (style) {
+					case "touch":
+						Haptics.selectionAsync()
+						break;
+					case "impact":
+						Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Medium)
+						break;
+					default:
+						Haptics.selectionAsync()
+				}
 			}
+		}else{
+			console.log("BZZ");
 		}
 	}
 
