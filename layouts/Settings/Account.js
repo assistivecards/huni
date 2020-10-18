@@ -2,8 +2,8 @@ import React from 'react';
 import { StyleSheet, View, Dimensions, Image, Text, ScrollView, Animated, TouchableOpacity, TextInput, KeyboardAvoidingView, Platform } from 'react-native';
 import { Image as CachedImage } from "react-native-expo-image-cache";
 
-import API from '../api';
-import TopBar from '../components/TopBar'
+import API from '../../api';
+import TopBar from '../../components/TopBar'
 import Svg, { Path, Line, Circle, Polyline, Rect } from 'react-native-svg';
 
 export default class Setting extends React.Component {

@@ -3,7 +3,7 @@ import { StyleSheet, View, SafeAreaView, Dimensions, Image, Text, ScrollView, An
 import Svg, { Path } from 'react-native-svg';
 
 import API from '../api';
-import titleCase from '../js/titleCase';
+import { titleCase } from "title-case";
 import { Image as CachedImage } from "react-native-expo-image-cache";
 import * as ScreenOrientation from 'expo-screen-orientation';
 

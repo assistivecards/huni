@@ -3,20 +3,20 @@ import { Easing, Animated } from 'react-native';
 
 import Home from './layouts/Home'
 import Cards from './layouts/Cards'
-import Settings from './layouts/Settings'
 import Announcer from './layouts/Announcer'
 
-import Account from './layouts/Account'
-import Language from './layouts/Language'
-import Voice from './layouts/Voice'
-import Notification from './layouts/Notification'
-import Browser from './layouts/Browser'
-import Remove from './layouts/Remove'
-import Avatar from './layouts/Avatar'
-import Subscription from './layouts/Subscription'
-import Premium from './layouts/Premium'
-import Legal from './layouts/Legal'
-import Accessibility from './layouts/Accessibility'
+import Settings from './layouts/Settings/Settings'
+import Account from './layouts/Settings/Account'
+import Language from './layouts/Settings/Language'
+import Voice from './layouts/Settings/Voice'
+import Notification from './layouts/Settings/Notification'
+import Browser from './layouts/Settings/Browser'
+import Remove from './layouts/Settings/Remove'
+import Avatar from './layouts/Settings/Avatar'
+import Subscription from './layouts/Settings/Subscription'
+import Premium from './layouts/Settings/Premium'
+import Legal from './layouts/Settings/Legal'
+import Accessibility from './layouts/Settings/Accessibility'
 
 const AppNavigator = createStackNavigator({
     Home:         { screen: Home          },

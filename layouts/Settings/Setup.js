@@ -1,7 +1,7 @@
 import React from 'react';
 import { StyleSheet, View, Dimensions, Image, Text, ScrollView, Animated, Easing, TouchableOpacity, TextInput, KeyboardAvoidingView, Platform, StatusBar, ActivityIndicator } from 'react-native';
 
-import API from '../api';
+import API from '../../api';
 import Svg, { Path, Ellipse, G } from 'react-native-svg';
 import * as ScreenOrientation from 'expo-screen-orientation';
 
@@ -185,7 +185,7 @@ export default class Setting extends React.Component {
     return (
       <View style={{flex: 1}}>
         <View style={{flex: 1, justifyContent: "center", alignItems: "center", flexDirection: "column", padding: 30}}>
-          <Image source={require("../assets/mascot.png")} style={{width: 120, height: 120}}/>
+          <Image source={require("../../assets/mascot.png")} style={{width: 120, height: 120}}/>
           <Text style={[API.styles.h2, {color: "#fff", marginTop: 30, fontSize: 26, marginHorizontal: 0, textAlign: "center"}]}>{API.t("setup_congrats_title", this.state.name)}</Text>
           <Text style={[API.styles.pHome, {marginBottom: 35, marginHorizontal: 0, textAlign: "center"}]}>{API.t("setup_congrats_description")}</Text>
           {!this.state.creating &&

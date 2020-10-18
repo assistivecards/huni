@@ -1,8 +1,8 @@
 import React from 'react';
 import { StyleSheet, View, Dimensions, Image, Text, ScrollView, Animated, TouchableOpacity, TextInput, KeyboardAvoidingView, Platform, SafeAreaView, ActivityIndicator } from 'react-native';
 
-import API from '../api';
-import TopBar from '../components/TopBar'
+import API from '../../api';
+import TopBar from '../../components/TopBar'
 import Svg, { Path, Ellipse, G } from 'react-native-svg';
 import { Image as CachedImage } from "react-native-expo-image-cache";
 

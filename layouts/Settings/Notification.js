@@ -2,9 +2,9 @@ import React from 'react';
 import { StyleSheet, View, Dimensions, Image, Text, ScrollView, Animated, TouchableOpacity, TextInput, KeyboardAvoidingView, Platform, AppState } from 'react-native';
 import * as Localization from 'expo-localization';
 
-import API from '../api';
-import Languages from '../languages.json';
-import TopBar from '../components/TopBar'
+import API from '../../api';
+import Languages from '../../languages.json';
+import TopBar from '../../components/TopBar'
 
 export default class Setting extends React.Component {
   constructor(props){

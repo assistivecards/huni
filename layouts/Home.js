@@ -2,7 +2,7 @@ import React from 'react';
 import { StyleSheet, View, SafeAreaView, Dimensions, Image, Text, ScrollView, Animated, TouchableOpacity, KeyboardAvoidingView, ActivityIndicator } from 'react-native';
 
 import API from '../api';
-import titleCase from '../js/titleCase';
+import { titleCase } from "title-case";
 import { Image as CachedImage } from "react-native-expo-image-cache";
 import * as ScreenOrientation from 'expo-screen-orientation';
 import Svg, { Line, Path, Circle } from 'react-native-svg';

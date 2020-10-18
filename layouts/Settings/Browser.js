@@ -1,9 +1,9 @@
 import React from 'react';
 import { StyleSheet, ScrollView, Text, View, Dimensions } from 'react-native';
 import { WebView } from 'react-native-webview';
-import API from '../api';
+import API from '../../api';
 
-import TopBar from '../components/TopBar'
+import TopBar from '../../components/TopBar'
 
 export default class App extends React.Component {
 

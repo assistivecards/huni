@@ -9,7 +9,7 @@ import { LinearGradient } from 'expo-linear-gradient';
 import * as ScreenOrientation from 'expo-screen-orientation';
 
 import API from '../api'
-import titleCase from '../js/titleCase';
+import { titleCase } from "title-case";
 
 import TopBar from '../components/TopBar'
 import TouchableScale from '../components/touchable-scale';

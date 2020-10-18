@@ -2,9 +2,9 @@ import React from 'react';
 import { StyleSheet, View, Dimensions, Image, Text, ScrollView, Animated, TouchableOpacity, TextInput, KeyboardAvoidingView, Platform, AppState, Linking, Share } from 'react-native';
 import Svg, { Path, Line, Circle, Polyline, Rect } from 'react-native-svg';
 
-import API from '../api';
-import APP from '../app.json';
-import TopBar from '../components/TopBar'
+import API from '../../api';
+import APP from '../../app.json';
+import TopBar from '../../components/TopBar'
 
 export default class Setting extends React.Component {
   constructor(props){

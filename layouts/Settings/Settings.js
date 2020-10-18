@@ -4,10 +4,10 @@ import Constants from 'expo-constants';
 import Svg, { Path, Line, Circle, Polyline, Rect } from 'react-native-svg';
 import * as ScreenOrientation from 'expo-screen-orientation';
 
-import API from '../api'
+import API from '../../api'
 
-import TopBar from '../components/TopBar'
-import Promo from '../components/Promo'
+import TopBar from '../../components/TopBar'
+import Promo from '../../components/Promo'
 
 export default class App extends React.Component {
   constructor(props) {
@@ -238,7 +238,7 @@ export default class App extends React.Component {
                 <Animated.View style={{flex: 1, alignItems: "center", justifyContent: "center", opacity: this.state.lockAnim}}>
                   <View style={[styles.shadow, {alignItems: "center", justifyContent: "center", backgroundColor: API.config.backgroundColor, margin: 20, borderRadius: 40, paddingVertical: 30}]}>
                     <View style={{marginBottom: 0}}>
-                      <Image source={require("../assets/mascot.png")} style={{width: 120, height: 120}} resizeMode={"contain"}/>
+                      <Image source={require("../../assets/mascot.png")} style={{width: 120, height: 120}} resizeMode={"contain"}/>
                     </View>
                     <Text style={[API.styles.h1, {color: "#fff", marginTop: 15}]}>{API.t("settings_locked_title")}</Text>
                     <Text style={[API.styles.pHome, {textAlign: "center", marginTop: 5}]}>{API.t("settings_locked_description")}</Text>

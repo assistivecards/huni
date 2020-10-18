@@ -3,8 +3,8 @@ import { StyleSheet, View, Dimensions, Image, Text, ScrollView, Animated, Toucha
 import DraggableFlatList from "react-native-draggable-flatlist";
 import { Image as CachedImage } from "react-native-expo-image-cache";
 
-import API from '../api';
-import TopBar from '../components/TopBar'
+import API from '../../api';
+import TopBar from '../../components/TopBar'
 import Svg, { Path } from 'react-native-svg';
 
 export default class Setting extends React.Component {

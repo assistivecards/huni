@@ -1,8 +1,8 @@
 import React from 'react';
 import { Text, View, StatusBar, TouchableOpacity, TouchableWithoutFeedback, ActivityIndicator, Image, Linking, SafeAreaView } from 'react-native';
 import Navigator from './Navigator';
-import Setup from './layouts/Setup';
-import Browser from './layouts/Browser';
+import Setup from './layouts/Settings/Setup';
+import Browser from './layouts/Settings/Browser';
 
 import Svg, { Path, Line, Circle, Polyline, Rect } from 'react-native-svg';
 
