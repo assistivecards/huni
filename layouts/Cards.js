@@ -8,7 +8,7 @@ import { Image as CachedImage } from "react-native-expo-image-cache";
 import * as ScreenOrientation from 'expo-screen-orientation';
 
 import TopBar from '../components/TopBar'
-import TouchableScale from '../components/touchable-scale'
+import TouchableScale from 'touchable-scale-btk';
 import WordItem from '../components/WordItem'
 
 export default class Setting extends React.Component {

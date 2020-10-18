@@ -7,7 +7,7 @@ import { Image as CachedImage } from "react-native-expo-image-cache";
 import * as ScreenOrientation from 'expo-screen-orientation';
 import Svg, { Line, Path, Circle } from 'react-native-svg';
 
-import TouchableScale from '../components/touchable-scale'
+import TouchableScale from 'touchable-scale-btk';
 
 export default class Setting extends React.Component {
   constructor(props){

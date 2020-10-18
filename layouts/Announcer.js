@@ -12,7 +12,7 @@ import API from '../api'
 import { titleCase } from "title-case";
 
 import TopBar from '../components/TopBar'
-import TouchableScale from '../components/touchable-scale';
+import TouchableScale from 'touchable-scale-btk';
 
 export default class App extends React.Component {
   constructor(props){
