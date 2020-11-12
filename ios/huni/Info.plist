@@ -38,27 +38,27 @@
 		</dict>
 	</dict>
 	<key>NSCalendarsUsageDescription</key>
-	<string>Allow Huni to access your calendar</string>
+	<string>Allow huni to access your calendar</string>
 	<key>NSCameraUsageDescription</key>
-	<string>Allow Huni to use the camera</string>
+	<string>Allow huni to use the camera</string>
 	<key>NSContactsUsageDescription</key>
-	<string>Allow Huni experiences to access your contacts</string>
+	<string>Allow huni experiences to access your contacts</string>
 	<key>NSLocationAlwaysAndWhenInUseUsageDescription</key>
-	<string>Allow Huni to use your location</string>
+	<string>Allow huni to use your location</string>
 	<key>NSLocationAlwaysUsageDescription</key>
-	<string>Allow Huni to use your location</string>
+	<string>Allow huni to use your location</string>
 	<key>NSLocationWhenInUseUsageDescription</key>
-	<string>Allow Huni to use your location</string>
+	<string>Allow huni to use your location</string>
 	<key>NSMicrophoneUsageDescription</key>
-	<string>Allow Huni to access your microphone</string>
+	<string>Allow huni to access your microphone</string>
 	<key>NSMotionUsageDescription</key>
-	<string>Allow Huni to access your device's accelerometer</string>
+	<string>Allow huni to access your device's accelerometer</string>
 	<key>NSPhotoLibraryAddUsageDescription</key>
-	<string>Give Huni periences permission to save photos</string>
+	<string>Give huni periences permission to save photos</string>
 	<key>NSPhotoLibraryUsageDescription</key>
-	<string>Give Huni periences permission to access your photos</string>
+	<string>Give huni periences permission to access your photos</string>
 	<key>NSRemindersUsageDescription</key>
-	<string>Allow Huni to access your reminders</string>
+	<string>Allow huni to access your reminders</string>
 	<key>NSSpeechRecognitionUsageDescription</key>
 	<string>Description of why you require the use of the speech recognition</string>
 	<key>UILaunchStoryboardName</key>

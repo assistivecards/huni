@@ -30,8 +30,8 @@
                BuildableIdentifier = "primary"
                BlueprintIdentifier = "13B07F861A680F5B00A75B9A"
                BuildableName = "Huni.app"
-               BlueprintName = "Huni"
-               ReferencedContainer = "container:Huni.xcodeproj">
+               BlueprintName = "huni"
+               ReferencedContainer = "container:huni.xcodeproj">
             </BuildableReference>
          </BuildActionEntry>
          <BuildActionEntry
@@ -43,9 +43,9 @@
             <BuildableReference
                BuildableIdentifier = "primary"
                BlueprintIdentifier = "00E356ED1AD99517003FC87E"
-               BuildableName = "HuniTests.xctest"
-               BlueprintName = "HuniTests"
-               ReferencedContainer = "container:Huni.xcodeproj">
+               BuildableName = "huniTests.xctest"
+               BlueprintName = "huniTests"
+               ReferencedContainer = "container:huni.xcodeproj">
             </BuildableReference>
          </BuildActionEntry>
       </BuildActionEntries>
@@ -60,8 +60,8 @@
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "13B07F861A680F5B00A75B9A"
             BuildableName = "Huni.app"
-            BlueprintName = "Huni"
-            ReferencedContainer = "container:Huni.xcodeproj">
+            BlueprintName = "huni"
+            ReferencedContainer = "container:huni.xcodeproj">
          </BuildableReference>
       </MacroExpansion>
       <Testables>
@@ -70,9 +70,9 @@
             <BuildableReference
                BuildableIdentifier = "primary"
                BlueprintIdentifier = "00E356ED1AD99517003FC87E"
-               BuildableName = "HuniTests.xctest"
-               BlueprintName = "HuniTests"
-               ReferencedContainer = "container:Huni.xcodeproj">
+               BuildableName = "huniTests.xctest"
+               BlueprintName = "huniTests"
+               ReferencedContainer = "container:huni.xcodeproj">
             </BuildableReference>
          </TestableReference>
       </Testables>
@@ -93,8 +93,8 @@
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "13B07F861A680F5B00A75B9A"
             BuildableName = "Huni.app"
-            BlueprintName = "Huni"
-            ReferencedContainer = "container:Huni.xcodeproj">
+            BlueprintName = "huni"
+            ReferencedContainer = "container:huni.xcodeproj">
          </BuildableReference>
       </BuildableProductRunnable>
    </LaunchAction>
@@ -110,8 +110,8 @@
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "13B07F861A680F5B00A75B9A"
             BuildableName = "Huni.app"
-            BlueprintName = "Huni"
-            ReferencedContainer = "container:Huni.xcodeproj">
+            BlueprintName = "huni"
+            ReferencedContainer = "container:huni.xcodeproj">
          </BuildableReference>
       </BuildableProductRunnable>
    </ProfileAction>
