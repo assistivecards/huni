@@ -1,11 +1,11 @@
 {
-  "name": "Huni",
+  "name": "huni",
   "displayName": "Huni",
   "analyticsKey": "UA-179085177-1",
   "apiEndpoint": "https://leeloo.dreamoriented.org/",
   "assetEndpoint": "https://api.assistivecards.com/",
   "assetVersion": 215,
-  "planPrefix": "Huniapp_",
+  "planPrefix": "huniapp_",
   "config": {
     "backgroundColor": "#63b2b5"
   },
@@ -14,8 +14,8 @@
     "googlePlay": 4974702142318544442
   },
   "expo": {
-    "name": "Huni",
-    "slug": "Huni",
+    "name": "huni",
+    "slug": "huni",
     "version": "1.0.0",
     "platforms": [
       "ios",
@@ -23,13 +23,13 @@
       "web"
     ],
     "ios": {
-      "bundleIdentifier": "org.dreamoriented.Huni",
+      "bundleIdentifier": "org.dreamoriented.huni",
       "buildNumber": "1.0.0",
       "requireFullScreen": true,
       "supportsTablet": true
     },
     "android": {
-      "package": "org.dreamoriented.Huni",
+      "package": "org.dreamoriented.huni",
       "permissions": [
         "WAKE_LOCK"
       ],

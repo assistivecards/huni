@@ -3,8 +3,7 @@
     "android": "react-native run-android",
     "ios": "react-native run-ios",
     "web": "expo start --web",
-    "start": "react-native start",
-    "rename": "npx react-native-rename Huni -b org.dreamoriented.huni"
+    "start": "react-native start"
   },
   "dependencies": {
     "@react-native-community/netinfo": "5.9.6",
