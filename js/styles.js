@@ -138,6 +138,14 @@ const styles = StyleSheet.create({
     bottom: -300,
     width: "100%"
   },
+  button: {
+    height: 50,
+    borderRadius: 25,
+    backgroundColor: APP.config.backgroundColor,
+    justifyContent: "center",
+    alignItems: "center",
+    width: 220
+  },
   whiteButton: {
     height: 50,
     borderRadius: 25,

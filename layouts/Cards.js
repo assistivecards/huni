@@ -1,6 +1,7 @@
 import React from 'react';
 import { StyleSheet, View, SafeAreaView, Dimensions, Image, Text, ScrollView, Animated, TouchableOpacity } from 'react-native';
 import Svg, { Path } from 'react-native-svg';
+import { LinearGradient } from 'expo-linear-gradient';
 
 import API from '../api';
 import { titleCase } from "title-case";
@@ -106,7 +107,7 @@ export default class Setting extends React.Component {
                 <Path d="M6 15 h-2a1 1 0 0 1 -1 -1v-4a1 1 0 0 1 1 -1h2l3.5 -4.5a.8 .8 0 0 1 1.5 .5v14a.8 .8 0 0 1 -1.5 .5l-3.5 -4.5"/>
               </Svg>
             </TouchableScale>
-            <Text style={[API.styles.pHome, {color: "#444", marginBottom: 20}]}>Let's train and learn saying the words in {titleCase(this.pack.locale)} category.</Text>
+            <Text style={[API.styles.pHome, {color: "#444", marginBottom: 20}]}>{API.t("card_header_subtitle", titleCase(this.pack.locale))}</Text>
 
             <View style={styles.board}>
               {this.state.cards.map((card, i) => {
@@ -117,11 +118,34 @@ export default class Setting extends React.Component {
               })}
             </View>
             {this.renderNavigation()}
-
             <View style={{backgroundColor: "#fff"}}><View style={API.styles.iosBottomPadderSmall}></View></View>
             <View style={API.styles.iosBottomExtraScrollBlocker}></View>
+            <View style={{height: 40}}></View>
           </SafeAreaView>
         </ScrollView>
+        <LinearGradient
+          // Background Linear Gradient
+          colors={['rgba(255,255,255,0)','rgba(255,255,255,1)','rgba(255,255,255,1)']}
+          style={{
+            position: 'absolute',
+            left: 0,
+            right: 0,
+            bottom: 0,
+            height: 150,
+            zIndex: 99,
+            flexDirection: "row",
+            justifyContent: "center",
+            alignItems: "center"
+          }}
+        >
+          <TouchableScale style={[API.styles.button, {flexDirection: "row"}]} onPress={() => console.log("hey")}>
+            <Svg className="icon icon-tabler icon-tabler-caret-right" height="30" width="30" fill="none" stroke="#fff" strokeLinecap="round" strokeWidth="2" viewBox="0 0 24 24">
+              <Path d="M0 0h24v24H0z" stroke="none"/>
+              <Path d="M18 15l-6-6l-6 6h12" transform="rotate(90 12 12)"/>
+            </Svg>
+            <Text style={{color: "#fff", fontWeight: "bold", fontSize: 18}}>{API.t("card_button_start_training")}</Text>
+          </TouchableScale>
+        </LinearGradient>
       </View>
     )
   }
