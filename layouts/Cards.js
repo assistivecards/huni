@@ -1,5 +1,5 @@
 import React from 'react';
-import { StyleSheet, View, SafeAreaView, Dimensions, Image, Text, ScrollView, Animated, TouchableOpacity } from 'react-native';
+import { StyleSheet, View, SafeAreaView, Dimensions, Image, Text, ScrollView, Animated, TouchableOpacity, ActivityIndicator } from 'react-native';
 import Svg, { Path } from 'react-native-svg';
 import { LinearGradient } from 'expo-linear-gradient';
 
@@ -116,6 +116,13 @@ export default class Setting extends React.Component {
                   <WordItem key={i} result={card} width={this.state.orientation == "portrait" ? "100%" : "50%"}/>
                 )
               })}
+              {this.state.cards.length == 0 &&
+                <View style={{height: 1000, width: "100%"}}>
+                  <View style={{ justifyContent: "center", alignItems: "center", height: 300}}>
+                    <ActivityIndicator color={API.config.backgroundColor}/>
+                  </View>
+                </View>
+              }
             </View>
             {this.renderNavigation()}
             <View style={{backgroundColor: "#fff"}}><View style={API.styles.iosBottomPadderSmall}></View></View>
