@@ -80,11 +80,7 @@ export default class Setting extends React.Component {
   }
 
   openCards(pack, packIndex){
-    if(pack == "random"){
-      this.props.navigation.push("Cards", {pack: {slug: "random", title: "Random"}, packs: this.state.packs, orientation: this.state.orientation});
-    }else{
-      this.props.navigation.push("Cards", {pack, packs: this.state.packs, packIndex, orientation: this.state.orientation});
-    }
+    this.props.navigation.push("Cards", {pack, packs: this.state.packs, packIndex, orientation: this.state.orientation});
   }
 
   renderPacks(){
@@ -121,16 +117,6 @@ export default class Setting extends React.Component {
         <ScrollView contentInsetAdjustmentBehavior="automatic" keyboardShouldPersistTaps="handled" keyboardDismissMode={"on-drag"}>
         <SafeAreaView style={{flex: 1}}>
           <View style={{flexDirection: "row", justifyContent: "space-between", alignItems: "center", height: 60}}>
-            <View style={styles.tabHolder}>
-              <View style={styles.tabStyleActive}>
-                <Text style={styles.tabStyleActiveText}>Categories</Text>
-              </View>
-              <View style={{width: 10}}></View>
-              <TouchableOpacity style={styles.tabStyle} onPress={() => this.openCards("random", 0)}>
-                <Text style={styles.tabStyleText}>Randomly</Text>
-              </TouchableOpacity>
-            </View>
-
             <TouchableOpacity style={styles.avatarHolder} onPress={() => this.openSettings()}>
               <View style={styles.avatar}>
                 <CachedImage uri={`${API.assetEndpoint}cards/avatar/${API.user.avatar}.png?v=${API.version}`}

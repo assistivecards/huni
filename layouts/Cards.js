@@ -26,9 +26,7 @@ export default class Setting extends React.Component {
 
   componentDidMount(){
     API.hit("Pack:"+this.pack.slug);
-    if(this.pack.slug != "random"){
-      this.fetchCards(this.pack.slug);
-    }
+    this.fetchCards(this.pack.slug);
     this.orientationSubscription = ScreenOrientation.addOrientationChangeListener(this._orientationChanged.bind(this));
   }
 
@@ -108,7 +106,7 @@ export default class Setting extends React.Component {
                 <Path d="M6 15 h-2a1 1 0 0 1 -1 -1v-4a1 1 0 0 1 1 -1h2l3.5 -4.5a.8 .8 0 0 1 1.5 .5v14a.8 .8 0 0 1 -1.5 .5l-3.5 -4.5"/>
               </Svg>
             </TouchableScale>
-            <Text style={[API.styles.h2, {color: "#000", marginHorizontal: 10}]}>Training words in this category</Text>
+            <Text style={[API.styles.pHome, {color: "#444", marginBottom: 20}]}>Let's train and learn saying the words in {titleCase(this.pack.locale)} category.</Text>
 
             <View style={styles.board}>
               {this.state.cards.map((card, i) => {
