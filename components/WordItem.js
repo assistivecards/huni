@@ -18,7 +18,6 @@ export default class App extends React.Component {
 
   UNSAFE_componentWillReceiveProps(newProps){
     if(newProps.active != this.props.active){
-      console.log(newProps.active)
       Animated.timing(
         this.state.colorAnim,
         {

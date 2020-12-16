@@ -24,10 +24,7 @@ export default class App extends React.Component {
       cardIndex: 0,
       results: [],
     };
-    Voice.onSpeechStart = this.onSpeechStart;
-    Voice.onSpeechRecognized = this.onSpeechRecognized;
-    Voice.onSpeechEnd = this.onSpeechEnd;
-    Voice.onSpeechError = this.onSpeechError;
+    
     Voice.onSpeechResults = this.onSpeechResults;
 
     this.cards = this.props.cards.map(card => {
@@ -72,7 +69,7 @@ export default class App extends React.Component {
         duration: 300,
         useNativeDriver: false
       }
-    ).start(async () => {
+    ).start(() => {
       this.state.move.setValue(0);
       this.setState({
         cardIndex: cardIndex+1
@@ -95,16 +92,11 @@ export default class App extends React.Component {
     if(e.value[0].toLowerCase().includes(this.wordToRecognize.toLowerCase())){
       this.recognized();
     }
-
   };
 
   _startRecognizing = async () => {
-    this.setState({
-      started: true,
-      results: [],
-    });
-
     try {
+      this.setState({ results: [], started: true });
       await Voice.start('en-US');
     } catch (e) {
       console.error(e);
@@ -120,6 +112,7 @@ export default class App extends React.Component {
     }
   };
 
+
   speak(text, speed){
     API.haptics("touch");
     API.speak(text, speed);
@@ -129,10 +122,8 @@ export default class App extends React.Component {
     const { move } = this.state;
 
     return move.interpolate({
-        inputRange: [0, 1],
-        outputRange: [from, to],
-        extrapolate: 'clamp',
-        useNativeDriver: false
+      inputRange: [0, 1],
+      outputRange: [from, to]
     });
   }
 
