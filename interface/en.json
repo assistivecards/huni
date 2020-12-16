@@ -102,6 +102,11 @@
 
 	"search_input_placeholder": "Search cards and phrases...",
 
+
+	"training_button_skip": "Skip",
+	"training_tip": "Try using the word in a sentence to make it easier to recognize.",
+
+
 	"premium_title": "Unlock Huni Premium!",
 	"premium_description": "Functionality of Huni AI will always be free. Huni Premium offers +50 additional Assistive Card packs.",
 	"premium_monthly": "Monthly",

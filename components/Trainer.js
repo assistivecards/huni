@@ -2,6 +2,7 @@ import React from 'react';
 import { StyleSheet, Platform, Text, View, TouchableOpacity, StatusBar, Dimensions, Image, TextInput, TouchableHighlight, Animated, Easing } from 'react-native';
 import { Image as CachedImage } from "react-native-expo-image-cache";
 import { LinearGradient } from 'expo-linear-gradient';
+import Svg, { Path } from 'react-native-svg';
 
 import API from '../api'
 import WordItem from './WordItem'
@@ -12,6 +13,8 @@ import Voice, {
   SpeechResultsEvent,
   SpeechErrorEvent,
 } from '@react-native-community/voice';
+
+let cardHeight = API.isTablet ? 124 : 94;
 
 export default class App extends React.Component {
   constructor(props: Props) {
@@ -136,14 +139,7 @@ export default class App extends React.Component {
   render(){
     return (
       <View>
-      <Text style={styles.welcome}>Welcome to Huni!</Text>
-      <Text style={styles.instructions}>
-        Press the button and start speaking. {this.state.started ? "..." : "?"}
-      </Text>
-      <Text style={styles.stat}>{`Recognized: ${
-        this.state.recognized
-      }`}</Text>
-
+      <Text style={styles.instructions}>{this.state.started ? "..." : "?"}</Text>
       <View style={{overflow: "hidden", height: 250}}>
         <LinearGradient
           // Background Linear Gradient
@@ -161,9 +157,9 @@ export default class App extends React.Component {
           }}
         />
 
-        <Animated.View style={{transform: [{translateY: this._getMoveInt(-90*(this.state.cardIndex)+50, -90*(this.state.cardIndex+1)+50)}]}}>
+        <Animated.View style={{transform: [{translateY: this._getMoveInt(-cardHeight*(this.state.cardIndex)+50, -cardHeight*(this.state.cardIndex+1)+50)}]}}>
           {this.cards.map((card, i) => {
-            return <WordItem result={card} key={i}/>
+            return <WordItem result={card} key={i} active={this.state.cardIndex == i}/>
           })}
         </Animated.View>
         <LinearGradient
@@ -183,11 +179,18 @@ export default class App extends React.Component {
         />
       </View>
 
-      <View>
-        <Text style={API.styles.p}>TIP: Try using the word in a sentence to make it easier to recognize.</Text>
+      <View style={{backgroundColor: "#f5f5f5", padding: 10, justifyContent: "center", alignItems: "center", paddingVertical: 20}}>
+        <Text style={[API.styles.p, { fontWeight: "bold", textAlign: "center", marginBottom: 20}]}>{API.t("training_tip")}</Text>
+
+        <TouchableScale style={[API.styles.button, {flexDirection: "row"}]} onPress={() => this.skip()}>
+          <Svg className="icon icon-tabler icon-tabler-caret-right" height="30" width="30" fill="none" stroke="#fff" strokeLinecap="round" strokeWidth="2" viewBox="0 0 24 24">
+            <Path d="M0 0h24v24H0z" stroke="none"/>
+            <Path d="M15 13l4 -4l-4 -4m4 4h-11a4 4 0 0 0 0 8h1"/>
+          </Svg>
+          <Text style={{color: "#fff", fontWeight: "bold", fontSize: 18}}>{API.t("training_button_skip")}</Text>
+        </TouchableScale>
       </View>
 
-      <Text style={styles.stat}>Results</Text>
       {this.state.results.map((result, index) => {
         return (
           <Text key={`result-${index}`} style={styles.stat}>
@@ -196,22 +199,6 @@ export default class App extends React.Component {
         );
       })}
 
-      <TouchableHighlight onPress={this._startRecognizing}>
-        <Text style={styles.action}>Start Recognizing</Text>
-      </TouchableHighlight>
-      <TouchableHighlight onPress={this._stopRecognizing}>
-        <Text style={styles.action}>Stop Recognizing</Text>
-      </TouchableHighlight>
-      <TouchableHighlight onPress={this._cancelRecognizing}>
-        <Text style={styles.action}>Cancel</Text>
-      </TouchableHighlight>
-      <TouchableHighlight onPress={this._destroyRecognizer}>
-        <Text style={styles.action}>Destroy</Text>
-      </TouchableHighlight>
-
-      <TouchableHighlight onPress={() => this.skip()}>
-        <Text style={API.styles.p}>SKIP</Text>
-      </TouchableHighlight>
       </View>
     );
   }
