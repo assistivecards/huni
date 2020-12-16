@@ -24,7 +24,7 @@ export default class App extends React.Component {
       cardIndex: 0,
       results: [],
     };
-    
+
     Voice.onSpeechResults = this.onSpeechResults;
 
     this.cards = this.props.cards.map(card => {
@@ -38,14 +38,14 @@ export default class App extends React.Component {
 
   componentDidMount(){
 
-    setTimeout(() => {
-      this.recognize(this.cards[this.state.cardIndex].title);
+    setTimeout(async () => {
+      await this.recognize(this.cards[this.state.cardIndex].title);
     }, 1000);
   }
 
-  recognize(word){
+  async recognize(word){
     this.wordToRecognize = word;
-    this._startRecognizing();
+    await this._startRecognizing();
   }
 
   async recognized(){
@@ -56,8 +56,7 @@ export default class App extends React.Component {
     let cardIndex = this.state.cardIndex;
 
     if(this.cards[cardIndex+1]){
-      this.recognize(this.cards[cardIndex+1].title);
-
+      await this.recognize(this.cards[cardIndex+1].title);
     }else{
       alert("All done!");
     }
@@ -66,7 +65,7 @@ export default class App extends React.Component {
       this.state.move,
       {
         toValue: 1,
-        duration: 300,
+        duration: 250,
         useNativeDriver: false
       }
     ).start(() => {
