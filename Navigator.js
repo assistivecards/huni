@@ -6,7 +6,7 @@ import { Easing, Animated } from 'react-native';
 
 import Home from './layouts/Home'
 import Cards from './layouts/Cards'
-import Announcer from './layouts/Announcer'
+import Training from './layouts/Training'
 
 import Settings from './layouts/Settings/Settings'
 import Account from './layouts/Settings/Account'
@@ -68,7 +68,7 @@ function forVertical(props) {
 const RootNavigator = createAppContainer(AppNavigator);
 const ModelNavigator = createStackNavigator({
     Root: { screen: RootNavigator },
-    Announcer: {screen: Announcer }
+    Training: {screen: Training }
   },
   {
     mode: 'modal',

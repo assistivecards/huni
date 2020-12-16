@@ -3,7 +3,7 @@ import { StyleSheet, Platform, Text, View, TouchableOpacity, StatusBar, Dimensio
 import { Image as CachedImage } from "react-native-expo-image-cache";
 
 import API from '../api'
-import TouchableScale from './touchable-scale'
+import TouchableScale from 'touchable-scale-btk'
 
 export default class App extends React.Component {
 

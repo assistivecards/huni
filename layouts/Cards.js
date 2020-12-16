@@ -145,7 +145,7 @@ export default class Setting extends React.Component {
             alignItems: "center"
           }}
         >
-          <TouchableScale style={[API.styles.button, {flexDirection: "row"}]} onPress={() => console.log("hey")}>
+          <TouchableScale style={[API.styles.button, {flexDirection: "row"}]} onPress={() => this.props.navigation.push("Training", {pack: this.pack, cards: this.state.cards})}>
             <Svg className="icon icon-tabler icon-tabler-caret-right" height="30" width="30" fill="none" stroke="#fff" strokeLinecap="round" strokeWidth="2" viewBox="0 0 24 24">
               <Path d="M0 0h24v24H0z" stroke="none"/>
               <Path d="M18 15l-6-6l-6 6h12" transform="rotate(90 12 12)"/>
