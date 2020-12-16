@@ -93,7 +93,7 @@ export default class Setting extends React.Component {
                 <CachedImage uri={`${API.assetEndpoint}cards/icon/${pack.slug}.png?v=${API.version}`} style={{width: API.isTablet ? 90 : 50, height: API.isTablet ? 90 : 50, margin: 15, marginBottom: 10}}/>
                 <View>
                   <Text style={[styles.categoryItemText, {fontSize: API.isTablet ? 25 : 18, marginBottom: 3}]}>{titleCase(pack.locale)}</Text>
-                  <Text style={[styles.categoryItemText, {fontSize: API.isTablet ? 23 : 16, fontWeight: "normal", opacity: 0.8, marginTop: 2}]}>{pack.count} Words & {pack.count * 4} Phrases</Text>
+                  <Text style={[styles.categoryItemText, {fontSize: API.isTablet ? 23 : 16, fontWeight: "normal", opacity: 0.8, marginTop: 2}]}>{pack.count} Training Words</Text>
                 </View>
               </View>
             </TouchableScale>

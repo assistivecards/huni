@@ -175,8 +175,8 @@ export default class App extends React.Component {
     return (
       <View style={{flex: 1}}>
         <Animated.View style={{flex: 1, opacity: this._getPopInt(0,1), backgroundColor: Platform.OS == "android" ? "rgba(255,255,255,0.95)" :  "rgba(255,255,255,0.2)"}}>
-          <BlurView intensity={100} style={{flex: 1}}>
-          </BlurView>
+          <View style={{flex: 1, backgroundColor: "#fff"}}>
+          </View>
         </Animated.View>
         <Animated.View
           {...this.state.panResponder.panHandlers} style={[{ transform: this.state.pan.getTranslateTransform() }, styles.modal]}>

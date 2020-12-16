@@ -1,8 +1,11 @@
 import React from 'react';
-import { StyleSheet, Platform, Text, View, TouchableOpacity, StatusBar, Dimensions, Image, TextInput, TouchableHighlight } from 'react-native';
+import { StyleSheet, Platform, Text, View, TouchableOpacity, StatusBar, Dimensions, Image, TextInput, TouchableHighlight, Animated, Easing } from 'react-native';
 import { Image as CachedImage } from "react-native-expo-image-cache";
+import { LinearGradient } from 'expo-linear-gradient';
 
 import API from '../api'
+import WordItem from './WordItem'
+
 import TouchableScale from 'touchable-scale-btk'
 import Voice, {
   SpeechRecognizedEvent,
@@ -14,6 +17,7 @@ export default class App extends React.Component {
   constructor(props: Props) {
     super(props);
     this.state = {
+      move: new Animated.Value(0),
       cardIndex: 0,
       results: [],
     };
@@ -44,25 +48,33 @@ export default class App extends React.Component {
     this._startRecognizing();
   }
 
-  recognize(word){
-    this.wordToRecognize = word;
-    this._startRecognizing();
-  }
-
   async recognized(){
     await this._stopRecognizing();
+    API.haptics("impact");
+    this.wordToRecognize = "$|$";
 
     let cardIndex = this.state.cardIndex;
-    this.setState({
-      cardIndex: cardIndex+1
-    });
-    this.wordToRecognize = "$|$";
 
     if(this.cards[cardIndex+1]){
       this.recognize(this.cards[cardIndex+1].title);
+
     }else{
       alert("All done!");
     }
+
+    Animated.timing(
+      this.state.move,
+      {
+        toValue: 1,
+        duration: 300,
+        useNativeDriver: false
+      }
+    ).start(async () => {
+      this.state.move.setValue(0);
+      this.setState({
+        cardIndex: cardIndex+1
+      });
+    });
   }
 
   skip(){
@@ -110,6 +122,17 @@ export default class App extends React.Component {
     API.speak(text, speed);
   }
 
+  _getMoveInt = (from, to) => {
+    const { move } = this.state;
+
+    return move.interpolate({
+        inputRange: [0, 1],
+        outputRange: [from, to],
+        extrapolate: 'clamp',
+        useNativeDriver: false
+    });
+  }
+
   render(){
     return (
       <View>
@@ -121,14 +144,48 @@ export default class App extends React.Component {
         this.state.recognized
       }`}</Text>
 
-      {typeof this.cards[this.state.cardIndex] != "undefined" &&
-        <Text style={API.styles.p}>{this.cards[this.state.cardIndex].title}</Text>
-      }
+      <View style={{overflow: "hidden", height: 250}}>
+        <LinearGradient
+          // Background Linear Gradient
+          colors={['rgba(255,255,255,1)','rgba(255,255,255,0)']}
+          style={{
+            position: 'absolute',
+            left: 0,
+            right: 0,
+            top: 0,
+            height: 50,
+            zIndex: 99,
+            flexDirection: "row",
+            justifyContent: "center",
+            alignItems: "center"
+          }}
+        />
 
-      {typeof this.cards[this.state.cardIndex+1] != "undefined" &&
-        <Text>Next: {this.cards[this.state.cardIndex+1].title}</Text>
-      }
+        <Animated.View style={{transform: [{translateY: this._getMoveInt(-90*(this.state.cardIndex)+50, -90*(this.state.cardIndex+1)+50)}]}}>
+          {this.cards.map((card, i) => {
+            return <WordItem result={card} key={i}/>
+          })}
+        </Animated.View>
+        <LinearGradient
+          // Background Linear Gradient
+          colors={['rgba(255,255,255,0)','rgba(255,255,255,1)']}
+          style={{
+            position: 'absolute',
+            left: 0,
+            right: 0,
+            bottom: 0,
+            height: 100,
+            zIndex: 99,
+            flexDirection: "row",
+            justifyContent: "center",
+            alignItems: "center"
+          }}
+        />
+      </View>
 
+      <View>
+        <Text style={API.styles.p}>TIP: Try using the word in a sentence to make it easier to recognize.</Text>
+      </View>
 
       <Text style={styles.stat}>Results</Text>
       {this.state.results.map((result, index) => {
