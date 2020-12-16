@@ -385,10 +385,9 @@ class Api {
 				}
 			});
 
-      const history = await InAppPurchases.getPurchaseHistoryAsync(true);
+			const history = await InAppPurchases.getPurchaseHistoryAsync(Platform.OS == "ios");
 			if (history.responseCode === InAppPurchases.IAPResponseCode.OK) {
 			  // get to know if user is premium or npt.
-				console.log(history.results);
 				let lifetime = history.results.filter(res => res.productId == "lifetime")[0];
 				if(lifetime){
 					this.premium = "lifetime";
