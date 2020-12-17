@@ -210,7 +210,7 @@ export default class App extends React.Component {
                   <Text style={[API.styles.h2, {textAlign: "center", marginTop: 15}]}>{API.t("training_title_great_work")}</Text>
                   <Text style={[API.styles.p, {textAlign: "center"}]}>{API.t("training_desc_done", this.pack.locale)}</Text>
 
-                  <TouchableScale style={[API.styles.button, {flexDirection: "row", width: 260, marginBottom: 10}]} onPress={() => this.main()}>
+                  <TouchableScale style={[API.styles.button, {flexDirection: "row", width: 260, marginBottom: 10, marginTop: 10}]} onPress={() => this.main()}>
                     <Svg className="icon icon-tabler icon-tabler-caret-right" height="30" width="30" fill="none" stroke="#fff" strokeLinecap="round" strokeWidth="2" viewBox="0 0 24 24">
                       <Path d="M0 0h24v24H0z" stroke="none"/>
                       <Path d="M15 13l4 -4l-4 -4m4 4h-11a4 4 0 0 0 0 8h1"/>
