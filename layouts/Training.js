@@ -185,17 +185,9 @@ export default class App extends React.Component {
               this.setState({scrollerHeight: height});
             }}>
 
-            <View style={{flex: 1, height: 600, marginTop: 44}}>
-
-                <View style={{flexDirection: "column", alignItems: "center"}}>
-                  <Text style={[API.styles.h2, {marginTop: 0}]}>Training</Text>
-                  <Text style={[API.styles.sub, {marginHorizontal: 0, marginBottom: 15}]}>{this.pack.locale}</Text>
-                </View>
+            <View style={{flex: 1, height: 600}}>
                 <Trainer cards={this.cards}/>
             </View>
-
-
-
           </View>
         </Animated.View>
         {Platform.OS == "ios" &&

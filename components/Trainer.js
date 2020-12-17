@@ -1,11 +1,12 @@
 import React from 'react';
-import { StyleSheet, Platform, Text, View, TouchableOpacity, StatusBar, Dimensions, Image, TextInput, TouchableHighlight, Animated, Easing } from 'react-native';
+import { StyleSheet, Platform, Text, View, TouchableOpacity, StatusBar, Dimensions, Image, TextInput, TouchableHighlight, Animated, Easing, SafeAreaView } from 'react-native';
 import { Image as CachedImage } from "react-native-expo-image-cache";
 import { LinearGradient } from 'expo-linear-gradient';
 import Svg, { Path } from 'react-native-svg';
 
 import API from '../api'
 import WordItem from './WordItem'
+import Recognition from './Recognition'
 
 import TouchableScale from 'touchable-scale-btk'
 import Voice, {
@@ -24,7 +25,7 @@ export default class App extends React.Component {
       cardIndex: 0,
       results: [],
     };
-    
+
     Voice.onSpeechResults = this.onSpeechResults;
 
     this.cards = this.props.cards.map(card => {
@@ -38,14 +39,14 @@ export default class App extends React.Component {
 
   componentDidMount(){
 
-    setTimeout(() => {
-      this.recognize(this.cards[this.state.cardIndex].title);
+    setTimeout(async () => {
+      await this.recognize(this.cards[this.state.cardIndex].title);
     }, 1000);
   }
 
-  recognize(word){
+  async recognize(word){
     this.wordToRecognize = word;
-    this._startRecognizing();
+    await this._startRecognizing();
   }
 
   async recognized(){
@@ -56,8 +57,7 @@ export default class App extends React.Component {
     let cardIndex = this.state.cardIndex;
 
     if(this.cards[cardIndex+1]){
-      this.recognize(this.cards[cardIndex+1].title);
-
+      await this.recognize(this.cards[cardIndex+1].title);
     }else{
       alert("All done!");
     }
@@ -66,7 +66,7 @@ export default class App extends React.Component {
       this.state.move,
       {
         toValue: 1,
-        duration: 300,
+        duration: 250,
         useNativeDriver: false
       }
     ).start(() => {
@@ -118,6 +118,14 @@ export default class App extends React.Component {
     API.speak(text, speed);
   }
 
+  async listenCurrentWord(){
+    await this._stopRecognizing();
+    this.speak(this.cards[this.state.cardIndex].title);
+    setTimeout(async () => {
+      await this._startRecognizing();
+    }, 1000);
+  }
+
   _getMoveInt = (from, to) => {
     const { move } = this.state;
 
@@ -129,68 +137,59 @@ export default class App extends React.Component {
 
   render(){
     return (
-      <View>
-      <Text style={styles.instructions}>{this.state.started ? "..." : "?"}</Text>
-      <View style={{overflow: "hidden", height: 250}}>
-        <LinearGradient
-          // Background Linear Gradient
-          colors={['rgba(255,255,255,1)','rgba(255,255,255,0)']}
-          style={{
-            position: 'absolute',
-            left: 0,
-            right: 0,
-            top: 0,
-            height: 50,
-            zIndex: 99,
-            flexDirection: "row",
-            justifyContent: "center",
-            alignItems: "center"
-          }}
-        />
+      <SafeAreaView>
+        <Recognition active={this.state.started}/>
+        <View style={{overflow: "hidden", height: 320}}>
+          <LinearGradient
+            // Background Linear Gradient
+            colors={['rgba(255,255,255,1)','rgba(255,255,255,1)','rgba(255,255,255,0)']}
+            style={{
+              position: 'absolute',
+              left: 0,
+              right: 0,
+              top: 0,
+              height: 60,
+              zIndex: 99,
+              flexDirection: "row",
+              justifyContent: "center",
+              alignItems: "center"
+            }}
+          />
 
-        <Animated.View style={{transform: [{translateY: this._getMoveInt(-cardHeight*(this.state.cardIndex)+50, -cardHeight*(this.state.cardIndex+1)+50)}]}}>
-          {this.cards.map((card, i) => {
-            return <WordItem result={card} key={i} active={this.state.cardIndex == i}/>
-          })}
-        </Animated.View>
-        <LinearGradient
-          // Background Linear Gradient
-          colors={['rgba(255,255,255,0)','rgba(255,255,255,1)']}
-          style={{
-            position: 'absolute',
-            left: 0,
-            right: 0,
-            bottom: 0,
-            height: 100,
-            zIndex: 99,
-            flexDirection: "row",
-            justifyContent: "center",
-            alignItems: "center"
-          }}
-        />
-      </View>
+          <Animated.View style={{transform: [{translateY: this._getMoveInt(-cardHeight*(this.state.cardIndex)+50, -cardHeight*(this.state.cardIndex+1)+50)}]}}>
+            {this.cards.map((card, i) => {
+              return <WordItem result={card} key={i} active={this.state.cardIndex == i} listen={this.listenCurrentWord.bind(this)}/>
+            })}
+          </Animated.View>
+          <LinearGradient
+            // Background Linear Gradient
+            colors={['rgba(255,255,255,0)','rgba(255,255,255,1)']}
+            style={{
+              position: 'absolute',
+              left: 0,
+              right: 0,
+              bottom: 0,
+              height: 100,
+              zIndex: 99,
+              flexDirection: "row",
+              justifyContent: "center",
+              alignItems: "center"
+            }}
+          />
+        </View>
 
-      <View style={{backgroundColor: "#f5f5f5", padding: 10, justifyContent: "center", alignItems: "center", paddingVertical: 20}}>
-        <Text style={[API.styles.p, { fontWeight: "bold", textAlign: "center", marginBottom: 20}]}>{API.t("training_tip")}</Text>
+        <View style={{backgroundColor: "#f5f5f5", padding: 10, justifyContent: "center", alignItems: "center", paddingVertical: 20}}>
+          <Text style={[API.styles.p, { fontWeight: "bold", textAlign: "center", marginBottom: 20}]}>{API.t("training_tip")}</Text>
 
-        <TouchableScale style={[API.styles.button, {flexDirection: "row"}]} onPress={() => this.skip()}>
-          <Svg className="icon icon-tabler icon-tabler-caret-right" height="30" width="30" fill="none" stroke="#fff" strokeLinecap="round" strokeWidth="2" viewBox="0 0 24 24">
-            <Path d="M0 0h24v24H0z" stroke="none"/>
-            <Path d="M15 13l4 -4l-4 -4m4 4h-11a4 4 0 0 0 0 8h1"/>
-          </Svg>
-          <Text style={{color: "#fff", fontWeight: "bold", fontSize: 18}}>{API.t("training_button_skip")}</Text>
-        </TouchableScale>
-      </View>
-
-      {this.state.results.map((result, index) => {
-        return (
-          <Text key={`result-${index}`} style={styles.stat}>
-            {result}
-          </Text>
-        );
-      })}
-
-      </View>
+          <TouchableScale style={[API.styles.button, {flexDirection: "row"}]} onPress={() => this.skip()}>
+            <Svg className="icon icon-tabler icon-tabler-caret-right" height="30" width="30" fill="none" stroke="#fff" strokeLinecap="round" strokeWidth="2" viewBox="0 0 24 24">
+              <Path d="M0 0h24v24H0z" stroke="none"/>
+              <Path d="M15 13l4 -4l-4 -4m4 4h-11a4 4 0 0 0 0 8h1"/>
+            </Svg>
+            <Text style={{color: "#fff", fontWeight: "bold", fontSize: 18}}>{API.t("training_button_skip")}</Text>
+          </TouchableScale>
+        </View>
+      </SafeAreaView>
     );
   }
 }
