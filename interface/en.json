@@ -106,6 +106,10 @@
 	"training_button_skip": "Skip",
 	"training_button_listen": "Listen",
 	"training_tip": "Try using the word in a sentence to make it easier to recognize.",
+	"training_button_choose": "Choose Another Pack",
+	"training_button_restart": "Restart",
+	"training_title_great_work": "Great Work!",
+	"training_desc_done": "You finished training all the words in $1 word pack. What do you want to do now?",
 
 
 	"premium_title": "Unlock Huni Premium!",

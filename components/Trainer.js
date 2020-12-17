@@ -59,7 +59,7 @@ export default class App extends React.Component {
     if(this.cards[cardIndex+1]){
       await this.recognize(this.cards[cardIndex+1].title);
     }else{
-      alert("All done!");
+      this.props.done();
     }
 
     Animated.timing(

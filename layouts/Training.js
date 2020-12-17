@@ -29,7 +29,8 @@ export default class App extends React.Component {
       orientation: this.props.navigation.getParam("orientation"),
       pop: new Animated.Value(0),
       pan: new Animated.ValueXY({x: 0, y: this.windowHeight}),
-      scrollerHeight: 0
+      scrollerHeight: 0,
+      done: false
     }
 
     this.valueListener = this.state.pan.addListener((value) => {
@@ -170,6 +171,17 @@ export default class App extends React.Component {
     API.speak(text, speed);
   }
 
+  done(){
+    this.setState({done: true})
+  }
+
+  main(){
+    this.closeModal();
+    setTimeout(() => {
+      this.props.navigation.pop();
+    }, 200);
+  }
+
   render() {
 
     return (
@@ -186,7 +198,35 @@ export default class App extends React.Component {
             }}>
 
             <View style={{flex: 1, height: 600}}>
-                <Trainer cards={this.cards}/>
+              {!this.state.done &&
+                <Trainer cards={this.cards} done={this.done.bind(this)}/>
+              }
+              {this.state.done &&
+                <View style={{ justifyContent: "center", alignItems: "center", height: this.windowHeight}}>
+                  <View style={{flexDirection: "row", justifyContent: "center"}}>
+                    <CachedImage uri={`${API.assetEndpoint}cards/icon/${this.pack.slug}.png?v=${API.version}`} style={{width: 100, height: 100, margin: 10}}/>
+                    <CachedImage uri={`${API.assetEndpoint}cards/conversation/yes.png?v=${API.version}`} style={{width: 100, height: 100, margin: 10}}/>
+                  </View>
+                  <Text style={[API.styles.h2, {textAlign: "center", marginTop: 15}]}>{API.t("training_title_great_work")}</Text>
+                  <Text style={[API.styles.p, {textAlign: "center"}]}>{API.t("training_desc_done", this.pack.locale)}</Text>
+
+                  <TouchableScale style={[API.styles.button, {flexDirection: "row", width: 260, marginBottom: 10}]} onPress={() => this.main()}>
+                    <Svg className="icon icon-tabler icon-tabler-caret-right" height="30" width="30" fill="none" stroke="#fff" strokeLinecap="round" strokeWidth="2" viewBox="0 0 24 24">
+                      <Path d="M0 0h24v24H0z" stroke="none"/>
+                      <Path d="M15 13l4 -4l-4 -4m4 4h-11a4 4 0 0 0 0 8h1"/>
+                    </Svg>
+                    <Text style={{color: "#fff", fontWeight: "bold", fontSize: 18}}>{API.t("training_button_choose")}</Text>
+                  </TouchableScale>
+
+                  <TouchableScale style={[API.styles.button, {flexDirection: "row", backgroundColor: "#fafafa"}]} onPress={() => this.setState({done: false})}>
+                    <Svg className="icon icon-tabler icon-tabler-caret-right" height="30" width="30" fill="none" stroke={API.config.backgroundColor} strokeLinecap="round" strokeWidth="2" viewBox="0 0 24 24">
+                      <Path d="M0 0h24v24H0z" stroke="none"/>
+                      <Path d="M15 13l4 -4l-4 -4m4 4h-11a4 4 0 0 0 0 8h1"/>
+                    </Svg>
+                    <Text style={{color: API.config.backgroundColor, fontWeight: "bold", fontSize: 18}}>{API.t("training_button_restart")}</Text>
+                  </TouchableScale>
+                </View>
+              }
             </View>
           </View>
         </Animated.View>
