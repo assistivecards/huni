@@ -60,6 +60,7 @@ export default class App extends React.Component {
 			if(user){
 				API.user = JSON.parse(user);
         this.setState({screen: "logged"});
+        API.initSpeech();
       }else{
         console.log("You need to setup your app!!");
         this.setState({screen: "login"});

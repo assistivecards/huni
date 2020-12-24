@@ -45,8 +45,6 @@ PODS:
   - EXScreenOrientation (2.0.0):
     - React-Core
     - UMCore
-  - EXSpeech (8.4.0):
-    - UMCore
   - EXSplashScreen (0.6.1):
     - React
     - UMCore
@@ -311,6 +309,8 @@ PODS:
     - React
   - RNSVG (12.1.0):
     - React
+  - TextToSpeech (2.0.0):
+    - React
   - UMAppLoader (1.3.0)
   - UMBarCodeScannerInterface (5.3.0)
   - UMCameraInterface (5.3.0)
@@ -349,7 +349,6 @@ DEPENDENCIES:
   - EXNotifications (from `../node_modules/expo-notifications/ios`)
   - EXPermissions (from `../node_modules/expo-permissions/ios`)
   - EXScreenOrientation (from `../node_modules/expo-screen-orientation/ios`)
-  - EXSpeech (from `../node_modules/expo-speech/ios`)
   - EXSplashScreen (from `../node_modules/expo-splash-screen/ios`)
   - EXSQLite (from `../node_modules/expo-sqlite/ios`)
   - FBLazyVector (from `../node_modules/react-native/Libraries/FBLazyVector`)
@@ -385,6 +384,7 @@ DEPENDENCIES:
   - RNReanimated (from `../node_modules/react-native-reanimated`)
   - RNScreens (from `../node_modules/react-native-screens`)
   - RNSVG (from `../node_modules/react-native-svg`)
+  - TextToSpeech (from `../node_modules/react-native-tts`)
   - UMAppLoader (from `../node_modules/unimodules-app-loader/ios`)
   - UMBarCodeScannerInterface (from `../node_modules/unimodules-barcode-scanner-interface/ios`)
   - UMCameraInterface (from `../node_modules/unimodules-camera-interface/ios`)
@@ -441,8 +441,6 @@ EXTERNAL SOURCES:
     :path: "../node_modules/expo-permissions/ios"
   EXScreenOrientation:
     :path: "../node_modules/expo-screen-orientation/ios"
-  EXSpeech:
-    :path: "../node_modules/expo-speech/ios"
   EXSplashScreen:
     :path: "../node_modules/expo-splash-screen/ios"
   EXSQLite:
@@ -509,6 +507,8 @@ EXTERNAL SOURCES:
     :path: "../node_modules/react-native-screens"
   RNSVG:
     :path: "../node_modules/react-native-svg"
+  TextToSpeech:
+    :path: "../node_modules/react-native-tts"
   UMAppLoader:
     :path: "../node_modules/unimodules-app-loader/ios"
   UMBarCodeScannerInterface:
@@ -558,7 +558,6 @@ SPEC CHECKSUMS:
   EXNotifications: 0a1152ef2bd0f1cdd72a46bb256523a6ce5fa6e5
   EXPermissions: 30cbe5b72bd209b65c00884180ad058a60bb413d
   EXScreenOrientation: 9110f49798fae74322f6fa959eab1da5d4805cf0
-  EXSpeech: daf271faf114448b0dccf6391b6b81f49bf44b99
   EXSplashScreen: c496093747ee7f4e933c6312c0f52681612592e3
   EXSQLite: d0d8677c13e60d5db2812387f059c697be27d3fb
   FBLazyVector: 3ef4a7f62e7db01092f9d517d2ebc0d0677c4a37
@@ -592,6 +591,7 @@ SPEC CHECKSUMS:
   RNReanimated: dd8c286ab5dd4ba36d3a7fef8bff7e08711b5476
   RNScreens: b748efec66e095134c7166ca333b628cd7e6f3e2
   RNSVG: ce9d996113475209013317e48b05c21ee988d42e
+  TextToSpeech: 4e2fc50c7495416c6da5a1662ad3f750c58d3c85
   UMAppLoader: 5db5dc03176c6238da9c8b3657a370137882a4ad
   UMBarCodeScannerInterface: 017672479f93de88d94c3a50dfb66b5348b65989
   UMCameraInterface: 22bd2c4bf15dcf68530368fa5704af7490818457
@@ -607,6 +607,6 @@ SPEC CHECKSUMS:
   UMTaskManagerInterface: 6cad5929dbc0a5b986ad4d77caac497d4de730a7
   Yoga: 7740b94929bbacbddda59bf115b5317e9a161598
 
-PODFILE CHECKSUM: 7d8194ccc8f29037ae68d6c3186b0418f91a1d37
+PODFILE CHECKSUM: 715a1ca0346f8741b56f81e56382cb336653592f
 
 COCOAPODS: 1.9.1

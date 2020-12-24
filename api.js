@@ -1,7 +1,7 @@
 import Storage from 'react-native-storage';
 import { AsyncStorage, Platform, Alert } from 'react-native';
 
-import * as Speech from 'expo-speech';
+import Speech from 'react-native-tts';
 import * as Localization from 'expo-localization';
 import * as Haptics from 'expo-haptics';
 import * as Permissions from 'expo-permissions';
@@ -57,6 +57,8 @@ class Api {
 		this.searchArray = [];
 		this.development = _DEVELOPMENT;
 		this.styles = styles;
+		this.setSpeechEngine();
+
 		this.config = APP.config;
 		this.event = Event;
 		this.language = "en";
@@ -83,6 +85,50 @@ class Api {
 		}
 		this._initSubscriptions();
   }
+
+
+	requestSpeechInstall(){
+		if(Platform.OS == "android"){
+			Speech.getInitStatus().then(() => {
+				Speech.requestInstallData();
+			}, (err) => {
+			  if (err.code === 'no_engine') {
+					Speech.requestInstallEngine();
+			  }
+			});
+		}
+	}
+
+	setSpeechEngine(){
+		if(Platform.OS == "android"){
+			Speech.engines().then(engines => {
+				engines.forEach(engine => {
+					if(engine.label){
+						if(engine.label.includes("Google") || engine.label.includes("google") || engine.label.includes("google")){
+							if(!engine.default){
+								Speech.setDefaultEngine(engine.name);
+							}
+						}
+					}
+				});
+			});
+		}
+	}
+
+	initSpeech(){
+		console.log("Speech Initialized");
+
+		Speech.setDefaultVoice(this.user.voice).then(res => {
+			console.log(res);
+		}, (err) => {
+		  console.log("Error: ", err);
+		});
+		Speech.setIgnoreSilentSwitch("ignore");
+		Speech.setDucking(true);
+		Speech.addEventListener('tts-start', () => {});
+		Speech.addEventListener('tts-finish', () => {});
+		Speech.addEventListener('tts-cancel', () => {});
+	}
 
 	hit(screen){
 		this.analytics.hit(new ScreenHit(screen))
@@ -208,6 +254,7 @@ class Api {
 		await this.setData("user", JSON.stringify(user));
 		console.log("Setup completed.");
 		this.user = user;
+		this.initSpeech();
 	}
 
 	signout(){
@@ -240,34 +287,45 @@ class Api {
 		await this.setData("user", JSON.stringify(user));
 	}
 
-	speak(text, speed){
+
+	speak(text, speed, voice){
+		if(voice){
+			Speech.setDefaultVoice(voice);
+		}
 		//text = this.phrase()
-		let rate = 1;
+		let rate = 0.5;
 		if(speed == "slow"){
-			rate = 0.5;
+			rate = 0.25;
 		}
 		if(this.user.voice != "unsupported"){
 			Speech.speak(text, {
-				voice: this.user.voice,
-				language: this.language,
+				language: this.user.language,
 				pitch: 1,
-				rate: rate
+				rate: rate,
+				androidParams: {
+					KEY_PARAM_STREAM: 'STREAM_MUSIC'
+				}
 			});
 		}
 	}
 
 	async getAvailableVoicesAsync(recall){
-		let voices = await Speech.getAvailableVoicesAsync();
+		let voices = await Speech.voices();
 		if(voices.length == 0){
 			if(recall){
 				return [];
 			}else{
 				await new Promise(function(resolve) {
-		        setTimeout(resolve, 1000);
+		        setTimeout(resolve, 8000);
 		    });
 				return await this.getAvailableVoicesAsync(true);
 			}
 		}else{
+			voices.map(voice => {
+				voice.name = voice.id;
+				voice.identifier = voice.id;
+				voice.quality == 500 ? voice.quality = "Enhanced" : voice.quality = "Optimal";
+			});
 			return voices;
 		}
 	}

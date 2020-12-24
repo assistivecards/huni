@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
 import { Platform, StyleSheet, Text, View, Image, TouchableHighlight} from 'react-native';
-import * as Speech from 'expo-speech';
 import * as Notifications from 'expo-notifications';
 
 import TopBar from './components/TopBar';
