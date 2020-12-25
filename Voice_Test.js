@@ -10,7 +10,7 @@ import Voice, {
   SpeechErrorEvent,
 } from '@react-native-community/voice';
 
-//import API from './api';
+import API from './api';
 
 export default class VoiceTest extends Component {
   constructor(props: Props) {

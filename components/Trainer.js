@@ -26,8 +26,8 @@ export default class App extends React.Component {
       results: [],
     };
 
+    Voice.onSpeechEnd = this.onSpeechEnd;
     Voice.onSpeechResults = this.onSpeechResults;
-
     this.cards = this.props.cards.map(card => {
       return {
         pack: card.pack,
@@ -85,6 +85,11 @@ export default class App extends React.Component {
     Voice.destroy().then(Voice.removeAllListeners);
   }
 
+  onSpeechEnd = (e) => {
+    this.setState({started: false});
+    //this._startRecognizing();
+  };
+
   onSpeechResults = async (e) => {
     this.setState({
       results: e.value,
@@ -93,6 +98,7 @@ export default class App extends React.Component {
       this.recognized();
     }
   };
+
 
   _startRecognizing = async () => {
     try {
@@ -188,6 +194,14 @@ export default class App extends React.Component {
             </Svg>
             <Text style={{color: "#fff", fontWeight: "bold", fontSize: 18}}>{API.t("training_button_skip")}</Text>
           </TouchableScale>
+        </View>
+
+        <View>
+        {
+          this.state.results.map(res => {
+            return <Text>{res}</Text>
+          })
+        }
         </View>
       </SafeAreaView>
     );
