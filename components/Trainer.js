@@ -40,13 +40,15 @@ export default class App extends React.Component {
   }
 
   async componentDidMount(){
-    const { status, expires, permissions } = await Permissions.askAsync(Permissions.AUDIO_RECORDING);
-  	if (status !== "granted") {
-  		this.setState({showRecordButton: false});
-  	} else {
-  		this.setState({showRecordButton: true});
-  	}
-
+    if(Platform.OS == "android") {
+      const { status, expires, permissions } = await Permissions.askAsync(Permissions.AUDIO_RECORDING);
+    	if (status !== "granted") {
+    		this.setState({showRecordButton: false});
+    	} else {
+    		this.setState({showRecordButton: true});
+    	}
+    }
+    
     setTimeout(async () => {
       if(Platform.OS == "android") {
         await this._startRecognizing();
