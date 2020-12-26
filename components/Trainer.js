@@ -3,6 +3,8 @@ import { StyleSheet, Platform, Text, View, TouchableOpacity, StatusBar, Dimensio
 import { Image as CachedImage } from "react-native-expo-image-cache";
 import { LinearGradient } from 'expo-linear-gradient';
 import Svg, { Path } from 'react-native-svg';
+import Speech from 'react-native-tts';
+import * as Permissions from 'expo-permissions';
 
 import API from '../api'
 import WordItem from './WordItem'
@@ -15,7 +17,7 @@ import Voice, {
   SpeechErrorEvent,
 } from '@react-native-community/voice';
 
-let cardHeight = API.isTablet ? 124 : 94;
+let cardHeight = API.isTablet ? 114 : 94;
 
 export default class App extends React.Component {
   constructor(props: Props) {
@@ -37,20 +39,40 @@ export default class App extends React.Component {
     });
   }
 
-  componentDidMount(){
+  async componentDidMount(){
+    const { status, expires, permissions } = await Permissions.askAsync(Permissions.AUDIO_RECORDING);
+  	if (status !== "granted") {
+  		this.setState({showRecordButton: false});
+  	} else {
+  		this.setState({showRecordButton: true});
+  	}
 
     setTimeout(async () => {
+      if(Platform.OS == "android") {
+        await this._startRecognizing();
+        setTimeout(() => {
+          if(!this.state.showRecordButton){
+            alert("This app needs microphone permission to work, you might need to give permissions manually.");
+          }
+        }, 10000);
+      }
+
       await this.recognize(this.cards[this.state.cardIndex].title);
     }, 1000);
   }
 
   async recognize(word){
     this.wordToRecognize = word;
-    await this._startRecognizing();
+    if(Platform.OS == "ios"){
+      await this._startRecognizing();
+    }
   }
 
   async recognized(){
-    await this._stopRecognizing();
+    if(Platform.OS == "ios"){
+      await this._stopRecognizing();
+    }
+
     API.haptics("impact");
     this.wordToRecognize = "$|$";
 
@@ -86,15 +108,14 @@ export default class App extends React.Component {
   }
 
   onSpeechEnd = (e) => {
-    this.setState({started: false});
-    //this._startRecognizing();
+    this._startRecognizing();
   };
 
   onSpeechResults = async (e) => {
     this.setState({
       results: e.value,
     });
-    if(e.value[0].toLowerCase().includes(this.wordToRecognize.toLowerCase())){
+    if(e.value.join(" ").toLowerCase().includes(this.wordToRecognize.toLowerCase())){
       this.recognized();
     }
   };
@@ -127,9 +148,10 @@ export default class App extends React.Component {
   async listenCurrentWord(){
     await this._stopRecognizing();
     this.speak(this.cards[this.state.cardIndex].title);
-    setTimeout(async () => {
+
+		Speech.addEventListener('tts-finish', async () => {
       await this._startRecognizing();
-    }, 1000);
+    });
   }
 
   _getMoveInt = (from, to) => {
@@ -195,14 +217,17 @@ export default class App extends React.Component {
             <Text style={{color: "#fff", fontWeight: "bold", fontSize: 18}}>{API.t("training_button_skip")}</Text>
           </TouchableScale>
         </View>
-
-        <View>
         {
-          this.state.results.map(res => {
-            return <Text>{res}</Text>
-          })
+          /*
+            <View>
+            {
+              this.state.results.map(res => {
+                return <Text>{res}</Text>
+              })
+            }
+            </View>
+          */
         }
-        </View>
       </SafeAreaView>
     );
   }
