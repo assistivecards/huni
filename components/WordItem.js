@@ -37,7 +37,7 @@ export default class App extends React.Component {
 
     setTimeout(() => {
       this.setState({disableButton: false});
-    }, 1200);
+    }, 2000);
   }
 
   render(){
@@ -53,7 +53,7 @@ export default class App extends React.Component {
           <CachedImage uri={`${API.assetEndpoint}cards/${result.pack}/${result.slug}.png?v=${API.version}`} style={{width: API.isTablet ? 70 : 50, height: API.isTablet ? 70 : 50, margin: 5}}/>
           <Text style={[styles.searchItemText, {fontSize: result.type == 2 ? 16 : 19, marginLeft: result.type == 2 ? 0 : 10}]}>{result.title}</Text>
           {(this.props.active && !this.state.disableButton) &&
-            <TouchableOpacity onPress={() => this.pressed()}>
+            <TouchableScale onPress={() => this.pressed()} >
               <Animated.View style={{paddingHorizontal: 12, height: 38, backgroundColor: "#92c9cc", opacity: this.state.colorAnim, flexDirection: "row", justifyContent: "center", alignItems: "center", borderRadius: 20}}>
                 <Svg width={26} height={26} viewBox="0 0 24 24" strokeLinecap="round" strokeWidth="2" stroke="#000" fill="none" style={{marginRight: 5, opacity: 0.7}}>
                   <Path stroke="none" d="M0 0h24v24H0z"/>
@@ -64,7 +64,7 @@ export default class App extends React.Component {
                 </Svg>
                 <Text style={{color: "#000", fontWeight: "bold", fontSize: 16, opacity: 0.55}}>{API.t("training_button_listen")}</Text>
               </Animated.View>
-            </TouchableOpacity>
+            </TouchableScale>
           }
         </Animated.View>
       </View>

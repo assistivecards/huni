@@ -48,7 +48,7 @@ export default class App extends React.Component {
     		this.setState({showRecordButton: true});
     	}
     }
-    
+
     setTimeout(async () => {
       if(Platform.OS == "android") {
         await this._startRecognizing();
@@ -110,7 +110,9 @@ export default class App extends React.Component {
   }
 
   onSpeechEnd = (e) => {
-    this._startRecognizing();
+    if(Platform.OS == "android"){
+      this._startRecognizing();
+    }
   };
 
   onSpeechResults = async (e) => {
@@ -150,10 +152,9 @@ export default class App extends React.Component {
   async listenCurrentWord(){
     await this._stopRecognizing();
     this.speak(this.cards[this.state.cardIndex].title);
-
-		Speech.addEventListener('tts-finish', async () => {
+    setTimeout(async () => {
       await this._startRecognizing();
-    });
+    }, 1600);
   }
 
   _getMoveInt = (from, to) => {
@@ -188,7 +189,7 @@ export default class App extends React.Component {
 
           <Animated.View style={{transform: [{translateY: this._getMoveInt(-cardHeight*(this.state.cardIndex)+50, -cardHeight*(this.state.cardIndex+1)+50)}]}}>
             {this.cards.map((card, i) => {
-              return <WordItem result={card} key={i} active={this.state.cardIndex == i} listen={this.listenCurrentWord.bind(this)}/>
+              return <WordItem result={card} key={i} active={this.state.cardIndex == i} listen={() => this.listenCurrentWord()}/>
             })}
           </Animated.View>
           <LinearGradient
