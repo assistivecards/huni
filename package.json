@@ -3,7 +3,11 @@
     "android": "react-native run-android",
     "ios": "react-native run-ios",
     "web": "expo start --web",
-    "start": "react-native start"
+    "start": "react-native start",
+    "splash": "yarn run configure-splash-screen -b '#63b2b5' -i './assets/splash.png' -r 'cover' --status-bar-style 'default'",
+    "clean": "cd android && gradlew clean",
+    "bundle": "cd android && ./gradlew bundleRelease",
+    "apk": "cd android && ./gradlew assembleRelease"
   },
   "dependencies": {
     "@react-native-community/netinfo": "5.9.6",

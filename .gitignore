@@ -39,7 +39,7 @@ yarn-error.log
 # BUCK
 buck-out/
 \.buckd/
-*.keystore
+#*.keystore
 
 # fastlane
 #
@@ -106,7 +106,7 @@ yarn-error.log
 # BUCK
 buck-out/
 \.buckd/
-*.keystore
+#*.keystore
 
 # fastlane
 #
