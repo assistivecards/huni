@@ -16,7 +16,7 @@
   "expo": {
     "name": "huni",
     "slug": "huni",
-    "version": "1.0.3",
+    "version": "1.0.5",
     "platforms": [
       "ios",
       "android",
@@ -24,7 +24,7 @@
     ],
     "ios": {
       "bundleIdentifier": "org.dreamoriented.huni",
-      "buildNumber": "1.0.3",
+      "buildNumber": "1.0.5",
       "requireFullScreen": true,
       "supportsTablet": true,
       "googleServicesFile": "./GoogleService-Info.plist"
