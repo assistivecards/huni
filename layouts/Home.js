@@ -141,7 +141,7 @@ export default class Setting extends React.Component {
         <SafeAreaView></SafeAreaView>
         <ScrollView contentInsetAdjustmentBehavior="automatic" keyboardShouldPersistTaps="handled" keyboardDismissMode={"on-drag"}>
         <SafeAreaView style={{flex: 1}}>
-          <View style={{flexDirection: "row", justifyContent: "flex-start", alignItems: "center", height: 60}}>
+          <View style={{flexDirection: "column", justifyContent: "flex-start", alignItems: "flex-start"}}>
             <TouchableOpacity style={styles.avatarHolder} onPress={() => this.openSettings()}>
               <View style={styles.avatar}>
                 <CachedImage uri={`${API.assetEndpoint}cards/avatar/${API.user.avatar}.png?v=${API.version}`}
@@ -156,12 +156,19 @@ export default class Setting extends React.Component {
                 </Svg>
               </View>
             </TouchableOpacity>
-            <Text style={[API.styles.h2, {marginLeft: 0, fontWeight: "normal", opacity: 0.8}]}>{API.t("home_title")}</Text>
+            <Text style={[API.styles.h2, {fontWeight: "500", color: "#333", marginBottom: 0, marginTop: 25}]}>{API.t("home_title")}</Text>
           </View>
           </SafeAreaView>
 
           <SafeAreaView>
             <View style={{padding: 15, flexDirection: "row", flexWrap: "wrap"}}>{this.renderPacks()}</View>
+            <View style={{marginHorizontal: 20, marginVertical: 10, backgroundColor: "#fafafa", borderRadius: 10, flexDirection: "row", alignItems: "center", justifyContent: "flex-start"}}>
+              <Image source={require("../assets/icon.png")} style={{width: 70, height: 70, borderRadius: 70, marginLeft: 12, marginRight: 5}}/>
+              <View style={{marginHorizontal: 10, flex: 1}}>
+                <Text style={[API.styles.h3, {marginHorizontal: 0, marginBottom: 3}]}>More training packs on the way!</Text>
+                <Text style={[API.styles.p, {marginBottom: 15, marginHorizontal: 0}]}>We are constantly updating and adding new packs for training.</Text>
+              </View>
+            </View>
           </SafeAreaView>
         </ScrollView>
       </View>
