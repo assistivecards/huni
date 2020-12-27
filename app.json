@@ -16,7 +16,7 @@
   "expo": {
     "name": "huni",
     "slug": "huni",
-    "version": "1.0.0",
+    "version": "1.0.3",
     "platforms": [
       "ios",
       "android",
@@ -24,7 +24,7 @@
     ],
     "ios": {
       "bundleIdentifier": "org.dreamoriented.huni",
-      "buildNumber": "1.0.0",
+      "buildNumber": "1.0.3",
       "requireFullScreen": true,
       "supportsTablet": true
     },
@@ -33,7 +33,7 @@
       "permissions": [
         "WAKE_LOCK"
       ],
-      "versionCode": 100
+      "versionCode": 103
     },
     "assetBundlePatterns": [
       "**/*"

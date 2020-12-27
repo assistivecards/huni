@@ -30,10 +30,9 @@ export default class Setting extends React.Component {
   componentDidMount(){
     API.hit("Home");
     API.event.on("refresh", this._refreshHandler)
+    API.event.on("premium", this._refreshHandler)
     this.getPacks();
     this.orientationSubscription = ScreenOrientation.addOrientationChangeListener(this._orientationChanged.bind(this));
-
-    API.event.on("announce", this._announcer.bind(this))
   }
 
   _orientationChanged(orientation){
@@ -49,18 +48,10 @@ export default class Setting extends React.Component {
     this.getPacks(true);
   };
 
-  _announcer = (card) => {
-    this.props.navigation.push("Announcer", {
-      card: API.getCardData(card.slug, card.pack),
-      pack: this.state.packs.filter(pack => pack.slug == card.pack)[0],
-      orientation: this.state.orientation
-    });
-  };
-
   componentWillUnmount(){
     ScreenOrientation.removeOrientationChangeListener(this.orientationSubscription);
     API.event.removeListener("refresh", this._refreshHandler);
-    API.event.removeListener("announce", this._announcer);
+    API.event.removeListener("premium", this._refreshHandler);
   }
 
   openSettings(){
@@ -80,21 +71,55 @@ export default class Setting extends React.Component {
   }
 
   openCards(pack, packIndex){
-    this.props.navigation.push("Cards", {pack, packs: this.state.packs, packIndex, orientation: this.state.orientation});
+    let open = "pack";
+    if(pack.premium == 1){
+      if(!API.isPremium()){
+        open = "premium";
+      }
+    }
+
+    if(open == "pack"){
+      this.props.navigation.push("Cards", {pack, packs: this.state.packs, packIndex, orientation: this.state.orientation});
+    }else if(open == "premium"){
+      this.props.navigation.push("Premium");
+    }
+
   }
 
   renderPacks(){
     if(this.state.packs.length){
       return(
         this.state.packs.map((pack, i) => {
+          let showPremium = false;
+          if(!API.isPremium() && pack.premium == 1) showPremium = true;
+
           return (
-            <TouchableScale key={i} style={[this.state.orientation == "portrait" ? styles.categoryItem : styles.categoryItemLandscape, {height: API.isTablet ? 160 : 100, opacity: pack.premium ? 0.5 : 1}]} onPress={() => this.openCards(pack, i)}>
-              <View style={[styles.categoryItemInner, {backgroundColor: pack.color}]}>
-                <CachedImage uri={`${API.assetEndpoint}cards/icon/${pack.slug}.png?v=${API.version}`} style={{width: API.isTablet ? 90 : 50, height: API.isTablet ? 90 : 50, margin: 15, marginBottom: 10}}/>
-                <View>
-                  <Text style={[styles.categoryItemText, {fontSize: API.isTablet ? 25 : 18, marginBottom: 3}]}>{titleCase(pack.locale)}</Text>
-                  <Text style={[styles.categoryItemText, {fontSize: API.isTablet ? 23 : 16, fontWeight: "normal", opacity: 0.8, marginTop: 2}]}>{pack.count} Training Words</Text>
+            <TouchableScale key={i} style={[this.state.orientation == "portrait" ? styles.categoryItem : styles.categoryItemLandscape, {height: API.isTablet ? 170 : 110}]} onPress={() => this.openCards(pack, i)}>
+              <View style={styles.categoryItemInner}>
+                <View style={{flex: 1, flexDirection: "row", alignItems: "center"}}>
+                  <View style={{backgroundColor: pack.color, borderRadius: 200, padding: 15, marginRight: 15}}>
+                    <CachedImage uri={`${API.assetEndpoint}cards/icon/${pack.slug}.png?v=${API.version}`} style={{width: API.isTablet ? 85 : 45, height: API.isTablet ? 85 : 45}}/>
+                  </View>
+                  <View>
+                    <Text style={[styles.categoryItemText, {fontSize: API.isTablet ? 25 : 18, marginBottom: 3}]}>{titleCase(pack.locale)}</Text>
+                    <Text style={[styles.categoryItemText, {fontSize: API.isTablet ? 23 : 16, fontWeight: "normal", opacity: 0.8, marginTop: 2}]}>{pack.count} Training Words</Text>
+                  </View>
                 </View>
+                {!showPremium &&
+                  <View style={{paddingHorizontal: 12, height: 38, backgroundColor: "#92c9cc", flexDirection: "row", justifyContent: "center", alignItems: "center", borderRadius: 20}}>
+                    <Svg width={26} height={26} viewBox="0 0 24 24" strokeLinecap="round" strokeWidth="2" stroke="#000" fill="none" style={{opacity: 0.7}}>
+                      <Path stroke="none" d="M0 0h24v24H0z"/>
+                      <Line x1="5" y1="12" x2="19" y2="12" />
+                      <Line x1="13" y1="18" x2="19" y2="12" />
+                      <Line x1="13" y1="6" x2="19" y2="12" />
+                    </Svg>
+                  </View>
+                }
+                {showPremium &&
+                  <View style={{paddingHorizontal: 12, height: 38, backgroundColor: "#a2ddfd", flexDirection: "row", justifyContent: "center", alignItems: "center", borderRadius: 20}}>
+                    <Text style={{color: "#000", fontWeight: "bold", fontSize: 16, opacity: 0.55}}>{API.t("home_premium")}</Text>
+                  </View>
+                }
               </View>
             </TouchableScale>
           )
@@ -116,7 +141,7 @@ export default class Setting extends React.Component {
         <SafeAreaView></SafeAreaView>
         <ScrollView contentInsetAdjustmentBehavior="automatic" keyboardShouldPersistTaps="handled" keyboardDismissMode={"on-drag"}>
         <SafeAreaView style={{flex: 1}}>
-          <View style={{flexDirection: "row", justifyContent: "space-between", alignItems: "center", height: 60}}>
+          <View style={{flexDirection: "row", justifyContent: "flex-start", alignItems: "center", height: 60}}>
             <TouchableOpacity style={styles.avatarHolder} onPress={() => this.openSettings()}>
               <View style={styles.avatar}>
                 <CachedImage uri={`${API.assetEndpoint}cards/avatar/${API.user.avatar}.png?v=${API.version}`}
@@ -131,11 +156,12 @@ export default class Setting extends React.Component {
                 </Svg>
               </View>
             </TouchableOpacity>
+            <Text style={[API.styles.h2, {marginLeft: 0, fontWeight: "normal", opacity: 0.8}]}>{API.t("home_title")}</Text>
           </View>
           </SafeAreaView>
 
           <SafeAreaView>
-            <View style={{padding: 15}}>{this.renderPacks()}</View>
+            <View style={{padding: 15, flexDirection: "row", flexWrap: "wrap"}}>{this.renderPacks()}</View>
           </SafeAreaView>
         </ScrollView>
       </View>
@@ -192,9 +218,12 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     justifyContent: "flex-start",
     alignItems: "center",
-    flex: 1, borderRadius: 20,
+    flex: 1,
     margin: 5,
-    backgroundColor: "#fafafa"
+    marginHorizontal: 10,
+    marginTop: 0,
+    borderBottomWidth: 1,
+    borderBottomColor: "#eee"
   },
   categoryItemText:{
     fontWeight: "bold",

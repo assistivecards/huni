@@ -23,7 +23,7 @@ const APP = require("./app.json");
 const _DEVELOPMENT = false;
 
 const _NETWORK_STATUS = true;
-const _FLUSH = true;
+const _FLUSH = false;
 const _DEVUSERIDENTIFIER = "109677539152659927717";
 const _DEVLOCALE = "en-US";
 const _ISPREMIUM = false;
@@ -420,14 +420,14 @@ class Api {
 
 							this.premium = purchase.productId;
 
-							let consume = (purchase.productId == "lifetime");
+							let consume = (purchase.productId.includes("lifetime"));
 							console.log("Should I consume?", consume);
 							// Then when you're done
 							let resfinish = await InAppPurchases.finishTransactionAsync(purchase, consume);
 							alert(`Successfully purchased ${purchase.productId.replace(APP.planPrefix, "")}, you can now use the premium version of the app!`);
 							this.event.emit("premium");
 							this.event.emit("premiumPurchase", this.premium);
-							this.setData("premium", this.premium);
+							await this.setData("premium", this.premium);
 							this.event.emit("refresh");
 						}
 					});

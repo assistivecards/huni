@@ -54,7 +54,7 @@ export default class App extends React.Component {
           <Text style={[styles.searchItemText, {fontSize: result.type == 2 ? 16 : 19, marginLeft: result.type == 2 ? 0 : 10}]}>{result.title}</Text>
           {(this.props.active && !this.state.disableButton) &&
             <TouchableScale onPress={() => this.pressed()} >
-              <Animated.View style={{paddingHorizontal: 12, height: 38, backgroundColor: "#92c9cc", opacity: this.state.colorAnim, flexDirection: "row", justifyContent: "center", alignItems: "center", borderRadius: 20}}>
+              <View style={{paddingHorizontal: 12, height: 38, backgroundColor: "#92c9cc", flexDirection: "row", justifyContent: "center", alignItems: "center", borderRadius: 20}}>
                 <Svg width={26} height={26} viewBox="0 0 24 24" strokeLinecap="round" strokeWidth="2" stroke="#000" fill="none" style={{marginRight: 5, opacity: 0.7}}>
                   <Path stroke="none" d="M0 0h24v24H0z"/>
                   <Path d="M0 0h24v24H0z" stroke="none"/>
@@ -63,7 +63,7 @@ export default class App extends React.Component {
                   <Path d="M6 15 h-2a1 1 0 0 1 -1 -1v-4a1 1 0 0 1 1 -1h2l3.5 -4.5a.8 .8 0 0 1 1.5 .5v14a.8 .8 0 0 1 -1.5 .5l-3.5 -4.5"/>
                 </Svg>
                 <Text style={{color: "#000", fontWeight: "bold", fontSize: 16, opacity: 0.55}}>{API.t("training_button_listen")}</Text>
-              </Animated.View>
+              </View>
             </TouchableScale>
           }
         </Animated.View>
