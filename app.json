@@ -26,14 +26,16 @@
       "bundleIdentifier": "org.dreamoriented.huni",
       "buildNumber": "1.0.3",
       "requireFullScreen": true,
-      "supportsTablet": true
+      "supportsTablet": true,
+      "googleServicesFile": "./GoogleService-Info.plist"
     },
     "android": {
       "package": "org.dreamoriented.huni",
       "permissions": [
         "WAKE_LOCK"
       ],
-      "versionCode": 103
+      "versionCode": 103,
+      "googleServicesFile": "./google-services.json"
     },
     "assetBundlePatterns": [
       "**/*"
