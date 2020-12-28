@@ -44,6 +44,7 @@ export default class Setting extends React.Component {
   }
 
   _refreshHandler = () => {
+    console.log("refreshed here");
     this.forceUpdate();
     this.getPacks(true);
   };

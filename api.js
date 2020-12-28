@@ -285,6 +285,7 @@ class Api {
 		this.user = user;
 
 		await this.setData("user", JSON.stringify(user));
+		this.event.emit("refresh");
 	}
 
 

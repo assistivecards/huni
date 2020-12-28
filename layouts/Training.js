@@ -173,6 +173,7 @@ export default class App extends React.Component {
 
   done(){
     this.setState({done: true})
+    API.hit("Done:"+this.pack.slug);
   }
 
   main(){
