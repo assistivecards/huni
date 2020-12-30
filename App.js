@@ -84,7 +84,7 @@ export default class App extends React.Component {
           {this.renderSignInButtons()}
           <TouchableOpacity onPress={() => this.setState({screen: "policy"})} style={{marginTop: 15, marginBottom: 30}}>
             <Text style={[API.styles.pHome, {textAlign: "center"}]}>
-              By signing in you accept our <Text style={{fontWeight: "600"}}>Terms of Use</Text> and <Text style={{fontWeight: "600"}}>Privacy Policy</Text>.
+              By starting you accept our <Text style={{fontWeight: "600"}}>Terms of Use</Text> and <Text style={{fontWeight: "600"}}>Privacy Policy</Text>.
             </Text>
           </TouchableOpacity>
         </SafeAreaView>

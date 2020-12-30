@@ -128,7 +128,7 @@ export default class Setting extends React.Component {
       );
     }else{
       return (
-        <View style={{flex: 1, justifyContent: "center", alignItems: "center", height: 300}}>
+        <View style={{flex: 1, justifyContent: "center", alignItems: "center", height: 600}}>
           <ActivityIndicator color={API.config.backgroundColor}/>
         </View>
       )
@@ -143,20 +143,31 @@ export default class Setting extends React.Component {
         <ScrollView contentInsetAdjustmentBehavior="automatic" keyboardShouldPersistTaps="handled" keyboardDismissMode={"on-drag"}>
         <SafeAreaView style={{flex: 1}}>
           <View style={{flexDirection: "column", justifyContent: "flex-start", alignItems: "flex-start"}}>
-            <TouchableOpacity style={styles.avatarHolder} onPress={() => this.openSettings()}>
-              <View style={styles.avatar}>
-                <CachedImage uri={`${API.assetEndpoint}cards/avatar/${API.user.avatar}.png?v=${API.version}`}
-                  style={{width: 40, height: 40, position: "relative", top: 4}}
-                  resizeMode={"contain"}
-                  />
-              </View>
-              <View style={styles.avatarIcon}>
-                <Svg width={11} height={11} viewBox="0 0 8 4">
-                  <Line x1="1" x2="7" y1="0.8" y2="0.8" fill="none" stroke={API.config.backgroundColor} strokeLinecap="round" strokeLinejoin="round" strokeWidth="1.1"/>
-                  <Line x1="1" x2="7" y1="3.2" y2="3.2" fill="none" stroke={API.config.backgroundColor} strokeLinecap="round" strokeLinejoin="round" strokeWidth="1.1"/>
-                </Svg>
-              </View>
-            </TouchableOpacity>
+            <View style={{flexDirection: "row", justifyContent: "space-between", alignItems: "center", flex: 1}}>
+              <TouchableOpacity style={styles.avatarHolder} onPress={() => this.openSettings()}>
+                <View style={styles.avatar}>
+                  <CachedImage uri={`${API.assetEndpoint}cards/avatar/${API.user.avatar}.png?v=${API.version}`}
+                    style={{width: 40, height: 40, position: "relative", top: 4}}
+                    resizeMode={"contain"}
+                    />
+                </View>
+                <View style={styles.avatarIcon}>
+                  <Svg width={11} height={11} viewBox="0 0 8 4">
+                    <Line x1="1" x2="7" y1="0.8" y2="0.8" fill="none" stroke={API.config.backgroundColor} strokeLinecap="round" strokeLinejoin="round" strokeWidth="1.1"/>
+                    <Line x1="1" x2="7" y1="3.2" y2="3.2" fill="none" stroke={API.config.backgroundColor} strokeLinecap="round" strokeLinejoin="round" strokeWidth="1.1"/>
+                  </Svg>
+                </View>
+              </TouchableOpacity>
+              <View style={{flex: 1}}></View>
+              <TouchableScale onPress={() => this.openSettings()} style={{paddingHorizontal: 12, height: 38, marginTop: 5, backgroundColor: "#a2ddfd", flexDirection: "row", justifyContent: "center", alignItems: "center", borderRadius: 20, marginHorizontal: 25}}>
+              <Svg width={24} height={24} viewBox="0 0 24 24" strokeLinecap="round" strokeWidth="2" stroke="#000" fill="none" style={{opacity: 0.7, marginRight: 5}}>
+                <Path d="M0 0h24v24H0z" stroke="none"/>
+              	<Path d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 0 0 2.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 0 0 1.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 0 0 -1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 0 0 -2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 0 0 -2.573 -1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 0 0 -1.065 -2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 0 0 1.066 -2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z"/>
+              	<Circle cx="12" cy="12" r="3"/>
+              </Svg>
+                <Text style={{color: "#000", fontWeight: "bold", fontSize: 16, opacity: 0.55}}>{API.t("home_settings")}</Text>
+              </TouchableScale>
+            </View>
             <Text style={[API.styles.h2, {fontWeight: "500", color: "#333", marginBottom: 0, marginTop: 25}]}>{API.t("home_title")}</Text>
           </View>
           </SafeAreaView>

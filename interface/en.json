@@ -81,8 +81,8 @@
 	"settings_selection_rate_the_app": "Rate this App",
 
 	"setup_create_profile_title": "Create a profile!",
-	"setup_create_profile_description": "Choose a profile name or tell us the first name of the person who is going to use this application.",
-	"setup_your_name": "Your Name",
+	"setup_create_profile_description": "Choose a profile name or tell us the nickname of the person who is going to use this application.",
+	"setup_your_name": "Your profile name",
 
 	"setup_avatar_title": "Choose an avatar!",
 	"setup_avatar_description": "Choose an avatar for the person who is going to use this application.",
@@ -113,6 +113,8 @@
 
 	"home_title": "Let's start training...",
 	"home_premium": "Premium",
+	"home_settings": "Settings",
+
 
 
 	"premium_title": "Unlock Huni Premium!",
