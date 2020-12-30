@@ -161,7 +161,7 @@ class Api {
 			return _ISPREMIUM;
 		}
 
-		if(this.premium.includes("lifetime") || this.premium.includes("yearly") || this.premium == this.premium.includes("monthly")){
+		if(this.premium.includes("lifetime") || this.premium.includes("yearly") || this.premium.includes("monthly")){
 			return true;
 		}else{
 			if(this.isGift){
