@@ -161,10 +161,6 @@ class Api {
 			return _ISPREMIUM;
 		}
 
-		if(this.premium.includes("lifetime")){
-			return true;
-		}
-
 		if(this.premium.includes("lifetime") || this.premium.includes("yearly") || this.premium == this.premium.includes("monthly")){
 			return true;
 		}else{
@@ -420,6 +416,13 @@ class Api {
 							// Process transaction here and unlock content...
 
 							this.premium = purchase.productId;
+							if(purchase.productId.includes("lifetime")){
+								this.premium = "lifetime";
+							}else if(purchase.productId.includes("monthly")){
+								this.premium = "monthly";
+							}else if(purchase.productId.includes("yearly")){
+								this.premium = "yearly";
+							}
 
 							let consume = (purchase.productId.includes("lifetime"));
 							console.log("Should I consume?", consume);
@@ -447,13 +450,19 @@ class Api {
 			const history = await InAppPurchases.getPurchaseHistoryAsync(Platform.OS == "ios");
 			if (history.responseCode === InAppPurchases.IAPResponseCode.OK) {
 			  // get to know if user is premium or npt.
-				let lifetime = history.results.filter(res => res.productId == "lifetime")[0];
+				let lifetime = history.results.filter(res => res.productId.includes("lifetime"))[0];
 				if(lifetime){
 					this.premium = "lifetime";
 				}else{
 					let orderedHistory = history.results.sort((a, b) => (a.purchaseTime > b.purchaseTime) ? 1 : -1);
 					if(orderedHistory[0]){
-						this.premium = orderedHistory[0].productId;
+						if(orderedHistory[0].productId.includes("monthly")){
+							this.premium = "monthly";
+						}else if(orderedHistory[0].productId.includes("yearly")){
+							this.premium = "yearly";
+						}else{
+							this.premium = "none";
+						}
 					}else{
 						this.premium = "none";
 					}
