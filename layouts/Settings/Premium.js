@@ -1,9 +1,9 @@
 import React from 'react';
-import { StyleSheet, View, Dimensions, Image, Text, ScrollView, Animated, TouchableOpacity, TextInput, KeyboardAvoidingView, Platform, SafeAreaView, ActivityIndicator } from 'react-native';
+import { StyleSheet, View, Dimensions, Image, Text, ScrollView, Animated, TouchableOpacity, TextInput, KeyboardAvoidingView, Platform, SafeAreaView, ActivityIndicator, Alert } from 'react-native';
 
 import API from '../../api';
 import TopBar from '../../components/TopBar'
-import Svg, { Path, Ellipse, G } from 'react-native-svg';
+import Svg, { Path, Ellipse, G, Circle } from 'react-native-svg';
 import { Image as CachedImage } from "react-native-expo-image-cache";
 
 function toFixed(num, fixed) {
@@ -45,6 +45,31 @@ export default class Setting extends React.Component {
   componentWillUnmount(){
     API.event.removeListener("premium", this._listenPremiumChange);
     API.event.removeListener("premiumPurchase", this._listenPremiumPurchase)
+  }
+
+
+  restore(){
+    Alert.alert(
+      "Restore",
+      "We will try to restore your the purchases you made before, for the cases where it failed to take effect or when you start usign a new device.",
+      [
+        {
+          text: "Cancel",
+          onPress: () => console.log("Cancel Pressed"),
+          style: "cancel"
+        },
+        {
+          text: "OK",
+          onPress: () => this.restorePurchases()
+        }
+      ],
+      "plain-text"
+    );
+  }
+
+  async restorePurchases(){
+    await API.restorePurchases();
+    alert("Your old pruchases have been reinstated, if any valid purchase exists.");
   }
 
   async save(toPremiumValue){
@@ -177,6 +202,21 @@ export default class Setting extends React.Component {
               <Text style={API.styles.sub}>{API.t("premium_details4")}</Text>
               <Text style={API.styles.sub}>{API.t("premium_details5")}</Text>
               <TouchableOpacity onPress={() => this.props.navigation.push("Browser", {link: "https://dreamoriented.org/termsofuse/"})}><Text style={API.styles.sub}>By continuing you accept our Terms of Use and Privacy Policy. (Touch to see in English)</Text></TouchableOpacity>
+
+              {true &&
+                <TouchableOpacity onPress={() => this.restore()}>
+                  <View style={[[styles.selectionItem, {flexDirection: API.user.isRTL ? "row-reverse" : "row"}], {borderBottomWidth: 0, paddingTop: 15, paddingHorizontal: 30}]}>
+                    <Svg height={24} width={24} viewBox="0 0 24 24" style={styles.selectionIcon} strokeWidth="2" stroke="#333" fill="none" strokeLinecap="round" strokeLinejoin="round">
+                      <Path d="M0 0h24v24H0z" stroke="none"/>
+                      <Path d="M7 12a5 5 0 0 1 5 -5"/>
+                      <Path d="M12 17a5 5 0 0 0 5 -5"/>
+                      <Circle cx="12" cy="12" r="9"/>
+                      <Circle cx="12" cy="12" r="1"/>
+                    </Svg>
+                    <Text style={[API.styles.b, {fontSize: 15, marginLeft: 10}]}>Restore Purchases</Text>
+                  </View>
+                </TouchableOpacity>
+              }
             </View>
             <View style={API.styles.iosBottomPadder}></View>
           </View>

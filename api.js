@@ -444,35 +444,7 @@ class Api {
 				}
 			});
 
-			const history = await InAppPurchases.getPurchaseHistoryAsync(Platform.OS == "ios");
-			if (history.responseCode === InAppPurchases.IAPResponseCode.OK) {
-			  // get to know if user is premium or npt.
-				let lifetime = history.results.filter(res => res.productId == "lifetime")[0];
-				if(lifetime){
-					this.premium = "lifetime";
-				}else{
-					let orderedHistory = history.results.sort((a, b) => (a.purchaseTime > b.purchaseTime) ? 1 : -1);
-					if(orderedHistory[0]){
-						this.premium = orderedHistory[0].productId;
-					}else{
-						this.premium = "none";
-					}
-				}
-
-				this.event.emit("premium");
-				await this.setData("premium", this.premium);
-
-				this.getPlans(); // async fetch the plans for later use.
-
-			}else{
-				console.log("#### Appstore status is not ok.");
-				this.premium = await this.getData("premium");
-				if(!this.premium) {
-					this.premium = "none";
-					this.setData("premium", "none");
-				}
-				this.event.emit("premium");
-			}
+			this.restorePurchases();
 
     } catch(err){
       console.log("###### maybe no internet, or the app reloaded in dev mode", err);
@@ -483,6 +455,38 @@ class Api {
 			}
 			this.event.emit("premium");
     }
+	}
+
+	async restorePurchases(){
+		const history = await InAppPurchases.getPurchaseHistoryAsync(Platform.OS == "ios");
+		if (history.responseCode === InAppPurchases.IAPResponseCode.OK) {
+			// get to know if user is premium or npt.
+			let lifetime = history.results.filter(res => res.productId == "lifetime")[0];
+			if(lifetime){
+				this.premium = "lifetime";
+			}else{
+				let orderedHistory = history.results.sort((a, b) => (a.purchaseTime > b.purchaseTime) ? 1 : -1);
+				if(orderedHistory[0]){
+					this.premium = orderedHistory[0].productId;
+				}else{
+					this.premium = "none";
+				}
+			}
+
+			this.event.emit("premium");
+			await this.setData("premium", this.premium);
+
+			this.getPlans(); // async fetch the plans for later use.
+
+		}else{
+			console.log("#### Appstore status is not ok.");
+			this.premium = await this.getData("premium");
+			if(!this.premium) {
+				this.premium = "none";
+				this.setData("premium", "none");
+			}
+			this.event.emit("premium");
+		}
 	}
 
 	async getPlans(){
