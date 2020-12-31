@@ -7,7 +7,9 @@
     "splash": "yarn run configure-splash-screen -b '#63b2b5' -i './assets/splash.png' -r 'cover' --status-bar-style 'default'",
     "clean": "cd android && gradlew clean",
     "bundle": "cd android && ./gradlew bundleRelease",
-    "apk": "cd android && ./gradlew assembleRelease"
+    "apk": "cd android && ./gradlew assembleRelease",
+    "release": "npx react-native run-android --variant=release",
+    "debug": "adb logcat"
   },
   "dependencies": {
     "@react-native-community/netinfo": "5.9.6",

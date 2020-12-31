@@ -7,7 +7,8 @@
   "assetVersion": 215,
   "planPrefix": "huniapp_",
   "config": {
-    "backgroundColor": "#63b2b5"
+    "backgroundColor": "#63b2b5",
+    "pFontColor": "#333333" 
   },
   "storeId": {
     "appStore": 1516921796,
@@ -16,7 +17,7 @@
   "expo": {
     "name": "huni",
     "slug": "huni",
-    "version": "1.0.6",
+    "version": "1.0.8",
     "platforms": [
       "ios",
       "android",
@@ -24,7 +25,7 @@
     ],
     "ios": {
       "bundleIdentifier": "org.dreamoriented.huni",
-      "buildNumber": "1.0.6",
+      "buildNumber": "1.0.8",
       "requireFullScreen": true,
       "supportsTablet": true,
       "googleServicesFile": "./GoogleService-Info.plist"
@@ -34,7 +35,7 @@
       "permissions": [
         "WAKE_LOCK"
       ],
-      "versionCode": 106,
+      "versionCode": 108,
       "googleServicesFile": "./google-services.json"
     },
     "assetBundlePatterns": [
