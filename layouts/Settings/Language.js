@@ -35,6 +35,10 @@ export default class Setting extends React.Component {
     if(language != API.user.language){
       changedFields.push("language");
       changedValues.push(language);
+
+      changedFields.push("accent");
+      let accent = Languages.languages.filter(lang => lang.code == API.user.language)[0].accent;
+      changedValues.push(accent);
     }
 
     let voiceDriver = await API.getBestAvailableVoiceDriver(language);
@@ -49,6 +53,7 @@ export default class Setting extends React.Component {
     let updateRes = await API.update(changedFields, changedValues);
     this.props.navigation.pop();
     API.haptics("impact");
+    API.initSpeech();
   }
 
   didChange(){

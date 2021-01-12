@@ -20,6 +20,7 @@ import Subscription from './layouts/Settings/Subscription'
 import Premium from './layouts/Settings/Premium'
 import Legal from './layouts/Settings/Legal'
 import Accessibility from './layouts/Settings/Accessibility'
+import Accent from './layouts/Settings/Accent'
 
 const AppNavigator = createStackNavigator({
     Home:         { screen: Home          },
@@ -36,6 +37,7 @@ const AppNavigator = createStackNavigator({
     Premium:      { screen: Premium       },
     Legal:        { screen: Legal         },
     Accessibility:{ screen: Accessibility },
+    Accent:       { screen: Accent        },
   },
   {
     headerMode: 'none',

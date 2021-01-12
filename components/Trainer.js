@@ -128,7 +128,11 @@ export default class App extends React.Component {
   _startRecognizing = async () => {
     try {
       this.setState({ results: [], started: true });
-      await Voice.start('en-US');
+      let accent = API.user.accent ? API.user.accent : API.user.language;
+      if(!accent) {
+        accent = "en";
+      }
+      await Voice.start(accent);
     } catch (e) {
       console.error(e);
     }

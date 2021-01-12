@@ -135,6 +135,18 @@ export default class App extends React.Component {
                 <Text style={[API.styles.b, {fontSize: 15}]}>{API.t("settings_selection_language")}</Text>
               </TouchableOpacity>
 
+              <TouchableOpacity style={[styles.selectionItem, {flexDirection: API.user.isRTL ? "row-reverse" : "row"}]} onPress={() => this.props.navigation.push("Accent")}>
+                <Svg height={24} width={24} viewBox="0 0 24 24" style={styles.selectionIcon} strokeWidth="2" stroke="#333" fill="none" strokeLinecap="round" strokeLinejoin="round">
+                  <Path d="M0 0h24v24H0z" stroke="none"/>
+                  <Path d="M11.5 3a17 17 0 0 0 0 18"/>
+                  <Path d="M12.5 3a17 17 0 0 1 0 18"/>
+                  <Circle cx="12" cy="12" r="9"/>
+                  <Line x1="3.6" x2="20.4" y1="9" y2="9"/>
+                  <Line x1="3.6" x2="20.4" y1="15" y2="15"/>
+                </Svg>
+                <Text style={[API.styles.b, {fontSize: 15}]}>{API.t("settings_selection_accent")}</Text>
+              </TouchableOpacity>
+
               <TouchableOpacity style={[styles.selectionItem, {flexDirection: API.user.isRTL ? "row-reverse" : "row"}]} onPress={() => this.props.navigation.push("Voice")}>
                 <Svg height={24} width={24} viewBox="0 0 24 24" style={styles.selectionIcon} strokeWidth="2" stroke="#333" fill="none" strokeLinecap="round" strokeLinejoin="round">
                   <Path stroke="none" d="M0 0h24v24H0z"/>

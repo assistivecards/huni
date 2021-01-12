@@ -17,6 +17,7 @@ import NetInfo from '@react-native-community/netinfo';
 import Event from './js/event';
 import makeid from './js/makeid';
 import styles from './js/styles';
+import uitext from './uitext';
 
 const APP = require("./app.json");
 // For test cases
@@ -28,7 +29,6 @@ const _DEVUSERIDENTIFIER = "109677539152659927717";
 const _DEVLOCALE = "en-US";
 const _ISPREMIUM = false;
 
-const enUI = require("./interface/en.json");
 
 const ANALYTICS_KEY = APP.analyticsKey;
 const API_ENDPOINT = APP.apiEndpoint;
@@ -53,7 +53,6 @@ class Api {
 		this.user = {};
 		this.cards = {};
 		this.storeId = APP.storeId;
-		this.uitext = {en: enUI};
 		this.searchArray = [];
 		this.development = _DEVELOPMENT;
 		this.styles = styles;
@@ -61,7 +60,6 @@ class Api {
 
 		this.config = APP.config;
 		this.event = Event;
-		this.language = "en";
 		this.analytics = new Analytics(_DEVELOPMENT ? "DEVELOPMENT" : ANALYTICS_KEY, {slug: APP.name, name: APP.displayName, version: APP.expo.version});
 		this.isTablet = false;
 		this._checkIfTablet();
@@ -237,7 +235,7 @@ class Api {
   }
 
 	async setup(profile){
-		let lang = profile.language ? profile.language : "en";
+		let lang = profile.language ? profile.language : Localization.locale.substr(0, 2);
 		let voice = await this.getBestAvailableVoiceDriver(lang);
 		let user = {
 			name: profile.name,
@@ -364,7 +362,7 @@ class Api {
 	}
 
 	async getPacks(force){
-		var url = ASSET_ENDPOINT + "packs/" + this.language + "/metadata.json?v="+this.version;
+		var url = ASSET_ENDPOINT + "packs/" + this.user.language + "/metadata.json?v="+this.version;
 
 		if(this.packs && force == null){
 			console.log("pulling from ram");
@@ -386,10 +384,6 @@ class Api {
 			this.packs = packsResponse;
 			return packsResponse;
 		}
-	}
-
-	async ramCards(slugArray, force){
-		// We need to ram things hereé!
 	}
 
 	async _initSubscriptions(){
@@ -526,7 +520,7 @@ class Api {
 	}
 
 	async getCards(slug, force){
-		var url = ASSET_ENDPOINT + "packs/" + this.language + "/"+ slug +".json?v="+this.version;
+		var url = ASSET_ENDPOINT + "packs/" + this.user.language + "/"+ slug +".json?v="+this.version;
 
 		if(this.cards[slug] && force == null){
 			console.log("pulling from ram", "cardsFor", slug);
@@ -573,21 +567,21 @@ class Api {
 	t(UITextIdentifier, variableArray){
 		let lang = "en";
 		if(this.user){
-			lang = this.language
+			lang = this.user.language ? this.user.language : Localization.locale.substr(0, 2);
 		}else{
 			lang = Localization.locale.substr(0, 2);
 		}
 
-		if(!this.uitext[lang]){
+		if(!uitext[lang + "_json"]){
 			lang = "en";
 		}
 
 		if(typeof variableArray == "string" || typeof variableArray == "number"){
-			let text = this.uitext[lang][UITextIdentifier];
+			let text = uitext[lang + "_json"][UITextIdentifier];
 			if(text) return text.replace("$1", variableArray);
 			return "UnSupportedIdentifier";
 		}else if(typeof variableArray == "array"){
-			let text = this.uitext[lang][UITextIdentifier];
+			let text = uitext[lang + "_json"][UITextIdentifier];
 			if(text){
 				variableArray.forEach((variable, i) => {
 					let variableIdentifier = `${i+1}`;
@@ -599,7 +593,7 @@ class Api {
 			}
 
 		}else{
-			let text = this.uitext[lang][UITextIdentifier];
+			let text = uitext[lang + "_json"][UITextIdentifier];
 			if(text) return text;
 			return "UnSupportedIdentifier";
 		}

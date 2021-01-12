@@ -18,6 +18,9 @@
 	"settings_language_supportedLanguages": "Supported Languages",
 	"settings_language_supportedLanguages_description": "All the languages that assistive cards support",
 
+	"settings_selection_accent": "Accent & Locale",
+	"settings_accent_description": "Choose the prefered speech Accent for the voice recogition system",
+
 	"settings_selection_voice": "Text-to-Speech Voice",
 	"settings_voice_description": "Select the text-to-speech voice driver",
 	"settings_voice_basedOnYourLocation": "Based On Your Location",

@@ -46,7 +46,7 @@ export default class Setting extends React.Component {
   _refreshHandler = () => {
     console.log("refreshed here");
     this.forceUpdate();
-    this.getPacks(true);
+    this.getPacks(true, true);
   };
 
   componentWillUnmount(){
@@ -67,8 +67,6 @@ export default class Setting extends React.Component {
   async getPacks(packs, force){
     let allPacks = await API.getPacks(force);
     this.setState({packs: allPacks});
-
-    API.ramCards(packs, force);
   }
 
   openCards(pack, packIndex){
@@ -168,19 +166,21 @@ export default class Setting extends React.Component {
                 <Text style={{color: "#000", fontWeight: "bold", fontSize: 16, opacity: 0.55}}>{API.t("home_settings")}</Text>
               </TouchableScale>
             </View>
-            <Text style={[API.styles.h2, {fontWeight: "500", color: "#333", marginBottom: 0, marginTop: 25}]}>{API.t("home_title")}</Text>
+            <Text style={[API.styles.h2, {fontWeight: "600", color: "#333", marginBottom: 0, marginTop: 25}]}>{API.t("home_title")}</Text>
           </View>
           </SafeAreaView>
 
           <SafeAreaView>
             <View style={{padding: 15, flexDirection: "row", flexWrap: "wrap"}}>{this.renderPacks()}</View>
-            <View style={{marginHorizontal: 20, marginVertical: 10, backgroundColor: "#fafafa", borderRadius: 10, flexDirection: "row", alignItems: "center", justifyContent: "flex-start"}}>
-              <Image source={require("../assets/icon.png")} style={{width: 70, height: 70, borderRadius: 70, marginLeft: 12, marginRight: 5}}/>
-              <View style={{marginHorizontal: 10, flex: 1}}>
-                <Text style={[API.styles.h3, {marginHorizontal: 0, marginBottom: 3}]}>More training packs on the way!</Text>
-                <Text style={[API.styles.p, {marginBottom: 15, marginHorizontal: 0}]}>We are constantly updating and adding new packs for training.</Text>
+            {false &&
+              <View style={{marginHorizontal: 20, marginVertical: 10, backgroundColor: "#fafafa", borderRadius: 10, flexDirection: "row", alignItems: "center", justifyContent: "flex-start"}}>
+                <Image source={require("../assets/icon.png")} style={{width: 70, height: 70, borderRadius: 70, marginLeft: 12, marginRight: 5}}/>
+                <View style={{marginHorizontal: 10, flex: 1}}>
+                  <Text style={[API.styles.h3, {marginHorizontal: 0, marginBottom: 3}]}>More training packs on the way!</Text>
+                  <Text style={[API.styles.p, {marginBottom: 15, marginHorizontal: 0}]}>We are constantly updating and adding new packs for training.</Text>
+                </View>
               </View>
-            </View>
+            }
           </SafeAreaView>
         </ScrollView>
       </View>
