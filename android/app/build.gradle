@@ -132,8 +132,8 @@ android {
         applicationId 'org.dreamoriented.huni'
         minSdkVersion rootProject.ext.minSdkVersion
         targetSdkVersion rootProject.ext.targetSdkVersion
-        versionCode 108
-        versionName "1.0.8"
+        versionCode 110
+        versionName "1.1.0"
     }
     splits {
         abi {
