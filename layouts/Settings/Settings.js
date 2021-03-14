@@ -117,7 +117,7 @@ export default class App extends React.Component {
         <ScrollView style={{flex: 1, backgroundColor: API.config.backgroundColor}}>
           <View style={styles.content}>
             <View style={styles.userSettings}>
-              <TouchableOpacity style={[styles.selectionItem, {flexDirection: API.user.isRTL ? "row-reverse" : "row"}]} onPress={() => this.openAccountSettings()}>
+              <TouchableOpacity style={[styles.selectionItem, {flexDirection: API.isRTL() ? "row-reverse" : "row"}]} onPress={() => this.openAccountSettings()}>
                 <Svg height={24} width={24} viewBox="0 0 24 24" style={styles.selectionIcon} strokeWidth="2" stroke="#333" fill="none" strokeLinecap="round" strokeLinejoin="round">
                   <Path stroke="none" d="M0 0h24v24H0z"/>
                   <Circle cx="12" cy="7" r="4" />
@@ -126,7 +126,7 @@ export default class App extends React.Component {
                 <Text style={[API.styles.b, {fontSize: 15}]}>{API.t("settings_selection_account")}</Text>
               </TouchableOpacity>
 
-              <TouchableOpacity style={[styles.selectionItem, {flexDirection: API.user.isRTL ? "row-reverse" : "row"}]} onPress={() => this.props.navigation.push("Language")}>
+              <TouchableOpacity style={[styles.selectionItem, {flexDirection: API.isRTL() ? "row-reverse" : "row"}]} onPress={() => this.props.navigation.push("Language")}>
                 <Svg height={24} width={24} viewBox="0 0 24 24" style={styles.selectionIcon} strokeWidth="2" stroke="#333" fill="none" strokeLinecap="round" strokeLinejoin="round">
                   <Path stroke="none" d="M0 0h24v24H0z"/>
                   <Path d="M5 7h7m-2 -2v2a5 7 0 0 1 -5 8m1 -4a7 4 0 0 0 6.7 4" />
@@ -135,7 +135,7 @@ export default class App extends React.Component {
                 <Text style={[API.styles.b, {fontSize: 15}]}>{API.t("settings_selection_language")}</Text>
               </TouchableOpacity>
 
-              <TouchableOpacity style={[styles.selectionItem, {flexDirection: API.user.isRTL ? "row-reverse" : "row"}]} onPress={() => this.props.navigation.push("Accent")}>
+              <TouchableOpacity style={[styles.selectionItem, {flexDirection: API.isRTL() ? "row-reverse" : "row"}]} onPress={() => this.props.navigation.push("Accent")}>
                 <Svg height={24} width={24} viewBox="0 0 24 24" style={styles.selectionIcon} strokeWidth="2" stroke="#333" fill="none" strokeLinecap="round" strokeLinejoin="round">
                   <Path d="M0 0h24v24H0z" stroke="none"/>
                   <Path d="M11.5 3a17 17 0 0 0 0 18"/>
@@ -147,7 +147,7 @@ export default class App extends React.Component {
                 <Text style={[API.styles.b, {fontSize: 15}]}>{API.t("settings_selection_accent")}</Text>
               </TouchableOpacity>
 
-              <TouchableOpacity style={[styles.selectionItem, {flexDirection: API.user.isRTL ? "row-reverse" : "row"}]} onPress={() => this.props.navigation.push("Voice")}>
+              <TouchableOpacity style={[styles.selectionItem, {flexDirection: API.isRTL() ? "row-reverse" : "row"}]} onPress={() => this.props.navigation.push("Voice")}>
                 <Svg height={24} width={24} viewBox="0 0 24 24" style={styles.selectionIcon} strokeWidth="2" stroke="#333" fill="none" strokeLinecap="round" strokeLinejoin="round">
                   <Path stroke="none" d="M0 0h24v24H0z"/>
                   <Path d="M15 8a5 5 0 0 1 0 8" />
@@ -157,7 +157,7 @@ export default class App extends React.Component {
                 <Text style={[API.styles.b, {fontSize: 15}]}>{API.t("settings_selection_voice")}</Text>
               </TouchableOpacity>
 
-              <TouchableOpacity style={[styles.selectionItem, {flexDirection: API.user.isRTL ? "row-reverse" : "row"}]} onPress={() => this.props.navigation.push("Notification")}>
+              <TouchableOpacity style={[styles.selectionItem, {flexDirection: API.isRTL() ? "row-reverse" : "row"}]} onPress={() => this.props.navigation.push("Notification")}>
                 <Svg height={24} width={24} viewBox="0 0 24 24" style={styles.selectionIcon} strokeWidth="2" stroke="#333" fill="none" strokeLinecap="round" strokeLinejoin="round">
                   <Path stroke="none" d="M0 0h24v24H0z"/>
                   <Path d="M9 7 h-3a2 2 0 0 0 -2 2v9a2 2 0 0 0 2 2h9a2 2 0 0 0 2 -2v-3" />
@@ -166,7 +166,7 @@ export default class App extends React.Component {
                 <Text style={[API.styles.b, {fontSize: 15}]}>{API.t("settings_selection_notifications")}</Text>
               </TouchableOpacity>
 
-              <TouchableOpacity style={[styles.selectionItem, {flexDirection: API.user.isRTL ? "row-reverse" : "row"}]} onPress={() => this.props.navigation.push("Accessibility")}>
+              <TouchableOpacity style={[styles.selectionItem, {flexDirection: API.isRTL() ? "row-reverse" : "row"}]} onPress={() => this.props.navigation.push("Accessibility")}>
                 <Svg height={24} width={24} viewBox="0 0 24 24" style={styles.selectionIcon} strokeWidth="2" stroke="#333" fill="none" strokeLinecap="round" strokeLinejoin="round">
                   <Path d="M0 0h24v24H0z" stroke="none"/>
                   <Path d="M10 16.5l2 -3l2 3m-2 -3v-2l3 -1m-6 0l3 1"/>
@@ -176,7 +176,7 @@ export default class App extends React.Component {
                 <Text style={[API.styles.b, {fontSize: 15}]}>{API.t("settings_selection_accessibility")}</Text>
               </TouchableOpacity>
 
-              <TouchableOpacity style={[styles.selectionItem, {flexDirection: API.user.isRTL ? "row-reverse" : "row"}]} onPress={() => this.props.navigation.push("Subscription")}>
+              <TouchableOpacity style={[styles.selectionItem, {flexDirection: API.isRTL() ? "row-reverse" : "row"}]} onPress={() => this.props.navigation.push("Subscription")}>
                 <Svg height={24} width={24} viewBox="0 0 24 24" style={styles.selectionIcon} strokeWidth="2" stroke="#333" fill="none" strokeLinecap="round" strokeLinejoin="round">
                   <Path stroke="none" d="M0 0h24v24H0z"/>
                   <Path d="M6 5h12l3 5l-8.5 9.5a.7 .7 0 0 1 -1 0l-8.5 -9.5l3 -5" />
@@ -188,9 +188,26 @@ export default class App extends React.Component {
 
             <View style={styles.appSettings}>
               <View style={styles.selectionCarrier}>
+                {API.config.apps &&
+                  <TouchableOpacity onPress={() => this.props.navigation.push("Apps")}>
+                    <View style={[styles.selectionItem, {flexDirection: API.isRTL() ? "row-reverse" : "row"}]}>
+                      <Svg height={24} width={24} viewBox="0 0 24 24" style={styles.selectionIcon} strokeWidth="2" stroke="#333" fill="none" strokeLinecap="round" strokeLinejoin="round">
+                          <Rect height="6" width="6" rx="1" x="4" y="4"/>
+                          <Rect height="6" width="6" rx="1" x="4" y="14"/>
+                          <Rect height="6" width="6" rx="1" x="14" y="14"/>
+                          <Line x1="14" x2="20" y1="7" y2="7"/>
+                          <Line x1="17" x2="17" y1="4" y2="10"/>
+                      </Svg>
+                      <Text style={[API.styles.b, {fontSize: 15}]}>{API.t("settings_selection_apps")}</Text>
+                      <View style={{ backgroundColor: API.config.backgroundColor, borderRadius: 5, marginHorizontal: 10, paddingHorizontal: 7}}>
+                        <Text style={[API.styles.b, {fontSize: 12, color: "#fff"}]}>{API.t("settings_selection_apps_new")}</Text>
+                      </View>
+                    </View>
+                  </TouchableOpacity>
+                }
 
                 <TouchableOpacity onPress={() => this.props.navigation.push("Browser", {link: "https://dreamoriented.org/huni-feedback/"})}>
-                  <View style={[styles.selectionItem, {flexDirection: API.user.isRTL ? "row-reverse" : "row"}]}>
+                  <View style={[styles.selectionItem, {flexDirection: API.isRTL() ? "row-reverse" : "row"}]}>
                     <Svg height={24} width={24} viewBox="0 0 24 24" style={styles.selectionIcon} strokeWidth="2" stroke="#333" fill="none" strokeLinecap="round" strokeLinejoin="round">
                       <Path stroke="none" d="M0 0h24v24H0z"/>
                       <Line x1="10" y1="14" x2="21" y2="3" />
@@ -201,7 +218,7 @@ export default class App extends React.Component {
                 </TouchableOpacity>
 
                 <TouchableOpacity onPress={() => this.props.navigation.push("Legal")}>
-                  <View style={[styles.selectionItem, {flexDirection: API.user.isRTL ? "row-reverse" : "row"}]}>
+                  <View style={[styles.selectionItem, {flexDirection: API.isRTL() ? "row-reverse" : "row"}]}>
                     <Svg height={24} width={24} viewBox="0 0 24 24" style={styles.selectionIcon} strokeWidth="2" stroke="#333" fill="none" strokeLinecap="round" strokeLinejoin="round">
                       <Path stroke="none" d="M0 0h24v24H0z"/>
                       <Path d="M15 21h-9a3 3 0 0 1 -3 -3v-1h10v2a2 2 0 0 0 4 0v-14a2 2 0 1 1 2 2h-2m2 -4h-11a3 3 0 0 0 -3 3v11" />
@@ -213,7 +230,7 @@ export default class App extends React.Component {
                 </TouchableOpacity>
 
                 {false &&
-                  <TouchableOpacity style={[[styles.selectionItem, {flexDirection: API.user.isRTL ? "row-reverse" : "row"}], {borderBottomWidth: 0}]} onPress={() => this.props.navigation.push("Remove")}>
+                  <TouchableOpacity style={[[styles.selectionItem, {flexDirection: API.isRTL() ? "row-reverse" : "row"}], {borderBottomWidth: 0}]} onPress={() => this.props.navigation.push("Remove")}>
                     <Svg height={24} width={24} viewBox="0 0 24 24" style={styles.selectionIcon} strokeWidth="2" stroke="#333" fill="none" strokeLinecap="round" strokeLinejoin="round">
                       <Path stroke="none" d="M0 0h24v24H0z"/>
                       <Line x1="4" y1="7" x2="20" y2="7" />

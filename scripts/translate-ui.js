@@ -31,7 +31,7 @@ function savePack(index){
     return savePack(index+1);
   }else{
 
-    let exists = fs.existsSync("../interface/"+language+".json");
+    let exists = fs.existsSync("./interface/"+language+".json");
     if(exists && checkExist){
       console.log("Already exists", language);
       index++;
@@ -48,7 +48,7 @@ function savePack(index){
             translationObj[trans] = res[i];
         });
 
-        fs.writeFileSync("../interface/"+language+".json", JSON.stringify(translationObj, null, 2), {encoding: "utf8"});
+        fs.writeFileSync("./interface/"+language+".json", JSON.stringify(translationObj, null, 2), {encoding: "utf8"});
         console.log("Saved", language);
 
 

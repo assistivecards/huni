@@ -21,6 +21,7 @@ import Premium from './layouts/Settings/Premium'
 import Legal from './layouts/Settings/Legal'
 import Accessibility from './layouts/Settings/Accessibility'
 import Accent from './layouts/Settings/Accent'
+import Apps from './layouts/Settings/Apps'
 
 const AppNavigator = createStackNavigator({
     Home:         { screen: Home          },
@@ -38,6 +39,7 @@ const AppNavigator = createStackNavigator({
     Legal:        { screen: Legal         },
     Accessibility:{ screen: Accessibility },
     Accent:       { screen: Accent        },
+    Apps:         { screen: Apps          },
   },
   {
     headerMode: 'none',

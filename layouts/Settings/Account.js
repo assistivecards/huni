@@ -60,7 +60,7 @@ export default class Setting extends React.Component {
         <TopBar back={() => this.props.navigation.pop()} backgroundColor={API.config.backgroundColor} rightButtonRender={true} rightButtonActive={this.didChange()} rightButtonPress={() => this.save()}/>
         <KeyboardAvoidingView style={{flex: 1}} behavior={Platform.OS == "ios" ? "padding" : "height"}>
           <ScrollView style={{flex: 1, backgroundColor: API.config.backgroundColor}}>
-            <View style={[styles.head, {alignItems: API.user.isRTL ? "flex-end" : "flex-start"}]}>
+            <View style={[styles.head, {alignItems: API.isRTL() ? "flex-end" : "flex-start"}]}>
               <Text style={API.styles.h1}>{API.t("settings_selection_account")}</Text>
               <Text style={API.styles.pHome}>{API.t("settings_account_description")}</Text>
             </View>
@@ -80,7 +80,7 @@ export default class Setting extends React.Component {
                 </View>
               </View>
               <TouchableOpacity onPress={() => API.signout()}>
-                <View style={[[styles.selectionItem, {flexDirection: API.user.isRTL ? "row-reverse" : "row"}], {borderBottomWidth: 0, padding: 25}]}>
+                <View style={[[styles.selectionItem, {flexDirection: API.isRTL() ? "row-reverse" : "row"}], {borderBottomWidth: 0, padding: 25}]}>
                   <Svg height={24} width={24} viewBox="0 0 24 24" style={styles.selectionIcon} strokeWidth="2" stroke="#333" fill="none" strokeLinecap="round" strokeLinejoin="round">
                     <Path stroke="none" d="M0 0h24v24H0z"/>
                     <Path d="M14 8v-2a2 2 0 0 0 -2 -2h-7a2 2 0 0 0 -2 2v12a2 2 0 0 0 2 2h7a2 2 0 0 0 2 -2v-2" />

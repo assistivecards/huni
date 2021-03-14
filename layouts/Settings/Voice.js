@@ -135,7 +135,7 @@ export default class Setting extends React.Component {
       <>
         <TopBar back={() => { this.props.navigation.pop(); API.initSpeech() }} backgroundColor={API.config.backgroundColor} rightButtonRender={true} rightButtonActive={this.didChange()} rightButtonPress={() => this.save()}/>
         <ScrollView style={{flex: 1, backgroundColor: API.config.backgroundColor}}>
-          <View style={[styles.head, {alignItems: API.user.isRTL ? "flex-end" : "flex-start"}]}>
+          <View style={[styles.head, {alignItems: API.isRTL() ? "flex-end" : "flex-start"}]}>
             <Text style={API.styles.h1}>{API.t("settings_selection_voice")}</Text>
             <Text style={API.styles.pHome}>{API.t("settings_voice_description")}</Text>
           </View>

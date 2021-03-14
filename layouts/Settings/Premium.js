@@ -205,7 +205,7 @@ export default class Setting extends React.Component {
 
               {true &&
                 <TouchableOpacity onPress={() => this.restore()}>
-                  <View style={[[styles.selectionItem, {flexDirection: API.user.isRTL ? "row-reverse" : "row"}], {borderBottomWidth: 0, paddingTop: 15, paddingHorizontal: 30}]}>
+                  <View style={[[styles.selectionItem, {flexDirection: API.isRTL() ? "row-reverse" : "row"}], {borderBottomWidth: 0, paddingTop: 15, paddingHorizontal: 30}]}>
                     <Svg height={24} width={24} viewBox="0 0 24 24" style={styles.selectionIcon} strokeWidth="2" stroke="#333" fill="none" strokeLinecap="round" strokeLinejoin="round">
                       <Path d="M0 0h24v24H0z" stroke="none"/>
                       <Path d="M7 12a5 5 0 0 1 5 -5"/>

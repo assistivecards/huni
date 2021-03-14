@@ -43,6 +43,9 @@
   "settings_subscriptions_downgrade_notice": "Du kan inte nedgradera din livstidspremieprenumeration.",
   "settings_subscriptions_oneTimePayment": "Engångsbetalning",
   "settings_subscriptions_recurringPayment": "Återkommande betalning",
+  "settings_selection_apps": "Alla appar",
+  "settings_selection_apps_new": "NY",
+  "settings_apps_description": "Upptäck andra appar från hjälpkort",
   "settings_selection_signout": "Logga ut",
   "settings_selection_sendFeedback": "Skicka synpunkter",
   "settings_selection_openSourceLicenses": "Öppen källkodslicenser",
@@ -115,7 +118,7 @@
   "premium_trial_title": "Starta 3 dagars GRATIS testversion",
   "premium_trial_description": "Avbryt när som helst utan kostnad",
   "premium_details1": "Gratis provperiod i 3 dagar, bara till årlig plan och under denna tid; du kan säga upp din prenumeration utan kostnad.",
-  "premium_details2": "Se till att läsa igenom säljarplattformens villkor före hand. Om du har några problem eller problem kontaktar vi oss så gör vi allt vi kan för att lösa eventuella problem du möter.",
+  "premium_details2": "Se till att läsa igenom säljarplattformens villkor före hand, om du har några problem eller problem kontaktar vi oss så gör vi allt vi kan för att lösa eventuella problem du möter.",
   "premium_details3": "Månads- och årsplaner är återkommande planer och Lifetime-planen är en engångsbetalningsplan för prenumerationer, såvida inte automatisk förnyelse är avstängd kommer du att debiteras periodpriset när den aktuella perioden slutar.",
   "premium_details4": "Tänk på att återbetalningar hanteras av plattformarna och återbetalningstiderna och policyn kan variera med avseende på plattformen och den marknad du prenumererar på.",
   "premium_details5": "Rapportera oavsiktliga köp till oss samma dag eller högst inom 24 timmar med hjälp av sidan 'Skicka feedback' i appinställningarna.",
@@ -129,9 +132,9 @@
   "button_use": "ANVÄNDA SIG AV",
   "button_using": "ANVÄNDER SIG AV",
   "button_add": "LÄGG TILL",
-  "button_remove": "AVLÄGSNA",
+  "button_remove": "TA BORT",
   "button_get_started": "Komma igång",
   "alert_yourDeviceDoesNotSupportTTS": "Enheten stöder inte röstdrivrutinen för detta språk. För att kunna använda TTS-funktioner måste du installera en röstdrivrutin. Du kan testa appen 'Google TTS' för att installera och hantera drivrutiner!",
   "alert_ok": "OK",
-  "alert_cancel": "Annullera"
+  "alert_cancel": "Avbryt"
 }
